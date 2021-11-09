@@ -1,16 +1,43 @@
 <div>
     Welcome to your homepage {{username}}
 </div>
-
-
-
-<button (click) = "getNewReleases()" type="button">
-    Click to get new releases
-</button>
-
+<br>
+<input [(ngModel)]="userSearch" id="searchBar">
+<label for = "searchBar">Search for another user</label>
+<br>
 <div>
-    The new releases are {{newReleases}}
+    Your profile description:
 </div>
+<button type="button">Edit your profile info</button>
+<br>
+<div>
+    Your top artists are:
+</div>
+    <button type="button">Edit your top artists</button>
+    <br>
+<div> 
+    Your top genres are:
+</div>
+    <button type ="button">Edit your top genres</button>
+    <br>
+<div>
+    Your anthem is:
+</div>
+    <button type ="button">Edit your anthem</button>
+    <br>
+<div>
+    Your friends are:
+</div>
+<button (click)="connectUserAccount()" type="button">
+    Click to get implicit access token
+</button>
+    
+<div>
+    The value of your access token is in url
+</div>
+
+
+
 
 <label for="artistSearch">search for an artist</label>
 <input [(ngModel)]="getArtistSearch" id="artistInput">

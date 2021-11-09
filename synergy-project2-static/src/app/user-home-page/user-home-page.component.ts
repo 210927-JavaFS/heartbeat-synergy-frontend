@@ -17,6 +17,7 @@ export class HomePageComponent implements OnInit {
   public newReleases: string = '';
   public songSearch: string = '';
   public artistSearch: string = '';
+  public userSearch: string = '';
   public songResult: string = '';
   public songId: string = '';
   public albumImageUrl: string = '';
@@ -32,6 +33,9 @@ export class HomePageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  connectUserAccount() {
+    this.accountService.getAccessToken();   
+  }
 
 
   getNewReleases() {

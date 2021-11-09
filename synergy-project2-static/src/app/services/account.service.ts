@@ -26,8 +26,8 @@ export class AccountService {
   token2Url:string = '';
 
   // additional params needed to create OAUTH 2.0 token
-  redirectUri:string = 'http://localhost:4200'; 
-  callbackUrl:string = 'http://localhost:4200'; 
+  redirectUri:string = 'http://localhost:4200/home-page'; 
+  callbackUrl:string = 'http://localhost:4200/home-page'; 
   responseType:string = 'code';
   scopes:string = 'user-library-read'; //can edit this to your liking
 

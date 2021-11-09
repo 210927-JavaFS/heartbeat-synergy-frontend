@@ -60,9 +60,29 @@ serverUrl:string = 'http://localhost:8083';
      * now in the url
      */
     window.location.href = this.token2Url; // see above
+
     console.log(this.token2Url); // janky solution just for testing
 
   }
+
+
+  getTokenFromUrl(){
+    console.log("in getTokenFromUrl");
+
+    const hash = window.location.hash;
+
+    const stringAfterHashtag = hash.substring(1);
+    const paramsInUrl = stringAfterHashtag.split("&");
+
+    const accessTokenArray = paramsInUrl[0].split("=");
+    console.log(accessTokenArray[1]);
+    const accessToken = accessTokenArray[1];
+
+    // paramsInUrl.forEach(element => {
+    //     console.log(element);
+    // });
+  }
+
 
   // build OAUTH request using implicit grant method
   buildRequest(){

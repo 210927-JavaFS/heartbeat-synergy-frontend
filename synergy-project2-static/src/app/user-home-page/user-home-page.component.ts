@@ -126,4 +126,12 @@ getGenres(){
     }
    )
   }
+
+  getTokenFromUrl() {
+    this.accountService.getTokenFromUrl();   
+  }
+
 }
+
+
+

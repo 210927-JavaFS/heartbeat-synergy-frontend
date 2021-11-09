@@ -23,9 +23,11 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     
-    if(this.accountService.loginServ(this.username,this.password)) {
-      this.transferService.setUsername(this.username);
-      this.transferService.setPassword(this.password);
+    
+      this.accountService.loginServ(this.transferService.getUsername(), this.transferService.getPassword()).subscribe(
+        (data: Object) => {
+          let response = JSON.stringify(data);
+        })
       this.accountService.getTokenServ().subscribe(
         (data: Object) => {
           this.token = Object.values(data)[0]
@@ -36,5 +38,5 @@ export class LoginPageComponent implements OnInit {
   }
 
 
-}
+
 

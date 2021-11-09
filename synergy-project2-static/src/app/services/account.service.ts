@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { UserDto } from '../models/user-dto';
 
 
 @Injectable({
@@ -31,7 +32,7 @@ export class AccountService {
   responseType:string = 'code';
   scopes:string = 'user-library-read'; //can edit this to your liking
 
-serverUrl:string = 'http://localhost:8083';
+serverUrl:string = 'http://localhost:8083/data';
 
   base64Credentials = btoa(this.clientId+':'+this.clientSecret);
   authTokenBody = new URLSearchParams({'grant_type':'client_credentials'});
@@ -116,8 +117,10 @@ serverUrl:string = 'http://localhost:8083';
 
   //*********************************************Localhost functions******************************** */
 
- loginServ(username:string, password:string):boolean {
-    return true
+ loginServ(username:string, password:string):Observable<Object> {
+    let dto = new UserDto(username, password);
+   return this.http.post(this.serverUrl + '/login', dto);
+    
   }
 
 

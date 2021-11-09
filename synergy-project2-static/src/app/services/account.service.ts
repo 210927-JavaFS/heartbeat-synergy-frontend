@@ -31,7 +31,7 @@ export class AccountService {
   responseType:string = 'code';
   scopes:string = 'user-library-read'; //can edit this to your liking
 
-serverUrl:string = 'http://localhost:8083';
+serverUrl:string = 'http://localhost:8083/data';
 
   base64Credentials = btoa(this.clientId+':'+this.clientSecret);
   authTokenBody = new URLSearchParams({'grant_type':'client_credentials'});
@@ -136,8 +136,13 @@ serverUrl:string = 'http://localhost:8083';
 
   //*********************************************Localhost functions******************************** */
 
- loginServ(username:string, password:string):boolean {
-    return true
+ loginServ(username:string, password:string):Observable<any> {
+   let user = {
+     "username" : username,
+     "password" : password
+   }
+   return this.http.post(this.serverUrl + '/login', user)
+    
   }
 
 

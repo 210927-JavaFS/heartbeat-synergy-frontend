@@ -23,7 +23,13 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     
-    if(this.accountService.loginServ(this.username,this.password)) {
+    if(true) {
+      this.accountService.loginServ(this.username, this.password).subscribe(
+        (data:Object)=> {
+          console.log(JSON.stringify(data));
+
+        }
+      )
       this.transferService.setUsername(this.username);
       this.transferService.setPassword(this.password);
       this.accountService.getTokenServ().subscribe(

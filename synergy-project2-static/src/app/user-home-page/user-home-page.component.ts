@@ -138,6 +138,12 @@ getGenres(){
   getTokenFromUrl() {
     this.authToken = this.accountService.getTokenFromUrl();
     console.log(this.authToken);
+    this.accountService.getTokenServ().subscribe(
+      (data: Object) => {
+        this.token = Object.values(data)[0]
+        this.transferService.setToken(this.token);
+        console.log(this.token);
+      });
   }
 
 }

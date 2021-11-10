@@ -130,7 +130,7 @@ getGenres(){
    this.accountService.getTopArtists(this.authToken).subscribe(
     (data:Object)=> {
       this.topArtists = JSON.stringify(data);
-      console.log("in getTopArtists()");
+      console.log(this.topArtists);
     }
    )
   }

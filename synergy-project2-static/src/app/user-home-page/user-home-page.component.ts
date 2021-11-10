@@ -30,12 +30,19 @@ export class HomePageComponent implements OnInit {
   public getArtistSearch:string = '';
   public username:string = this.transferService.getUsername();
   public password:string = this.transferService.getPassword();
-  public user:any = this.transferService.getUser();
+  public user:User = this.transferService.getUser();
+  
+  
 
   constructor(private accountService: AccountService, private transferService:TransferService) { }
  
   ngOnInit(): void {
     
+    
+  }
+
+  initfunction(){
+    this.user = this.transferService.getUser();
   }
 
   connectUserAccount() {

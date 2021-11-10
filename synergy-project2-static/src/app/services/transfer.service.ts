@@ -10,7 +10,7 @@ export class TransferService {
   private username:string = '';
   private password:string = '';
   public token:string = '';
-  public user:User|null = null;
+  public user:User = new User(0, '','','','','','','',[],[]);
 
   constructor() { }
 
@@ -41,7 +41,8 @@ export class TransferService {
     this.user=user
   }
 
-  getUser():any {
+  getUser():User {
     return this.user;
   }
+  
 }

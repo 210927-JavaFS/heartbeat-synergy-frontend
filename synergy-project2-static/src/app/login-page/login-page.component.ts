@@ -34,7 +34,7 @@ export class LoginPageComponent implements OnInit {
           this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[7],
             userValues[8], userValues[9], userValues[10]);
           this.transferService.setUser(this.user);
-
+            
         }
       )
       this.transferService.setUsername(this.username);
@@ -44,8 +44,8 @@ export class LoginPageComponent implements OnInit {
           this.token = Object.values(data)[0]
           this.transferService.setToken(this.token);
         });
-      this.router.navigate(['home-page'])}
-    
+      this.router.navigate(['home-page']);
+    }
   }
 
 

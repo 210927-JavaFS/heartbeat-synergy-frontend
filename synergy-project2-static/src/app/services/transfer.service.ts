@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,13 @@ export class TransferService {
   public token:string = '';
   public user:User = new User(0, '','','','','','','',[],[]);
 
-  constructor() { }
+  userChange : Subject<User> = new Subject<User>();
+
+  constructor() { 
+    this.userChange.subscribe((value) => {
+      this.user = value;
+    })
+  }
 
   setUsername(username:string){
     this.username=username;
@@ -38,7 +45,7 @@ export class TransferService {
   }
 
   setUser(user:User) {
-    this.user=user
+    this.userChange.next(user);
   }
 
   getUser():User {

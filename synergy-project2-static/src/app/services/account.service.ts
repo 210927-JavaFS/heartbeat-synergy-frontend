@@ -30,7 +30,7 @@ export class AccountService {
   redirectUri:string = 'http://localhost:4200/home-page'; 
   callbackUrl:string = 'http://localhost:4200/home-page'; 
   responseType:string = 'code';
-  scopes:string = 'user-library-read'; //can edit this to your liking
+  scopes:string = 'user-library-read, user-top-read'; //can edit this to your liking
 
 serverUrl:string = 'http://localhost:8083';
 

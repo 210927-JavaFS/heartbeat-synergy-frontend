@@ -5,6 +5,8 @@ import { Track } from '../models/track';
 import { LoginPageComponent } from '../login-page/login-page.component';
 import { TransferService } from '../services/transfer.service';
 import { Artist } from '../models/artist';
+import { ThisReceiver } from '@angular/compiler';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-user-home-page',
@@ -28,27 +30,23 @@ export class HomePageComponent implements OnInit {
   public getArtistSearch:string = '';
   public username:string = this.transferService.getUsername();
   public password:string = this.transferService.getPassword();
+  public user:any = this.transferService.getUser();
+
   constructor(private accountService: AccountService, private transferService:TransferService) { }
  
   ngOnInit(): void {
+    
   }
 
   connectUserAccount() {
-    this.accountService.getAccessToken();   
+    this.accountService.getAccessToken();  
   }
 
-
-  getNewReleases() {
-    this.accountService.getnewReleasesServ(this.transferService.token).subscribe(
-      (data: Object) => {
-        this.newReleases = JSON.stringify(data);
-      }
-    )
-
-  }
 
   clearResults() {
     this.newReleases = '';
+    console.log(this.transferService.getUser());
+    console.log(this.user);
   }
 
   searchSong():Track {

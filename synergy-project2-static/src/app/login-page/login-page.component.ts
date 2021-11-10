@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
 
@@ -13,6 +14,7 @@ export class LoginPageComponent implements OnInit {
   public username: string = '';
   public password: string = ''
   public token:string = '';
+  public user:User = new User(0, '','','','','','','',[],[]);
 
 
   constructor(private router: Router, private accountService:AccountService, private transferService:TransferService) { }
@@ -26,7 +28,12 @@ export class LoginPageComponent implements OnInit {
     if(true) {
       this.accountService.loginServ(this.username, this.password).subscribe(
         (data:Object)=> {
-          console.log(JSON.stringify(data));
+          console.log(JSON.stringify(data))
+          let userValues:any[]=Object.values(data);
+          console.log(userValues);
+          this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[7],
+            userValues[8], userValues[9], userValues[10]);
+          this.transferService.setUser(this.user);
 
         }
       )

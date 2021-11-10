@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../models/user';
 import { AccountService } from './account.service';
 
 @Injectable({
@@ -9,6 +10,7 @@ export class TransferService {
   private username:string = '';
   private password:string = '';
   public token:string = '';
+  public user:User|null = null;
 
   constructor() { }
 
@@ -33,5 +35,13 @@ export class TransferService {
 
   getToken():string{
     return this.token;
+  }
+
+  setUser(user:User) {
+    this.user=user
+  }
+
+  getUser():any {
+    return this.user;
   }
 }

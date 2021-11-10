@@ -16,6 +16,7 @@ import { User } from '../models/user';
 export class HomePageComponent implements OnInit {
 
   public token:string = this.transferService.getToken();
+  public authToken:string = '';
   public newReleases: string = '';
   public songSearch: string = '';
   public artistSearch: string = '';
@@ -125,7 +126,8 @@ getGenres(){
  }
 
  getTopArtists(){
-   this.accountService.getTopArtists(this.token).subscribe(
+   console.log("inTopArtists "+this.authToken);
+   this.accountService.getTopArtists(this.authToken).subscribe(
     (data:Object)=> {
       this.topArtists = JSON.stringify(data);
       console.log("in getTopArtists()");
@@ -134,7 +136,8 @@ getGenres(){
   }
 
   getTokenFromUrl() {
-    this.accountService.getTokenFromUrl();   
+    this.authToken = this.accountService.getTokenFromUrl();
+    console.log(this.authToken);
   }
 
 }

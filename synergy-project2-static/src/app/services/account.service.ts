@@ -23,13 +23,14 @@ export class AccountService {
   authUrl:string = 'https://accounts.spotify.com/authorize';
   tokenUrl:string = 'https://accounts.spotify.com/api/token';
 
-  token2Url:string = '';
+  authTokenUrl:string = '';
+  authToken:string = '';
 
   // additional params needed to create OAUTH 2.0 token
   redirectUri:string = 'http://localhost:4200/home-page'; 
   callbackUrl:string = 'http://localhost:4200/home-page'; 
   responseType:string = 'code';
-  scopes:string = 'user-library-read'; //can edit this to your liking
+  scopes:string = 'user-library-read, user-top-read'; //can edit this to your liking
 
 serverUrl:string = 'http://localhost:8083/data';
 
@@ -49,7 +50,7 @@ serverUrl:string = 'http://localhost:8083/data';
   }
 
   getAccessToken(){
-    this.token2Url = this.buildRequest();
+    this.authTokenUrl = this.buildRequest();
     
     /**
      * redirects url to redirectUri value to access OAUTH token
@@ -59,28 +60,21 @@ serverUrl:string = 'http://localhost:8083/data';
      * to our site with the newly generated access token
      * now in the url
      */
-    window.location.href = this.token2Url; // see above
-
-    console.log(this.token2Url); // janky solution just for testing
-
+    window.location.href = this.authTokenUrl; // see above
   }
 
 
-  getTokenFromUrl(){
-    console.log("in getTokenFromUrl");
-
+  getTokenFromUrl():string{
     const hash = window.location.hash;
 
     const stringAfterHashtag = hash.substring(1);
     const paramsInUrl = stringAfterHashtag.split("&");
 
-    const accessTokenArray = paramsInUrl[0].split("=");
-    console.log(accessTokenArray[1]);
-    const accessToken = accessTokenArray[1];
+    const authTokenArray = paramsInUrl[0].split("=");
+    console.log(authTokenArray[1]);
+    this.authToken = authTokenArray[1];
 
-    // paramsInUrl.forEach(element => {
-    //     console.log(element);
-    // });
+    return this.authToken;
   }
 
 
@@ -121,8 +115,8 @@ serverUrl:string = 'http://localhost:8083/data';
   }
 
   // need to fix this - needs to take the OAUTH token
-  getTopArtists(token:string):Observable<Object>{
-    return this.http.get(this.requestUrl + 'recommendations/me/top/artists?limit=5', {headers: new HttpHeaders({'Authorization': 'Bearer '+token })})
+  getTopArtists(authToken:string):Observable<Object>{
+    return this.http.get(this.requestUrl + 'me/top/artists', {headers: new HttpHeaders({'Authorization': 'Bearer '+authToken, 'Content-Type':'application/json', "Accept": "application/json" })})
  }
  
     

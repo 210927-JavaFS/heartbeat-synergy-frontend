@@ -7,6 +7,7 @@ import { TransferService } from '../services/transfer.service';
 import { Artist } from '../models/artist';
 import { ThisReceiver } from '@angular/compiler';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-home-page',
@@ -17,7 +18,6 @@ export class HomePageComponent implements OnInit {
 
   public token:string = this.transferService.getToken();
   public authToken:string = '';
-  public newReleases: string = '';
   public songSearch: string = '';
   public artistSearch: string = '';
   public userSearch: string = '';
@@ -29,15 +29,46 @@ export class HomePageComponent implements OnInit {
   public track:Track|null = null;
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
-  public username:string = this.transferService.getUsername();
-  public password:string = this.transferService.getPassword();
-  public user:User|null = null;
-  
-  
-
-  constructor(private accountService: AccountService, private transferService:TransferService) 
+  public user:User = new User(0, '','','','','','','',[],[]);;
+  public firstName:string = '';
+  public profileDescription = '';
+  public anthem:string = '';
+  public track1:Track|null = null;
+  public topUserArtists:any[] = [];
+  public topUserGenres:any[] = [];
+  constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
   {
-    transferService.userChange.subscribe(value => {this.user = value});
+    transferService.userChange.subscribe(value => 
+    {
+    //Values
+    this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
+    this.user.profileDescription, this.anthem=this.user.playlist, this.topUserGenres=this.generateGenres(this.user.topArtists),
+      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.anthem);
+      console.log(this.topUserArtists);
+      console.log(this.user.anthem);
+      console.log(this.user);
+     
+    
+    //Functions
+    this.accountService.getSongServ(this.transferService.token, this.anthem).subscribe(
+      (data: Object) => {
+        let innerData = Object.values(data);
+        let innerArtistandAlbum: any[] = Object.values(innerData[0]);
+        let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
+        let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
+        let artistName = innerArtistDetails[3];
+        let albumName = innerArtistandAlbum[7];
+        let songName = innerData[11]; 
+        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[6]);
+        let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[2]);
+        let albumImageUrl = innerAlbumImageDetails[1];
+        this.albumImageUrl = albumImageUrl;
+        let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
+        this.track = track;
+
+      }
+    )}  );
+
   }
  
   ngOnInit(): void {
@@ -51,11 +82,62 @@ export class HomePageComponent implements OnInit {
     this.accountService.getAccessToken();  
   }
 
+  generateGenres(genres:any):any[] {
+    if(genres != undefined){
+    let array:any[] = [];
+    for(let i=0; i<genres.length; i++){
+      
+      array[i]=Object.values(genres[i])[1];
+    }
+    return array;}
+    else{ 
+      let array = ["nothing here yet"];
+      return array;
+    }
+  }
 
-  clearResults() {
-    this.newReleases = '';
-    console.log(this.transferService.getUser());
-    console.log(this.user);
+  generateTopArtists(artists:any):any[] {
+    if(artists!=undefined){
+    let array:any[] = [];
+    for(let i=0; i<artists.length; i++){
+      console.log(artists);
+      array[i]=Object.values(artists[i]);
+    }
+    console.log(array);
+    return array;
+  }
+    else{
+      let array = ["nothing here yet"];
+      return array;
+    }
+  }
+
+  searchUser(){
+    this.router.navigate(['potential-match']);
+  }
+
+
+
+  getSong(songUrl:string):Track {
+    this.accountService.getSongServ(this.transferService.token, songUrl).subscribe(
+      (data: Object) => {
+        let innerData = Object.values(data);
+        let innerArtistandAlbum: any[] = Object.values(innerData[0]);
+        let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
+        let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
+        let artistName = innerArtistDetails[3];
+        let albumName = innerArtistandAlbum[6];
+        let songName = innerData[11]; 
+        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[5]);
+        let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[0]);
+        let albumImageUrl = innerAlbumImageDetails[1];
+        this.albumImageUrl = albumImageUrl;
+        let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
+        this.track = track;
+        return track;
+      }
+    )
+    return new Track('','','','','');
   }
 
   searchSong():Track {
@@ -82,9 +164,9 @@ export class HomePageComponent implements OnInit {
             let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[0]);
             let albumImageUrl = innerAlbumImageDetails[1];
             this.albumImageUrl = albumImageUrl;
-            let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
-            this.track = track;
-            return track;
+            let track1 = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
+            this.track1 = track1;
+            return track1;
           }
         )
       }
@@ -113,6 +195,24 @@ export class HomePageComponent implements OnInit {
     })
     return new Artist('','','');
 }
+
+  getArtist(artistId:any):Artist {
+    this.accountService.getArtistServ(this.transferService.token, artistId).subscribe(
+      (data: Object) => {
+        console.log(data);
+        let innerGetData:any[]=Object.values(data);
+        console.log(innerGetData);
+        let artistName=innerGetData[6];
+        let artistImage:any[] = innerGetData[5];
+        let artistImageArray:any[]=Object.values(artistImage[2]);
+        let artistImageUrl = artistImageArray[1];
+        let artist = new Artist('adsfasdf', artistName, artistImageUrl);
+        console.log(artist);
+        return artist;
+        
+      })
+      return new Artist('','','');
+  }
 
 
 

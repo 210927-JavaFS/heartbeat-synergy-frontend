@@ -32,7 +32,7 @@ export class AccountService {
   responseType:string = 'code';
   scopes:string = 'user-library-read, user-top-read'; //can edit this to your liking
 
-serverUrl:string = 'http://localhost:8083/data';
+  serverUrl:string = 'http://localhost:8083/data';
 
   base64Credentials = btoa(this.clientId+':'+this.clientSecret);
   authTokenBody = new URLSearchParams({'grant_type':'client_credentials'});
@@ -138,8 +138,4 @@ serverUrl:string = 'http://localhost:8083/data';
    return this.http.post(this.serverUrl + '/login', user)
     
   }
-
-
-
-  
 }

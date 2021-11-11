@@ -45,7 +45,17 @@
     The value of your access token isin console
 </div>
 
-
+<form th:action="@{/users/save}"
+    th:object="${user}" method="post"
+    enctype="multipart/form-data"
+    >
+    <div>
+     
+    <label>Photos: </label>
+    <input (change)="onFileChange($event)" type="file" name="image" accept="image/png, image/jpeg" />
+     
+    </div>
+</form>
 
 
 <label for="artistSearch">search for an artist</label>
@@ -89,3 +99,29 @@
 <button (click) = "clearResults()"> 
     click this to clear results
 </button>
+<div class="container row">
+    <div class="col-md-12">
+        <h1>Upload Image</h1>
+    </div>
+</div>
+<div class="container row">
+    <div class="col-md-6">
+        <input type="file" (change)="onFileChange($event)">
+    </div>
+    <div class="col-md-6">
+        <input type="button" (click)="onUpload()" value="upload">
+    </div>
+</div>
+<hr />
+<div class="container row">
+    <div class="col-md-12">
+        <div *ngIf=message>{{message}}</div>
+    </div>
+</div>
+<div class="container row">
+    <div class="col-md-12">
+        <div *ngIf=retrievedImage>
+            <img [src]="retrievedImage">
+        </div>
+    </div>
+</div>

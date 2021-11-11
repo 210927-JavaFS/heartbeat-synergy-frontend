@@ -8,6 +8,8 @@ import { Artist } from '../models/artist';
 import { ThisReceiver } from '@angular/compiler';
 import { User } from '../models/user';
 
+import { HttpClient } from '@angular/common/http';
+import { UserImage } from '../models/user-image';
 @Component({
   selector: 'app-user-home-page',
   templateUrl: './user-home-page.component.html',
@@ -33,16 +35,21 @@ export class HomePageComponent implements OnInit {
   public password:string = this.transferService.getPassword();
   public user:User|null = null;
   
-  
+  selectedFile: File|null = null;
+  retrievedImage: any;
+  message: string = "";
 
-  constructor(private accountService: AccountService, private transferService:TransferService) 
+  constructor(private accountService: AccountService, private transferService:TransferService, private httpClient:HttpClient) 
   {
-    transferService.userChange.subscribe(value => {this.user = value});
+    transferService.userChange.subscribe(value => {this.user = value;});
+    transferService.imageChange.subscribe((value)=>{ 
+      if(this.user?.images.length != undefined && this.user?.images.length > 0)
+        this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+    });
   }
  
   ngOnInit(): void {
   }
-
   
   initfunction(){
   }
@@ -51,6 +58,14 @@ export class HomePageComponent implements OnInit {
     this.accountService.getAccessToken();  
   }
 
+  onFileChange(event:any)
+  {
+    this.selectedFile = event.target.files[0];
+  }
+
+  onUpload() {
+    this.transferService.uploadUserImage(this.selectedFile);
+  }
 
   clearResults() {
     this.newReleases = '';

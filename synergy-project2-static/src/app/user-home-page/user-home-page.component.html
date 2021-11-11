@@ -7,7 +7,7 @@
 <br>
 <input [(ngModel)]="userSearch" id="searchBar">
 <label for = "searchBar">Search for another user</label>
-<button>search</button>
+<button (click) = "searchUser()" type="button">Search</button>
 <br>
 <div>
    Profile status: 
@@ -19,6 +19,12 @@
 <div>
     Your top artists are:
 
+</div>
+<div *ngFor="let cell of topUserArtists">
+  artist name:
+    {{cell[1]}}
+    <br>
+    <img [src]= "cell[2]">
 </div>
   
     <br>

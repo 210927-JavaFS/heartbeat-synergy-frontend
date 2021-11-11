@@ -7,6 +7,7 @@ import { TransferService } from '../services/transfer.service';
 import { Artist } from '../models/artist';
 import { ThisReceiver } from '@angular/compiler';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-home-page',
@@ -35,15 +36,17 @@ export class HomePageComponent implements OnInit {
   public track1:Track|null = null;
   public topUserArtists:any[] = [];
   public topUserGenres:any[] = [];
-  constructor(private accountService: AccountService, private transferService:TransferService) 
+  constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
   {
     transferService.userChange.subscribe(value => 
     {
     //Values
     this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
     this.user.profileDescription, this.anthem=this.user.playlist, this.topUserGenres=this.generateGenres(this.user.topArtists),
-      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topGenres);
-      console.log(this.topArtists);
+      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.anthem);
+      console.log(this.topUserArtists);
+      console.log(this.user.anthem);
+      console.log(this.user);
      
     
     //Functions
@@ -100,12 +103,20 @@ export class HomePageComponent implements OnInit {
       console.log(artists);
       array[i]=Object.values(artists[i]);
     }
-    return array;}
+    console.log(array);
+    return array;
+  }
     else{
       let array = ["nothing here yet"];
       return array;
     }
   }
+
+  searchUser(){
+    this.router.navigate(['potential-match']);
+  }
+
+
 
   getSong(songUrl:string):Track {
     this.accountService.getSongServ(this.transferService.token, songUrl).subscribe(

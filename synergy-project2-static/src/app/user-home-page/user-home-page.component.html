@@ -1,5 +1,5 @@
 <div>
-    Welcome to your homepage {{username}}
+    Welcome to your homepage {{firstName}}
 </div>
 
 <br>
@@ -7,47 +7,55 @@
 <label for = "searchBar">Search for another user</label>
 <br>
 <div>
-    Your profile description:
+    Description:
+    {{profileDescription}}
 </div>
-<button type="button">Edit your profile info</button>
+
 <br>
 <div>
     Your top artists are:
+
 </div>
-    <button type="button">Edit your top artists</button>
+  
     <br>
-<div> 
-    Your top genres are:
+    <div>
+        Your top genres are:
+    </div>
+<div *ngFor="let cell of topUserGenres"> 
+    {{cell}}
 </div>
-    <button type ="button">Edit your top genres</button>
+    
     <br>
 <div>
     Your anthem is:
+    {{track?.trackName}}
+    Written by: 
+    {{track?.trackArtist}}
+    From: 
+    {{track?.trackAlbum}}
+   
 </div>
-    <button type ="button">Edit your anthem</button>
+  <img [src] = "albumImageUrl">
     <br>
 <div>
     Your friends are:
 </div>
+
 <button (click)="connectUserAccount()" type="button">
     Click to get implicit access token
 </button>
     
-<div>
-    The value of your access token is in url
-</div>
+
 
 <button (click)="getTokenFromUrl()" type="button">
     Click to get token from url
 </button>
     
-<div>
-    The value of your access token isin console
-</div>
 
 
 
 
+<!-- 
 <label for="artistSearch">search for an artist</label>
 <input [(ngModel)]="getArtistSearch" id="artistInput">
 <button (click) = "searchArtist()" type="button"> 
@@ -76,7 +84,7 @@
    album image: 
 </div>
 <img [src] = "albumImageUrl">
-<br>
+<br> -->
 
 <button (click) = "getTopArtists()"> 
     click to get 5 top artists
@@ -86,6 +94,4 @@
 
 
 
-<button (click) = "clearResults()"> 
-    click this to clear results
-</button>
+

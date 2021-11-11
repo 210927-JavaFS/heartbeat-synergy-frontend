@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { User } from '../models/user';
 
 
 @Injectable({
@@ -96,6 +97,7 @@ export class AccountService {
   }
 
 
+  // api calls
   getnewReleasesServ(token:string):Observable<Object> {
     return this.http.get(this.requestUrl + 'browse/new-releases', {headers: new HttpHeaders({'Authorization': 'Bearer '+token })})
 
@@ -127,6 +129,17 @@ export class AccountService {
   getArtistServ(token:string, artistId:string):Observable<Object> {
     return this.http.get(this.requestUrl +'artists/'+artistId +'?market=us', {headers: new HttpHeaders({'Authorization': 'Bearer '+token })})
   }
+
+
+  //spring data calls
+  getAllUsers(){
+    return this.http.get<User[]>('http://localhost:8083/data/account');
+  }
+
+  getUser(id:number){
+    return this.http.get<User>('http://localhost:8083/data/account/'+id);
+  }
+
 
   //*********************************************Localhost functions******************************** */
 

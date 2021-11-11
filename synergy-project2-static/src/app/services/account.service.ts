@@ -106,6 +106,7 @@ serverUrl:string = 'http://localhost:8083/data';
   }
 
   getSongServ(token:string, songId:string):Observable<Object> {
+    if (songId!=null){}
     return this.http.get(this.requestUrl +'tracks/'+songId +'?market=us', {headers: new HttpHeaders({'Authorization': 'Bearer '+token })})
   }
 

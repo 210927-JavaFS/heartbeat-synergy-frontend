@@ -2,15 +2,19 @@
     Welcome to your homepage {{firstName}}
 </div>
 
+<!-- <button type="button" (click)="getArtist()">test Button</button> -->
+
 <br>
 <input [(ngModel)]="userSearch" id="searchBar">
 <label for = "searchBar">Search for another user</label>
+<button>search</button>
 <br>
 <div>
-    Description:
-    {{profileDescription}}
+   Profile status: 
 </div>
-
+<div>
+{{profileDescription}}
+</div>
 <br>
 <div>
     Your top artists are:
@@ -38,8 +42,10 @@
   <img [src] = "albumImageUrl">
     <br>
 <div>
-    Your friends are:
+    Your matches are:
 </div>
+
+<br>
 
 <button (click)="connectUserAccount()" type="button">
     Click to get implicit access token

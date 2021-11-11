@@ -42,7 +42,9 @@ export class HomePageComponent implements OnInit {
     //Values
     this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
     this.user.profileDescription, this.anthem=this.user.playlist, this.topUserGenres=this.generateGenres(this.user.topArtists),
-      console.log(this.topUserGenres);
+      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topGenres);
+      console.log(this.topArtists);
+     
     
     //Functions
     this.accountService.getSongServ(this.transferService.token, this.anthem).subscribe(
@@ -78,12 +80,31 @@ export class HomePageComponent implements OnInit {
   }
 
   generateGenres(genres:any):any[] {
+    if(genres != undefined){
     let array:any[] = [];
     for(let i=0; i<genres.length; i++){
       
       array[i]=Object.values(genres[i])[1];
     }
-    return array;
+    return array;}
+    else{ 
+      let array = ["nothing here yet"];
+      return array;
+    }
+  }
+
+  generateTopArtists(artists:any):any[] {
+    if(artists!=undefined){
+    let array:any[] = [];
+    for(let i=0; i<artists.length; i++){
+      console.log(artists);
+      array[i]=Object.values(artists[i]);
+    }
+    return array;}
+    else{
+      let array = ["nothing here yet"];
+      return array;
+    }
   }
 
   getSong(songUrl:string):Track {
@@ -163,6 +184,24 @@ export class HomePageComponent implements OnInit {
     })
     return new Artist('','','');
 }
+
+  getArtist(artistId:any):Artist {
+    this.accountService.getArtistServ(this.transferService.token, artistId).subscribe(
+      (data: Object) => {
+        console.log(data);
+        let innerGetData:any[]=Object.values(data);
+        console.log(innerGetData);
+        let artistName=innerGetData[6];
+        let artistImage:any[] = innerGetData[5];
+        let artistImageArray:any[]=Object.values(artistImage[2]);
+        let artistImageUrl = artistImageArray[1];
+        let artist = new Artist('adsfasdf', artistName, artistImageUrl);
+        console.log(artist);
+        return artist;
+        
+      })
+      return new Artist('','','');
+  }
 
 
 

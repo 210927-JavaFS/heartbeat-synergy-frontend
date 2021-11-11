@@ -29,23 +29,24 @@ export class HomePageComponent implements OnInit {
   public track:Track|null = null;
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
-  public user:User = new User(0, '','','','','','','',[],[]);;
+  public user:User = new User(0, '','','','','','','','',[],[], '', '');
   public firstName:string = '';
   public profileDescription = '';
   public anthem:string = '';
   public track1:Track|null = null;
   public topUserArtists:any[] = [];
   public topUserGenres:any[] = [];
+  public age:string = '';
+  
   constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
   {
     transferService.userChange.subscribe(value => 
     {
     //Values
     this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
-    this.user.profileDescription, this.anthem=this.user.playlist, this.topUserGenres=this.generateGenres(this.user.topArtists),
-      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.anthem);
+    this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
+      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists);
       console.log(this.topUserArtists);
-      console.log(this.user.anthem);
       console.log(this.user);
      
     
@@ -57,9 +58,9 @@ export class HomePageComponent implements OnInit {
         let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
         let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
         let artistName = innerArtistDetails[3];
-        let albumName = innerArtistandAlbum[7];
+        let albumName = innerArtistandAlbum[6];
         let songName = innerData[11]; 
-        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[6]);
+        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[5]);
         let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[2]);
         let albumImageUrl = innerAlbumImageDetails[1];
         this.albumImageUrl = albumImageUrl;

@@ -75,6 +75,7 @@
                             {{track?.trackArtist}}
                             <br>
                                
+
                                
                             </div>
                               <img [src] = "albumImageUrl">
@@ -86,11 +87,13 @@
                <hr>
               
               <div class="row">
+                <div class="row">
                 <div class="col-sm-3">
                   <h6 class="mb-0">Favorite Artists</h6>
                 </div>
+              </div>
                 <br>
-                <div *ngFor="let cell of topUserArtists" >
+                <div *ngFor="let cell of topUserArtists" class="col">
                     {{cell[1]}}
                      <br>
                     <img [src]="cell[2]">

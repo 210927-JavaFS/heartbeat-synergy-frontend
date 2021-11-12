@@ -7,6 +7,7 @@ import { TransferService } from '../services/transfer.service';
 import { Artist } from '../models/artist';
 import { ThisReceiver } from '@angular/compiler';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-home-page',
@@ -35,7 +36,7 @@ export class HomePageComponent implements OnInit {
   
   
 
-  constructor(private accountService: AccountService, private transferService:TransferService) 
+  constructor(private accountService: AccountService, private transferService:TransferService, private router:Router) 
   {
     transferService.userChange.subscribe(value => {this.user = value});
   }
@@ -47,10 +48,13 @@ export class HomePageComponent implements OnInit {
   initfunction(){
   }
 
+  editGenres(){
+    this.router.navigate(['genres']);
+  }
+
   connectUserAccount() {
     this.accountService.getAccessToken();  
   }
-
 
   clearResults() {
     this.newReleases = '';

@@ -191,10 +191,6 @@ export class AccountService {
     return this.http.post(this.serverUrl + '/account/'+userId+ '/artist', topArtists)
 
   }
-}
-
-    return this.http.post(this.serverUrl + '/account', sendUser)
-  }
 
   getUserImages(id:number):Observable<UserImage[]>{
     return this.http.get<UserImage[]>(this.serverUrl + '/account/' + id + "/photo");

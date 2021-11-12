@@ -63,7 +63,7 @@
     Click to get token from url
 </button>
      -->
- -->
+
 
 
 
@@ -114,18 +114,21 @@
             </ol>
           </nav>
           <!-- /Breadcrumb -->
-    
+          <input [(ngModel)]="userSearch" id="searchBar">
+          <button (click) = "searchUser()" type="button">Search</button>
+          <br>
+          <br>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <img src="https://balermo.com/wp-content/uploads/2020/04/Pepega-1024x1024.png" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4></h4>
                       <p class="text-secondary mb-1">Age: {{age}}</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <p class="text-secondary mb-1">Username: {{username}}</p>
+                      <p class="text-secondary mb-1">Interested in: {{interest}}</p>
                     </div>
                   </div>
                 </div>
@@ -147,7 +150,7 @@
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{firstName}}
+                      {{firstName}} {{lastName}}
                     </div>
                   </div>
                   <hr>
@@ -161,16 +164,20 @@
                     
 
                   </div>
-                  <hr><div class="row">
+                  <hr>
+                  <div class="row">
                         <div class="col-sm-3">
                           <h6 class="mb-0">Anthem</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <div>
-                                Your anthem is:
+
                                 {{track?.trackName}}
-                                Written by: 
-                                {{track?.trackArtist}}
+                            <br>
+                            By: 
+                            {{track?.trackArtist}}
+                            <br>
+                               
                                 From: 
                                 {{track?.trackAlbum}}
                                
@@ -178,34 +185,27 @@
                               <img [src] = "albumImageUrl">
                                 <br>
                         </div>
-                  <div class="row">
-                   
-                  </div>
-                  <hr>
-                  <hr>
-                </div>
-              </div>
-              <h6 class="d-flex align-items-center mb-3"><i class="material-icons text-info mr-2">Favorite</i>Artists</h6>
-              <div *ngFor="let cell of topUserArtists">
+               
                   
-             
-              <div class="row gutters-sm">
-                <div class="col-sm-6 mb-3">
-                  <div class="card h-100">
-                    <div class="card-body">
-                      
-                      <small>{{cell[1]}}</small>
-                     
-                        <img [src]="cell[2]">
-                      </div>
+                </div>
+               <hr>
+              
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Favorite Artists</h6>
+                </div>
+                <br>
+                <div *ngFor="let cell of topUserArtists" >
+                    {{cell[1]}}
+                     <br>
+                    <img [src]="cell[2]">
+                </div>
+                
+
+              </div>
             
 
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
+</div>
 
             </div>
           </div>

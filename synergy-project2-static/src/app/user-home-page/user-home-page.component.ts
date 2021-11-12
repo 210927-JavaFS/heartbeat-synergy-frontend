@@ -37,7 +37,9 @@ export class HomePageComponent implements OnInit {
   public topUserArtists:any[] = [];
   public topUserGenres:any[] = [];
   public age:string = '';
-  
+  public username:string = '';
+  public lastName:string= '';
+  public interest:string= '';
   constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
   {
     transferService.userChange.subscribe(value => 
@@ -45,7 +47,8 @@ export class HomePageComponent implements OnInit {
     //Values
     this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
     this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
-      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists);
+      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists),
+      this.username=this.user.username, this.lastName=this.user.lastName, this.interest=this.user.filterType;
       console.log(this.topUserArtists);
       console.log(this.user);
      

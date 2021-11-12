@@ -1,0 +1,17 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+    
+        <div class="form-group">
+            <label for="Genres">Genres</label>
+            <div *ngFor="let genre of genreList">
+                <label>
+                    <input type="checkbox"  [value]=genre.genre (change)="onCheckboxChange($event)"/>
+                    {{genre.genre}}
+                </label>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit"[disabled]="!form.valid">Submit</button>
+    </form>
+    </div>
+

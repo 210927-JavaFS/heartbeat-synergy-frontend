@@ -29,8 +29,10 @@ export class HomePageComponent implements OnInit {
   public track:Track|null = null;
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
+
   public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
   public friend:User = new User(0, '','','','','','','','',[],[], '', '', null);
+
   public firstName:string = '';
   public profileDescription = '';
   public anthem:string = '';
@@ -41,10 +43,13 @@ export class HomePageComponent implements OnInit {
   public username:string = '';
   public lastName:string= '';
   public interest:string= '';
+ 
+
   public id:string|null = '';
   public retrievedImage:string="";
 
   constructor(private accountService: AccountService, private router:Router) 
+
   {
     this.id = sessionStorage.getItem('currentUser');
     if(this.id != null)
@@ -94,9 +99,14 @@ export class HomePageComponent implements OnInit {
 
   
 
+  editGenres(){
+    this.router.navigate(['genres']);
+  }
+
   connectUserAccount() {
     this.accountService.getAccessToken();  
   }
+
 
   generateGenres(genres:any):any[] {
     if(genres != undefined){
@@ -110,6 +120,7 @@ export class HomePageComponent implements OnInit {
       let array = ["nothing here yet"];
       return array;
     }
+
   }
 
   generateTopArtists(artists:any):any[] {

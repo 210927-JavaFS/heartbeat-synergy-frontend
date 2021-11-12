@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 
 
@@ -10,14 +11,18 @@ import { AccountService } from '../services/account.service';
 })
 export class MatchPageComponent implements OnInit {
 
+  users: User[] | null = null;
+
   constructor(private as: AccountService, private router:Router) { }
 
   ngOnInit(): void {
+    this.getPotentialMatches();
   }
 
 
   getPotentialMatches(){
-    let potentMatches=this.as.getPotentialMatches();
-    console.log(potentMatches);
+    this.as.getPotentialMatches().subscribe(value=>{
+      this.users=value;
+    });
   }
 }

@@ -5,6 +5,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './user-home-page/user-home-page.component';
 import { RegistrationComponent} from './registration/registration.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
+import { MatchPageComponent } from './match-page/match-page.component';
 
 const routes: Routes = [
   {path: '', component:LoginPageComponent, pathMatch: 'full'},
@@ -12,7 +13,10 @@ const routes: Routes = [
   {path: 'home-page', component: HomePageComponent, pathMatch: 'full'},
 
   {path: 'registration', component: RegistrationComponent, pathMatch: 'full'},
-  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'}
+  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'},
+
+  {path: 'match-page', component: MatchPageComponent, pathMatch: 'full'},
+
 ];
 
 @NgModule({
@@ -24,5 +28,5 @@ export class AppRoutingModule {
  
 }
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent]
 

@@ -145,8 +145,9 @@ export class AccountService {
   
 
   getPotentialMatches(){
+    console.log("in getPotentialMatches")
     let data = sessionStorage.getItem('currentUser');
-    console.log(data);
+    console.log("data: "+data);
     return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/potentials');
   }
 

@@ -44,6 +44,10 @@ export class HomePageComponent implements OnInit {
   public id:string = '';
   constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
   {
+
+    //testing
+    console.log("in user-home-page: "+sessionStorage.getItem('currentUser'));
+
     transferService.userChange.subscribe(value => 
     {
     //Values

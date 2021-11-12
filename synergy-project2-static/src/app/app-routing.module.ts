@@ -4,14 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './user-home-page/user-home-page.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { MatchPageComponent } from './match-page/match-page.component';
 
 const routes: Routes = [
   {path: '', component:LoginPageComponent, pathMatch: 'full'},
 
   {path: 'home-page', component: HomePageComponent, pathMatch: 'full'},
 
-  {path: 'registration', component: RegistrationComponent, pathMatch: 'full'}
+  {path: 'registration', component: RegistrationComponent, pathMatch: 'full'},
 
+  {path: 'match-page', component: MatchPageComponent, pathMatch: 'full'}
 
 
 ];
@@ -26,5 +28,5 @@ export class AppRoutingModule {
 }
 
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, RegistrationComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, RegistrationComponent, MatchPageComponent]
 

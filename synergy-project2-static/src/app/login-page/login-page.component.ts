@@ -14,12 +14,18 @@ export class LoginPageComponent implements OnInit {
   public username: string = '';
   public password: string = ''
   public token:string = '';
-  public user:User = new User(0, '','','','','','','','',[],[], '', '');
+  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
 
 
   constructor(private router: Router, private accountService:AccountService, private transferService:TransferService) { }
 
   ngOnInit(): void {
+    sessionStorage.clear();
+    console.log("token reset: " + sessionStorage.getItem('token'));
+  }
+
+  ngAfterViewInit() {
+    
   }
   
 
@@ -32,20 +38,16 @@ export class LoginPageComponent implements OnInit {
           let userValues:any[]=Object.values(data);
           console.log(userValues);
           this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12]);
-            this.transferService.setId(userValues[0]);
-          this.transferService.setUser(this.user);
-            
+            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);;
+          sessionStorage.setItem('currentUser', this.user.userId.toString());
+          this.accountService.getTokenServ().subscribe(
+            (data: Object) => {
+              this.token = Object.values(data)[0];
+              sessionStorage.setItem('token', this.token);
+              this.router.navigate(['home-page']);
+            });
         }
       )
-      this.transferService.setUsername(this.username);
-      this.transferService.setPassword(this.password);
-      this.accountService.getTokenServ().subscribe(
-        (data: Object) => {
-          this.token = Object.values(data)[0]
-          this.transferService.setToken(this.token);
-        });
-      this.router.navigate(['home-page']);
     }
   }
 

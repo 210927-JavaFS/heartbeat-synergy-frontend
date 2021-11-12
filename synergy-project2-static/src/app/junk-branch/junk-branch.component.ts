@@ -26,7 +26,7 @@ export class JunkBranchComponent implements OnInit {
   public track:Track|null = null;
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
-  public user:User = new User(0, '','','','','','','','',[],[], '', '');
+  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
   public firstName:string = '';
   public profileDescription = '';
   public anthem:string = '';

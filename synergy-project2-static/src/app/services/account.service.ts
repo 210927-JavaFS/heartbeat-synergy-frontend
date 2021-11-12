@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
+import { UserImage } from '../models/user-image';
 
 
 @Injectable({
@@ -183,8 +184,27 @@ export class AccountService {
       "filterType": filterType,
       "userType": userType
   }
-  return this.http.post(this.serverUrl + '/account', sendUser)
-
-    }
+    return this.http.post(this.serverUrl + '/account', sendUser)
   }
+
+  getUserImages(id:number):Observable<UserImage[]>{
+    return this.http.get<UserImage[]>(this.serverUrl + '/account/' + id + "/photo");
+  }
+
+  uploadUserImage(file:File|null, userId:number){
+    if(file===null)return;
+    const uploadImageData = new FormData();
+    uploadImageData.append('image', file, file.name);
+    this.http.post(this.serverUrl+'/account/'+ userId+'/photo', uploadImageData, {observe:'response'})
+    .subscribe((response)=> {
+    if(response.status ===201){
+      console.log("upload success");
+    }
+    else
+      console.log("upload not successful");
+    });
+  }
+}
+
+  
 

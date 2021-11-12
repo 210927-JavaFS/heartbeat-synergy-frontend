@@ -8,9 +8,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { JunkBranchComponent } from './junk-branch/junk-branch.component';
-import { MatchPageComponent } from './match-page/match-page.component';
-
-
+import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +16,7 @@ import { MatchPageComponent } from './match-page/match-page.component';
     routingComponents,
     RegistrationComponent,
     JunkBranchComponent,
-    MatchPageComponent
-    
+    EditProfilePageComponent
   ],
   imports: [
     BrowserModule,

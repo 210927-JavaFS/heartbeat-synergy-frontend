@@ -9,14 +9,12 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { JunkBranchComponent } from './junk-branch/junk-branch.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
-import { PotentialMatchComponent } from './potential-match/potential-match.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     RegistrationComponent,
-    PotentialMatchComponent,
     JunkBranchComponent,
     EditProfilePageComponent
   ],

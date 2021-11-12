@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { Artist } from '../models/artist';
+import { Track } from '../models/track';
 import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
-import { Observable } from 'rxjs';
-import { Track } from '../models/track';
-import { LoginPageComponent } from '../login-page/login-page.component';
 import { TransferService } from '../services/transfer.service';
-import { Artist } from '../models/artist';
-import { ThisReceiver } from '@angular/compiler';
-import { Router } from '@angular/router';
-
 
 @Component({
-  selector: 'app-friends-page',
-  templateUrl: './friends-page.component.html',
-  styleUrls: ['./friends-page.component.css']
+  selector: 'app-junk-branch',
+  templateUrl: './junk-branch.component.html',
+  styleUrls: ['./junk-branch.component.css']
 })
-export class FriendsPageComponent implements OnInit {
+export class JunkBranchComponent implements OnInit {
 
+  
   public token:string = this.transferService.getToken();
   public authToken:string = '';
   public songSearch: string = '';
@@ -38,87 +34,13 @@ export class FriendsPageComponent implements OnInit {
   public topUserArtists:any[] = [];
   public topUserGenres:any[] = [];
   public age:string = '';
-  
-  constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
-  {
-    transferService.userChange.subscribe(value => 
-    {
-    //Values
-    this.user = value, this.firstName=this.user.firstName, this.profileDescription = 
-    this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
-      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists);
-      console.log(this.topUserArtists);
-      console.log(this.user);
-     
-    
-    //Functions
-    this.accountService.getSongServ(this.transferService.token, this.anthem).subscribe(
-      (data: Object) => {
-        let innerData = Object.values(data);
-        let innerArtistandAlbum: any[] = Object.values(innerData[0]);
-        let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
-        let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
-        let artistName = innerArtistDetails[3];
-        let albumName = innerArtistandAlbum[6];
-        let songName = innerData[11]; 
-        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[5]);
-        let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[2]);
-        let albumImageUrl = innerAlbumImageDetails[1];
-        this.albumImageUrl = albumImageUrl;
-        let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
-        this.track = track;
+  public username:string = '';
+  public lastName:string= '';
+  public interest:string= '';
+  constructor(private accountService:AccountService, private transferService:TransferService) { }
 
-      }
-    )}  );
-
-  }
- 
   ngOnInit(): void {
   }
-
-  
-  initfunction(){
-  }
-
-  connectUserAccount() {
-    this.accountService.getAccessToken();  
-  }
-
-  generateGenres(genres:any):any[] {
-    if(genres != undefined){
-    let array:any[] = [];
-    for(let i=0; i<genres.length; i++){
-      
-      array[i]=Object.values(genres[i])[1];
-    }
-    return array;}
-    else{ 
-      let array = ["nothing here yet"];
-      return array;
-    }
-  }
-
-  generateTopArtists(artists:any):any[] {
-    if(artists!=undefined){
-    let array:any[] = [];
-    for(let i=0; i<artists.length; i++){
-      console.log(artists);
-      array[i]=Object.values(artists[i]);
-    }
-    console.log(array);
-    return array;
-  }
-    else{
-      let array = ["nothing here yet"];
-      return array;
-    }
-  }
-
-  searchUser(){
-    this.router.navigate(['potential-match']);
-  }
-
-
 
   getSong(songUrl:string):Track {
     this.accountService.getSongServ(this.transferService.token, songUrl).subscribe(
@@ -218,34 +140,5 @@ export class FriendsPageComponent implements OnInit {
 
 
 
-getGenres(){
-  this.accountService.getGenres(this.token).subscribe(
-   (data:Object)=> {
-     this.genres = JSON.stringify(data);
-     console.log("in getGenres()");
-   }
-  )
- }
-
- getTopArtists(){
-   console.log("inTopArtists "+this.authToken);
-   this.accountService.getTopArtists(this.authToken).subscribe(
-    (data:Object)=> {
-      this.topArtists = JSON.stringify(data);
-      console.log(this.topArtists);
-    }
-   )
-  }
-
-  getTokenFromUrl() {
-    this.authToken = this.accountService.getTokenFromUrl();
-    console.log(this.authToken);
-    this.accountService.getTokenServ().subscribe(
-      (data: Object) => {
-        this.token = Object.values(data)[0]
-        this.transferService.setToken(this.token);
-        console.log(this.token);
-      });
-  }
 
 }

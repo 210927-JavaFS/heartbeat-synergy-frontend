@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PotentialMatchComponent } from './potential-match.component';
+import { JunkBranchComponent } from './junk-branch.component';
 
-describe('PotentialMatchComponent', () => {
-  let component: PotentialMatchComponent;
-  let fixture: ComponentFixture<PotentialMatchComponent>;
+describe('JunkBranchComponent', () => {
+  let component: JunkBranchComponent;
+  let fixture: ComponentFixture<JunkBranchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PotentialMatchComponent ]
+      declarations: [ JunkBranchComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PotentialMatchComponent);
+    fixture = TestBed.createComponent(JunkBranchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

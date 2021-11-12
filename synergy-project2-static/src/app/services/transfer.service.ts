@@ -12,14 +12,23 @@ export class TransferService {
   private password:string = '';
   public token:string = '';
   public user:User = new User(0, '','','','','','','','',[],[], '', '');
+  public friend:User = new User(0, '','','','','','','','',[],[], '', '');
+  public id:string = ''
 
   userChange : Subject<User> = new Subject<User>();
+  friendChange : Subject<User> = new Subject<User>();
 
   constructor() { 
     this.userChange.subscribe((value) => {
       this.user = value;
     })
+    this.friendChange.subscribe((value) => {
+      this.friend = value;
+    })
+   
   }
+
+  
 
   setUsername(username:string){
     this.username=username;
@@ -51,5 +60,22 @@ export class TransferService {
   getUser():User {
     return this.user;
   }
+
+  setFriend(friend:User) {
+    this.userChange.next(friend);
+  }
+
+  getFriend():User {
+    return this.friend;
+  }
+
+  getId():string {
+    return this.id;
+  }
+
+  setId(id:string){
+    this.id=id;
+  }
+
   
 }

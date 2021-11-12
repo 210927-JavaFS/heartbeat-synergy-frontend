@@ -7,8 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { PotentialMatchComponent } from './potential-match/potential-match.component';
-import { FriendsPageComponent } from './friends-page/friends-page.component';
+import { JunkBranchComponent } from './junk-branch/junk-branch.component';
 
 
 
@@ -17,8 +16,7 @@ import { FriendsPageComponent } from './friends-page/friends-page.component';
     AppComponent,
     routingComponents,
     RegistrationComponent,
-    PotentialMatchComponent,
-    FriendsPageComponent
+    JunkBranchComponent
     
   ],
   imports: [

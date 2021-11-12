@@ -3,9 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './user-home-page/user-home-page.component';
+
 import { GenresComponent} from './genres/genres.component';
 
-import { RegistrationComponent } from './registration/registration.component';
+
+import { RegistrationComponent} from './registration/registration.component';
+import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
+
 
 const routes: Routes = [
   {path: '', component:LoginPageComponent, pathMatch: 'full'},
@@ -14,10 +18,13 @@ const routes: Routes = [
 
   {path: 'registration', component: RegistrationComponent, pathMatch: 'full'},
 
+
  {path: 'genres', component: GenresComponent, pathMatch: 'full'}
 
 
 
+
+  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'}
 
 ];
 
@@ -25,11 +32,10 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 }) 
-
+ 
 export class AppRoutingModule {
  
 }
 
-
-export const routingComponents = [HomePageComponent, LoginPageComponent, RegistrationComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent]
 

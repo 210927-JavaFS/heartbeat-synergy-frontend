@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent implements OnInit {
 
-  public token:string = this.transferService.getToken();
+  public token:string|null = '';
   public authToken:string = '';
   public songSearch: string = '';
   public artistSearch: string = '';
@@ -30,8 +30,9 @@ export class HomePageComponent implements OnInit {
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
 
-  public user:User = new User(0, '','','','','','','','',[],[], '', '');
-  public friend:User = new User(0, '','','','','','','','',[],[], '', '');
+  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public friend:User = new User(0, '','','','','','','','',[],[], '', '', null);
+
   public firstName:string = '';
   public profileDescription = '';
   public anthem:string = '';
@@ -42,45 +43,58 @@ export class HomePageComponent implements OnInit {
   public username:string = '';
   public lastName:string= '';
   public interest:string= '';
-  public id:string = '';
-  constructor(private accountService: AccountService, private transferService:TransferService,private router:Router) 
+ 
+
+  public id:string|null = '';
+  public retrievedImage:string="";
+
+  constructor(private accountService: AccountService, private router:Router) 
 
   {
-    transferService.userChange.subscribe(value => 
+    this.id = sessionStorage.getItem('currentUser');
+    if(this.id != null)
     {
-    //Values
-    this.user = value, this.firstName=this.user.firstName, this.id=this.transferService.id; console.log(this.id); this.profileDescription = 
-    this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
-      console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists),
-      this.username=this.user.username, this.lastName=this.user.lastName, this.interest=this.user.filterType;
-      console.log(this.topUserArtists);
-      console.log(this.user);
-     
-    
-    //Functions
-    this.accountService.getSongServ(this.transferService.token, this.anthem).subscribe(
-      (data: Object) => {
-        let innerData = Object.values(data);
-        let innerArtistandAlbum: any[] = Object.values(innerData[0]);
-        let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
-        let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
-        let artistName = innerArtistDetails[3];
-        let albumName = innerArtistandAlbum[6];
-        let songName = innerData[11]; 
-        let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[5]);
-        let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[2]);
-        let albumImageUrl = innerAlbumImageDetails[1];
-        this.albumImageUrl = albumImageUrl;
-        console.log(albumName,albumImageUrl);
-        let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
-        this.track = track;
-
-      }
-    )}  );
-
+      let numId:number = parseInt(this.id);
+      accountService.getUser(numId).subscribe(value =>
+        {
+          this.user = value, this.firstName=this.user.firstName; console.log(this.id); this.profileDescription = 
+          this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
+            console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists),
+            this.username=this.user.username, this.lastName=this.user.lastName, this.interest=this.user.filterType;
+            accountService.getUserImages(numId).subscribe(value=>
+              {
+                this.user.images = value;
+                if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+                  this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+              });
+          
+          this.token = sessionStorage.getItem('token');
+          if(this.token != null)
+          {
+            this.accountService.getSongServ(this.token, this.anthem).subscribe(
+              (data: Object) => {
+                let innerData = Object.values(data);
+                let innerArtistandAlbum: any[] = Object.values(innerData[0]);
+                let innerArtistInfo: any[] = Object.values(innerArtistandAlbum[1]);
+                let innerArtistDetails: any[] = Object.values(innerArtistInfo[0]);
+                let artistName = innerArtistDetails[3];
+                let albumName = innerArtistandAlbum[6];
+                let songName = innerData[11]; 
+                let innerAlbumImageInfo: any[] = Object.values(innerArtistandAlbum[5]);
+                let innerAlbumImageDetails: any[] = Object.values(innerAlbumImageInfo[2]);
+                let albumImageUrl = innerAlbumImageDetails[1];
+                this.albumImageUrl = albumImageUrl;
+                console.log(albumName,albumImageUrl);
+                let track = new Track(this.songId, songName, artistName, albumName, albumImageUrl);
+                this.track = track;
+              }
+            )
+        }});
+    }
   }
  
   ngOnInit(): void {
+
   }
 
   
@@ -132,39 +146,34 @@ export class HomePageComponent implements OnInit {
       let userValues:any[]=Object.values(data);
           console.log(userValues);
           this.friend = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12]);
-          this.transferService.setFriend(this.friend);
-          console.log(this.friend);
+            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
     this.router.navigate(['home-page']);
   })}
 
   goHome(){
-    this.accountService.getUser(parseInt(this.id)).subscribe(
-      (data: Object) => {
-        console.log(data);
-        let userValues:any[]=Object.values(data);
-            console.log(userValues);
-            this.friend = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-              userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12]);
-            this.transferService.setFriend(this.friend);
-            console.log(this.friend);
-      this.router.navigate(['home-page']);
-    })
-    
+    this.router.navigate(['home-page']);  
   }
 
 login(){
   this.router.navigate(['']);
 }
 
+goEdit()
+{
+  this.router.navigate(['edit-profile-page']);
+}
+
   
-getGenres(){
-  this.accountService.getGenres(this.token).subscribe(
-   (data:Object)=> {
-     this.genres = JSON.stringify(data);
-     console.log("in getGenres()");
-   }
-  )
+getGenres()
+{
+  if(this.token != null)
+  {
+    this.accountService.getGenres(this.token).subscribe(
+      (data:Object)=> {
+        this.genres = JSON.stringify(data);
+        console.log("in getGenres()");
+      })
+  }
  }
 
  getTopArtists(){
@@ -179,11 +188,13 @@ getGenres(){
 
   getTokenFromUrl() {
     this.authToken = this.accountService.getTokenFromUrl();
-    console.log(this.authToken);
     this.accountService.getTokenServ().subscribe(
       (data: Object) => {
-        this.token = Object.values(data)[0]
-        this.transferService.setToken(this.token);
+        this.token = Object.values(data)[0];
+        if(this.token != null)
+        {
+          sessionStorage.setItem('token', this.token);
+        }
         console.log(this.token);
       });
   }

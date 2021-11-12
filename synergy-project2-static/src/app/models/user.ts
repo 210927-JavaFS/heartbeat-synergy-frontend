@@ -1,6 +1,6 @@
 export class User {
 
     constructor(public userId:number, public username:string, public password:string, public firstName:string, public lastName:string, 
-        public profileDescription:string, public playlist:string, public anthem:string, 
-        public topArtists:any[], public topGenres:any[]){}
+        public age:any, public profileDescription:string, public playlist:string, public anthem:string, 
+        public topArtists:any[], public topGenres:any[], public filterType:string, public userType:string){}
 }

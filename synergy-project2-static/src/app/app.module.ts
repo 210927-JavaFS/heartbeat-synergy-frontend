@@ -8,6 +8,8 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PotentialMatchComponent } from './potential-match/potential-match.component';
+import { FriendsPageComponent } from './friends-page/friends-page.component';
+import { JunkBranchComponent } from './junk-branch/junk-branch.component';
 
 
 
@@ -16,7 +18,9 @@ import { PotentialMatchComponent } from './potential-match/potential-match.compo
     AppComponent,
     routingComponents,
     RegistrationComponent,
-    PotentialMatchComponent
+    PotentialMatchComponent,
+    FriendsPageComponent,
+    JunkBranchComponent
     
   ],
   imports: [

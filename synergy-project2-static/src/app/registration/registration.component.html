@@ -1,1 +1,23 @@
-<p>registration works!</p>
+<input id="username" [(ngModel)]="username">
+<label for="username">enter username</label>
+<input id="password" [(ngModel)]="password">
+<label for="password">enter username</label>
+<input id="firstName" [(ngModel)]="firstName">
+<label for="firstName">enter your first name</label>
+<input id="lastName" [(ngModel)]="lastName">
+<label for="lastName">enter your last name</label>
+<input id="profileDescription" [(ngModel)]="profileDescription">
+<label for="profileDescription">enter your profileDescription</label>
+<input id="age " [(ngModel)]="age">
+<label for="age">enter your age</label>
+<input id="anthem" [(ngModel)]="anthem">
+<label for="anthem">enter your favorite song</label>
+<input id="favoriteArtist">
+<label for="favoriteArtist">enter your favorite artist</label>
+<input id="favoriteGenre" >
+<label for="favoriteGenre">enter your favorite genre</label>
+<input for="gender" [(ngModel)]="gender">
+<label for="gender">enter your gender</label>
+<input for="preference" [(ngModel)]="preference">
+<label for="preference">enter your gender preference</label>
+<button type="button" (click)="registerUser()">Register</button>

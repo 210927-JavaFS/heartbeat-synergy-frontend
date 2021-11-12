@@ -56,6 +56,7 @@ export class LoginPageComponent implements OnInit {
       (data: Object) => {
         this.token = Object.values(data)[0];
         sessionStorage.setItem('token', this.token);
+        console.log(this.token);
         this.router.navigate(['registration']);
       });
   }

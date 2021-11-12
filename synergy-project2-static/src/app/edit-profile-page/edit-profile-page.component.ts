@@ -38,7 +38,7 @@ export class EditProfilePageComponent implements OnInit {
               this.user.images = value;
               if(this.user?.images?.length != undefined && this.user?.images.length > 0)
                 this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
-            });
+          });
         });
     }
   }
@@ -66,7 +66,18 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   onUpload() {
-    //this.transferService.uploadUserImage(this.selectedFile);
+    if(this.id != null)
+    {
+      let numId:number = parseInt(this.id);
+      this.accountService.uploadUserImage(this.selectedFile, numId)?.subscribe(value=>{
+        this.accountService.getUserImages(numId).subscribe(value=>
+          {
+            this.user.images = value;
+            if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+              this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+        });
+      });    
+    }
   }
 
 }

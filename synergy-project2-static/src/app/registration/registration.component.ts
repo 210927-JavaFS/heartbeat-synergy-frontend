@@ -26,13 +26,19 @@ export class RegistrationComponent implements OnInit {
   public gender:string = '';
   public preference:string = '';
   public token:string = '';
+  public anthemUrl:string = '';
   public genres:any=[];
   genreList: any=[];
+  
   constructor(private accountService: AccountService, private transferService: TransferService,private formBuilder:FormBuilder) {
     this.form = this.formBuilder.group({
       genre: this.formBuilder.array([],[Validators.required])
     })
    }
+
+
+
+
 
   ngOnInit(): void {
     this.getGenres()
@@ -71,34 +77,37 @@ export class RegistrationComponent implements OnInit {
   }
 
   registerUser(){
+    this.searchSong(); 
     this.accountService.createUserServ(this.artistId, this.username, this.password, this.firstName, this.lastName, this.age,
-      this.profileDescription, this.searchSong(this.anthem, ''), this.preference, this.gender).subscribe( (data: Object) => {
+      this.profileDescription, this.anthemUrl, this.preference, this.gender).subscribe( (data: Object) => {
         console.log(data); 
-         
+         console.log(this.anthem);
 
       })
   }
 
-  searchSong(artistSearch:string, songSearch:string):string {
+  getToken() {
     this.accountService.getTokenServ().subscribe(
       (data: Object) => {
         this.token = Object.values(data)[0];
-      
-    this.accountService.searchSongServ(this.token, artistSearch, songSearch).subscribe(
-      (data: Object) => {
-        let innerData: any[] = Object.values(data);
-        let innerInfo: any[] = Object.values(innerData[0]);
-        let innerSongs: any[] = Object.values(innerInfo[1]);
-        let innerSongsInfo: any[] = Object.values(innerSongs[0]);
-        let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
-        let finalUrl = innerSongsInfoUrl[0];
-        let anthem = finalUrl.substring(31, finalUrl.length);
-        console.log(anthem);
-        return anthem;     
-  })
+      console.log(this.token);
 });
-  return "hello";
 }
+searchSong(){
+this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
+  (data: Object) => {
+    let innerData: any[] = Object.values(data);
+    let innerInfo: any[] = Object.values(innerData[0]);
+    let innerSongs: any[] = Object.values(innerInfo[1]);
+    let innerSongsInfo: any[] = Object.values(innerSongs[0]);
+    let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
+    let finalUrl = innerSongsInfoUrl[0];
+    let anthem = finalUrl.substring(31, finalUrl.length);
+    console.log(anthem);
+    this.anthemUrl=anthem;
+    console.log(this.anthemUrl);
+      return(anthem);
+})}
 
 searchArtist(artistName:string):Artist {
   this.accountService.searchArtistServ(this.transferService.token, artistName).subscribe(

@@ -2,25 +2,32 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { AccountService } from './account.service';
 import {Subject} from 'rxjs';
+import { UserImage } from '../models/user-image';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransferService {
-
+  private serverUrl:string = 'http://localhost:8083/data';
   private username:string = '';
   private password:string = '';
   public token:string = '';
-  public user:User = new User(0, '','','','','','','','',[],[], '', '');
-  public friend:User = new User(0, '','','','','','','','',[],[], '', '');
+  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public friend:User = new User(0, '','','','','','','','',[],[], '', '', null);
   public id:string = ''
 
   userChange : Subject<User> = new Subject<User>();
   friendChange : Subject<User> = new Subject<User>();
+  imageChange : Subject<UserImage[]> = new Subject<UserImage[]>();
 
-  constructor() { 
+  public userImage : Observable<UserImage[]>|null = null;
+
+  constructor(private http:HttpClient) { 
     this.userChange.subscribe((value) => {
       this.user = value;
+      //this.updateUserImages();
     })
     this.friendChange.subscribe((value) => {
       this.friend = value;
@@ -76,6 +83,8 @@ export class TransferService {
   setId(id:string){
     this.id=id;
   }
+
+  
 
   
 }

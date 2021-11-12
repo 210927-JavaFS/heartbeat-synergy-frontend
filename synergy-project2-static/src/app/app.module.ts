@@ -12,22 +12,25 @@ import { RegistrationComponent } from './registration/registration.component';
 import { GenresComponent } from './genres/genres.component';
 
 import { JunkBranchComponent } from './junk-branch/junk-branch.component';
-
-
+import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
-    RegistrationComponent,
+
 
 
     GenresComponent,
 
-    JunkBranchComponent
+
 
     
+
+    JunkBranchComponent,
+    EditProfilePageComponent
+
   ],
   imports: [
     BrowserModule,

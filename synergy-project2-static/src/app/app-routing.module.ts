@@ -5,6 +5,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { HomePageComponent } from './user-home-page/user-home-page.component';
 import { FriendsPageComponent } from './friends-page/friends-page.component';
 import { PotentialMatchComponent } from './potential-match/potential-match.component';
+import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
 
 const routes: Routes = [
   {path: '', component:LoginPageComponent, pathMatch: 'full'},
@@ -12,7 +13,9 @@ const routes: Routes = [
 
   {path: 'friends-page', component: FriendsPageComponent, pathMatch: 'full'},
 
-  {path: 'potential-match', component: PotentialMatchComponent, pathMatch: 'full'}
+  {path: 'potential-match', component: PotentialMatchComponent, pathMatch: 'full'},
+
+  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'}
 
 ];
 
@@ -26,5 +29,5 @@ export class AppRoutingModule {
 }
 
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, PotentialMatchComponent, FriendsPageComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, PotentialMatchComponent, FriendsPageComponent, EditProfilePageComponent]
 

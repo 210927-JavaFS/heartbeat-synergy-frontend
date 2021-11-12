@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Artist } from '../models/artist';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
@@ -26,17 +27,18 @@ export class RegistrationComponent implements OnInit {
   public token:string = '';
   public anthemUrl:string = '';
 
-  constructor(private accountService: AccountService, private transferService: TransferService) { }
+  constructor(private accountService: AccountService,  private router:Router) { }
 
   ngOnInit(): void {
   }
 
   registerUser(){
-    this.searchSong(); 
+    console.log(this.token);
+    let url =this.searchSong(); 
     this.accountService.createUserServ(this.artistId, this.username, this.password, this.firstName, this.lastName, this.age,
-      this.profileDescription, this.anthemUrl, this.preference, this.gender).subscribe( (data: Object) => {
+      this.profileDescription, url, this.preference, this.gender).subscribe( (data: Object) => {
         console.log(data); 
-         console.log(this.anthem);
+         console.log(this.anthemUrl);
 
       })
   }
@@ -48,7 +50,8 @@ export class RegistrationComponent implements OnInit {
       console.log(this.token);
 });
 }
-searchSong(){
+
+searchSong():string{
 this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
   (data: Object) => {
     let innerData: any[] = Object.values(data);
@@ -57,15 +60,17 @@ this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
     let innerSongsInfo: any[] = Object.values(innerSongs[0]);
     let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
     let finalUrl = innerSongsInfoUrl[0];
-    let anthem = finalUrl.substring(31, finalUrl.length);
+    let anthem:string = finalUrl.substring(31, finalUrl.length);
     console.log(anthem);
     this.anthemUrl=anthem;
     console.log(this.anthemUrl);
-      return(anthem);
-})}
+    console.log(anthem);
+      return anthem;
+})
+return this.anthemUrl; }
 
 searchArtist(artistName:string):Artist {
-  this.accountService.searchArtistServ(this.transferService.token, artistName).subscribe(
+  this.accountService.searchArtistServ(this.token, artistName).subscribe(
     (data: Object) => {
         console.log(data);
         let innerArtistSearch:any[] = Object.values(data);
@@ -83,6 +88,10 @@ searchArtist(artistName:string):Artist {
        
     })
     return new Artist('','','');
+}
+
+login(){
+  this.router.navigate(['']);
 }
 
 

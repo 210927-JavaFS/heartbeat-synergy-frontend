@@ -42,19 +42,26 @@ export class HomePageComponent implements OnInit {
   public lastName:string= '';
   public interest:string= '';
   public id:string|null = '';
+  public retrievedImage:string="";
+
   constructor(private accountService: AccountService, private router:Router) 
   {
     this.id = sessionStorage.getItem('currentUser');
     if(this.id != null)
     {
-      accountService.getUser(parseInt(this.id)).subscribe(value =>
+      let numId:number = parseInt(this.id);
+      accountService.getUser(numId).subscribe(value =>
         {
           this.user = value, this.firstName=this.user.firstName; console.log(this.id); this.profileDescription = 
           this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
             console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists),
             this.username=this.user.username, this.lastName=this.user.lastName, this.interest=this.user.filterType;
-            console.log(this.topUserArtists);
-            console.log(this.user);
+            accountService.getUserImages(numId).subscribe(value=>
+              {
+                this.user.images = value;
+                if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+                  this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+              });
           
           this.token = sessionStorage.getItem('token');
           if(this.token != null)

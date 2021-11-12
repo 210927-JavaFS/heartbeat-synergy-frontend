@@ -14,7 +14,7 @@ export class EditProfilePageComponent implements OnInit {
   public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
   public age:string = '';
   public firstName:string='';
-  public id:string = '';
+  public id:string|null = '';
   public profileDescription='';
   public lastName:string= '';
   public interest:string= '';
@@ -24,18 +24,23 @@ export class EditProfilePageComponent implements OnInit {
 
   constructor(private accountService: AccountService, private transferService:TransferService, private router:Router) 
   { 
-    transferService.userChange.subscribe(value => 
-      {
-      //Values
-      this.user = value, this.firstName=this.user.firstName, this.id=this.transferService.id; console.log(this.id); this.profileDescription = 
-      this.user.profileDescription, this.age=this.user.age,
-        this.identify=this.user.userType, this.lastName=this.user.lastName, this.interest=this.user.filterType;
-      }
-    );
-    transferService.imageChange.subscribe((value)=>{ 
-      if(this.user?.images?.length != undefined && this.user?.images.length > 0)
-        this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
-    });
+    this.id = sessionStorage.getItem('currentUser');
+    if(this.id != null)
+    {
+      let numID:number = parseInt(this.id);
+      accountService.getUser(numID).subscribe(value =>
+        {
+          this.user = value, this.firstName=this.user.firstName; console.log(this.id); this.profileDescription = 
+          this.user.profileDescription, this.age=this.user.age, this.lastName=this.user.lastName, this.interest=this.user.filterType;
+            console.log(this.user);
+          accountService.getUserImages(numID).subscribe(value=>
+            {
+              this.user.images = value;
+              if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+                this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+            });
+        });
+    }
   }
 
   ngOnInit(): void {
@@ -61,7 +66,7 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   onUpload() {
-    this.transferService.uploadUserImage(this.selectedFile);
+    //this.transferService.uploadUserImage(this.selectedFile);
   }
 
 }

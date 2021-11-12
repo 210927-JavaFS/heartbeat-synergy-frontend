@@ -27,7 +27,7 @@ export class TransferService {
   constructor(private http:HttpClient) { 
     this.userChange.subscribe((value) => {
       this.user = value;
-      this.updateUserImages();
+      //this.updateUserImages();
     })
     this.friendChange.subscribe((value) => {
       this.friend = value;
@@ -84,32 +84,7 @@ export class TransferService {
     this.id=id;
   }
 
-  getUserImages():Observable<UserImage[]>{
-    return this.http.get<UserImage[]>(this.serverUrl + '/account/' + this.user?.userId + "/photo");
-  }
-
-  updateUserImages(){
-    this.userImage = this.getUserImages();
-    this.userImage.subscribe((value) => {
-      if(this.user != null)
-        this.user.images = value;
-      this.imageChange.next(value);});
-  }
-
-  uploadUserImage(file:File|null){
-    if(file===null)return;
-    const uploadImageData = new FormData();
-    uploadImageData.append('image', file, file.name);
-    this.http.post(this.serverUrl+'/account/'+this.user?.userId+'/photo', uploadImageData, {observe:'response'})
-    .subscribe((response)=> {
-    if(response.status ===201){
-      console.log("upload success");
-      this.updateUserImages();
-    }
-    else
-      console.log("upload not successful");
-    });
-  }
+  
 
   
 }

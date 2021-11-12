@@ -1,6 +1,21 @@
+<head>
+    <style>
+        div.scroll {
+            margin:4px, 4px;
+            padding:4px;
+            width: 500px;
+            height: 110px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align:justify;
+        }
+    </style>
+</head>
 <div class="container">
+
+
     <form [formGroup]="form" (ngSubmit)="submit()">
-    
+        <div class = "scroll">
         <div class="form-group">
             <label for="Genres">Genres</label>
             <div *ngFor="let genre of genreList">
@@ -10,7 +25,7 @@
                 </label>
             </div>
         </div>
-
+    </div>
         <button class="btn btn-primary" type="submit"[disabled]="!form.valid">Submit</button>
     </form>
     </div>

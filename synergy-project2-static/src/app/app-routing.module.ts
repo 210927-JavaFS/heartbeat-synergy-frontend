@@ -19,10 +19,7 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent, pathMatch: 'full'},
 
 
- {path: 'genres', component: GenresComponent, pathMatch: 'full'}
-
-
-
+ {path: 'genres', component: GenresComponent, pathMatch: 'full'},
 
   {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'}
 

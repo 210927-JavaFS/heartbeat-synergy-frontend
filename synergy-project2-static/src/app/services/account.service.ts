@@ -191,10 +191,6 @@ export class AccountService {
     return this.http.post(this.serverUrl + '/account/'+userId+ '/artist', topArtists)
 
   }
-}
-
-    return this.http.post(this.serverUrl + '/account', sendUser)
-  }
 
   getUserImages(id:number):Observable<UserImage[]>{
     return this.http.get<UserImage[]>(this.serverUrl + '/account/' + id + "/photo");
@@ -204,14 +200,7 @@ export class AccountService {
     if(file===null)return;
     const uploadImageData = new FormData();
     uploadImageData.append('image', file, file.name);
-    this.http.post(this.serverUrl+'/account/'+ userId+'/photo', uploadImageData, {observe:'response'})
-    .subscribe((response)=> {
-    if(response.status ===201){
-      console.log("upload success");
-    }
-    else
-      console.log("upload not successful");
-    });
+    return this.http.post(this.serverUrl+'/account/'+ userId+'/photo', uploadImageData, {observe:'response'});
   }
 }
 

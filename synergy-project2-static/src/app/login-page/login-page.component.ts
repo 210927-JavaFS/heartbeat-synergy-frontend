@@ -33,6 +33,7 @@ export class LoginPageComponent implements OnInit {
           console.log(userValues);
           this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
             userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12]);
+            this.transferService.setId(userValues[0]);
           this.transferService.setUser(this.user);
             
         }

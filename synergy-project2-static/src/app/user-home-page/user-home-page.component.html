@@ -1,106 +1,3 @@
-<!-- <div>
-    Welcome to your homepage {{firstName}}
-</div>
-
-<!-- <button type="button" (click)="getArtist()">test Button</button> -->
-
-<!-- <br>
-<input [(ngModel)]="userSearch" id="searchBar">
-<label for = "searchBar">Search for another user</label>
-<button (click) = "searchUser()" type="button">Search</button>
-<br>
-<div>
-   Profile status: 
-</div>
-<div>
-{{profileDescription}}
-</div>
-<br>
-<div>
-    Your top artists are:
-
-</div>
-<div *ngFor="let cell of topUserArtists">
-  artist name:
-    {{cell[1]}}
-    <br>
-    <img [src]= "cell[2]">
-</div>
-  
-    <br>
-    <div>
-        Your top genres are:
-    </div>
-<div *ngFor="let cell of topUserGenres"> 
-    {{cell}}
-</div>
-    
-    <br>
-<div>
-    Your anthem is:
-    {{track?.trackName}}
-    Written by: 
-    {{track?.trackArtist}}
-    From: 
-    {{track?.trackAlbum}}
-   
-</div>
-  <img [src] = "albumImageUrl">
-    <br>
-<div>
-    Your matches are:
-</div>
-
-<br>
-
-<button (click)="connectUserAccount()" type="button">
-    Click to get implicit access token
-</button>
-    
-
-
-<button (click)="getTokenFromUrl()" type="button">
-    Click to get token from url
-</button>
-     -->
-
-
-
-
-<!-- 
-<label for="artistSearch">search for an artist</label>
-<input [(ngModel)]="getArtistSearch" id="artistInput">
-<button (click) = "searchArtist()" type="button"> 
-    search a specific artist
-</button>
-
-
-<label for="songInput">song name</label>
-<input [(ngModel)]="songSearch" id="songInput">
-<label for="artistInput">artist name</label>
-<input [(ngModel)] = "artistSearch" id="albumInput"> 
-
-
-<button (click) = "searchSong()" type="button">
-    Get info about this song:
-</button>
-
-<div>
-    Information about this song:
-    artist name: 
-    {{track?.trackArtist}}
-    album name: 
-    {{track?.trackAlbum}}
-    song name: 
-    {{track?.trackName}}
-   album image: 
-</div>
-<img [src] = "albumImageUrl">
-<br> -->
-
-<!-- <button (click) = "getTopArtists()"> 
-    click to get 5 top artists
-</button> -->
 
 <div class="container">
     <div class="main-body">
@@ -108,9 +5,9 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Login</a></li>
-              <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Friend Profile</li>
+              <li class="breadcrumb-item"><button (click)="login()">Logout</button></li>
+              <li class="breadcrumb-item"><button (click)="goHome()">Home</button></li>
+              <li class="breadcrumb-item"><button (click)="goHome()">Edit Account</button></li>
             </ol>
           </nav>
           <!-- /Breadcrumb -->
@@ -178,8 +75,6 @@
                             {{track?.trackArtist}}
                             <br>
                                
-                                From: 
-                                {{track?.trackAlbum}}
                                
                             </div>
                               <img [src] = "albumImageUrl">

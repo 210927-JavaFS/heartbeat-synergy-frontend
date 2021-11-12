@@ -152,4 +152,31 @@ export class AccountService {
    return this.http.post(this.serverUrl + '/login', user)
     
   }
-}
+
+  createUserServ(id:string,username:string,password:string,firstName:string,lastName:string,age:string,profileDescription:string,anthem:string,filterType:string,userType:string):Observable<any> {
+    let sendUser = {
+      "id": id,
+      "username": username,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "age": parseInt(age),
+      "profileDescription": profileDescription,
+      "playlist": null,
+      "anthem": anthem,
+      "topArtists": [
+          {
+            
+          }
+      ],
+      "topGenres": [
+        
+      ],
+      "filterType": filterType,
+      "userType": userType
+  }
+  return this.http.post(this.serverUrl + '/account', sendUser)
+
+    }
+  }
+

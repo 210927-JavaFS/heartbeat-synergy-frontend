@@ -1,91 +1,126 @@
-<div>
-    Welcome to your homepage {{username}}
-</div>
 
-<br>
-<input [(ngModel)]="userSearch" id="searchBar">
-<label for = "searchBar">Search for another user</label>
-<br>
-<div>
-    Your profile description:
-</div>
-<button type="button">Edit your profile info</button>
-<br>
-<div>
-    Your top artists are:
-</div>
-    <button type="button">Edit your top artists</button>
-    <br>
+
+
+
+
+    
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><button (click)="login()">Logout</button></li>
+              <li class="breadcrumb-item"><button (click)="goHome()">Home</button></li>
+              <li class="breadcrumb-item"><button (click)="goHome()">Edit Account</button></li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+          <input [(ngModel)]="userSearch" id="searchBar">
+          <button (click) = "searchUser()" type="button">Search</button>
+          <br>
+          <br>
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://balermo.com/wp-content/uploads/2020/04/Pepega-1024x1024.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4></h4>
+                      <p class="text-secondary mb-1">Age: {{age}}</p>
+                      <p class="text-secondary mb-1">Username: {{username}}</p>
+                      <p class="text-secondary mb-1">Interested in: {{interest}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"><h6>Favorite Genres: </h6></li>
+                  <div *ngFor="let cell of topUserGenres" >
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">{{cell}}</li>
+                  </div>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Full Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{firstName}} {{lastName}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Profile Description</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{profileDescription}}
+                    </div>
+                    
+
+                  </div>
+                  <hr>
+                  <div class="row">
+                        <div class="col-sm-3">
+                          <h6 class="mb-0">Anthem</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <div>
+
+                                {{track?.trackName}}
+                            <br>
+                            By: 
+                            {{track?.trackArtist}}
+                            <br>
+                               
+
+                               
+                            </div>
+                              <img [src] = "albumImageUrl">
+                                <br>
+                        </div>
+               
+                  
+                </div>
+               <hr>
+              
+              <div class="row">
+                <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Favorite Artists</h6>
+                </div>
+              </div>
+                <br>
+                <div *ngFor="let cell of topUserArtists" class="col">
+                    {{cell[1]}}
+                     <br>
+                    <img [src]="cell[2]">
+                </div>
+                
 <div> 
     Your top genres are:
 </div>
     <button (click)="editGenres()" type ="button">Edit your top genres</button>
     <br>
-<div>
-    Your anthem is:
-</div>
-    <button type ="button">Edit your anthem</button>
-    <br>
-<div>
-    Your friends are:
-</div>
-<button (click)="connectUserAccount()" type="button">
-    Click to get implicit access token
-</button>
-    
-<div>
-    The value of your access token is in url
+
+<div class="container">
+    <div class="main-body">
+              </div>
+            
+
 </div>
 
-<button (click)="getTokenFromUrl()" type="button">
-    Click to get token from url
-</button>
-    
-<div>
-    The value of your access token isin console
-</div>
+            </div>
+          </div>
 
-
-
-
-<label for="artistSearch">search for an artist</label>
-<input [(ngModel)]="getArtistSearch" id="artistInput">
-<button (click) = "searchArtist()" type="button"> 
-    search a specific artist
-</button>
-
-
-<label for="songInput">song name</label>
-<input [(ngModel)]="songSearch" id="songInput">
-<label for="artistInput">artist name</label>
-<input [(ngModel)] = "artistSearch" id="albumInput"> 
-
-
-<button (click) = "searchSong()" type="button">
-    Get info about this song:
-</button>
-
-<div>
-    Information about this song:
-    artist name: 
-    {{track?.trackArtist}}
-    album name: 
-    {{track?.trackAlbum}}
-    song name: 
-    {{track?.trackName}}
-   album image: 
-</div>
-<img [src] = "albumImageUrl">
-<br>
-
-<button (click) = "getTopArtists()"> 
-    click to get 5 top artists
-</button>
+        </div>
+    </div>
 
 
 
 
 
-<button (click) = "clearResults()"> 
-    click this to clear results
-</button>

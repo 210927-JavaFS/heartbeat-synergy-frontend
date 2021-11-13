@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Artist } from '../models/artist';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
+import {FormBuilder, FormGroup, FormControl, Validators, FormArray} from'@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -10,6 +11,7 @@ import { TransferService } from '../services/transfer.service';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
+  form:FormGroup;
 
   public username:string = '';
   public password:string = '';
@@ -26,10 +28,53 @@ export class RegistrationComponent implements OnInit {
   public preference:string = '';
   public token:any = '';
   public anthemUrl:string = '';
+  public genres:any=[];
+  genreList: any=[];
+  
+  constructor(private accountService: AccountService, private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
+    this.form = this.formBuilder.group({
+      genre: this.formBuilder.array([],[Validators.required])
+    })
+   }
 
-  constructor(private accountService: AccountService,  private router:Router) { }
+
+
+
 
   ngOnInit(): void {
+    this.getGenres()
+    this.form = this.formBuilder.group({
+      genre:this.formBuilder.array([])
+    });
+  }
+
+  getGenres(){
+    this.accountService.getGenres(this.token).subscribe(
+     (data:Object)=> {
+       this.genres=data
+       console.log(this.genres.genres.length)
+       for(let i = 0; i<this.genres.genres.length;i++){
+         this.genreList.push({id:i,genre:this.genres.genres[i]})
+       }
+     }
+    )
+   }
+
+   onCheckboxChange(e: any) {
+    const genre: FormArray = this.form.get('genre') as FormArray;
+      if (e.target.checked) {
+        genre.push(new FormControl(e.target.value));
+      } else {
+         const index = genre.controls.findIndex(x => x.value === e.target.value);
+         genre.removeAt(index);
+      }
+    
+    
+  }
+
+  submit(){
+
+    console.log(this.form.value);
   }
 
   registerUser(){

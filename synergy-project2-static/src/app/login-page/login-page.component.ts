@@ -52,6 +52,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   register(){
+
     this.accountService.getTokenServ().subscribe(
       (data: Object) => {
         this.token = Object.values(data)[0];
@@ -59,6 +60,7 @@ export class LoginPageComponent implements OnInit {
         console.log(this.token);
         this.router.navigate(['registration']);
       });
+
   }
 
 

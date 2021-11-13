@@ -77,6 +77,25 @@
 
                                 </div>
                             </div>
+
+                            <div class="container">
+
+
+                                <form [formGroup]="form" (ngSubmit)="submit()">
+                                    <div class = "scroll">
+                                    <div class="form-group">
+                                        <label for="Genres">Genres</label>
+                                        <div *ngFor="let genre of genreList">
+                                            <label>
+                                                <input type="checkbox"  [value]=genre.genre (change)="onCheckboxChange($event)"/>
+                                                {{genre.genre}}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <button class="btn btn-primary" type="submit"[disabled]="!form.valid">Submit</button>
+                                </form>
+                                </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label for="gender">Gender:</label>

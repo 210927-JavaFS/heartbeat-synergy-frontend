@@ -12,12 +12,11 @@ import { User } from '../models/user';
 export class GenresComponent implements OnInit {
   form:FormGroup;
   public token:string = this.transferService.getToken();
-  public genres:string='';
+  public genres:any=[];
+  public id:number = 1;
   
-  //public genres:any[] = this.accountService.getGenres(this.token);
-  genreList: any=[
-    {id:1, genre:'Rock'},{id:2,genre:'Roll'}
-  ];
+//this.id = sessionStorage.getItem("currentUser");
+  genreList: any=[];
 
   constructor(private formBuilder:FormBuilder,private accountService: AccountService, private transferService:TransferService) {
     this.form = this.formBuilder.group({
@@ -28,17 +27,18 @@ export class GenresComponent implements OnInit {
    getGenres(){
     this.accountService.getGenres(this.token).subscribe(
      (data:Object)=> {
-       this.genres = JSON.stringify(data);
-       console.log(this.genres)
-       for(let i = 0; i<this.genres.length;i++){
-         this.genreList.push({id:i,genre:this.genres[i]})
+       this.genres=data
+       console.log(this.genres.genres.length)
+       for(let i = 0; i<this.genres.genres.length;i++){
+         this.genreList.push({id:i,genre:this.genres.genres[i]})
        }
      }
     )
    }
 
+   
+
    onCheckboxChange(e: any) {
-     this.getGenres()
     const genre: FormArray = this.form.get('genre') as FormArray;
       if (e.target.checked) {
         genre.push(new FormControl(e.target.value));
@@ -56,6 +56,7 @@ export class GenresComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getGenres()
     this.form = this.formBuilder.group({
       genre:this.formBuilder.array([])
     });

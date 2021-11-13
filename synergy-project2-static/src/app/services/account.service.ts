@@ -119,6 +119,10 @@ export class AccountService {
     return this.http.get(this.requestUrl + 'recommendations/available-genre-seeds', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
   }
 
+  postGenres(userId:any, genres:any):Observable<Object>{
+    return this.http.post(this.serverUrl +"/account/"+ userId +"/genres", genres);
+  }
+
   // need to fix this - needs to take the OAUTH token
   getTopArtists(authToken: string): Observable<Object> {
     return this.http.get(this.requestUrl + 'me/top/artists', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + authToken, 'Content-Type': 'application/json', "Accept": "application/json" }) })
@@ -163,7 +167,7 @@ export class AccountService {
 
   }
 
-  createUserServ(id: string, username: string, password: string, firstName: string, lastName: string, age: string, profileDescription: string, anthem: string, filterType: string, userType: string): Observable<any> {
+  createUserServ(id: string, username: string, password: string, firstName: string, lastName: string, age: string, profileDescription: string, anthem: string, filterType: string, userType: string, userGenres: any[]): Observable<any> {
     let sendUser = {
       "id": id,
       "username": username,
@@ -179,9 +183,7 @@ export class AccountService {
 
         }
       ],
-      "topGenres": [
-
-      ],
+      "topGenres": userGenres,
       "filterType": filterType,
       "userType": userType
     }

@@ -45,8 +45,9 @@ export class AccountService {
 
   //*******************************************Spotify API Functions******************************** */
 
-  getTokenServ(): Observable<Object> {
 
+  getTokenServ():Observable<Object> {
+    
     return this.http.post(this.tokenUrl, this.authTokenBody, { headers: this.authTokenHeaders }) as Observable<Object>;
 
   }
@@ -144,6 +145,14 @@ export class AccountService {
 
   getUser(id: number) {
     return this.http.get<User>('http://localhost:8083/data/account/' + id);
+  }
+  
+
+  getPotentialMatches(){
+    console.log("in getPotentialMatches")
+    let data = sessionStorage.getItem('currentUser');
+    console.log("data: "+data);
+    return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/potentials');
   }
 
 

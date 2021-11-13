@@ -1,0 +1,27 @@
+<!-- profile pic, username, first name, age -->
+
+<div class="container">
+    <div class="row">
+      <div *ngFor="let user of users">
+      <div class="col-md-6 col-xl-4">                       
+        <div class="card">
+          <div class="card-body">
+              <div *ngIf="user.images; else elseBlock">
+                <img [src]= "getUserImage(user)" alt="Admin" class="rounded-circle" width="150">
+              </div>
+              <ng-template #elseBlock>
+                <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150">
+              </ng-template> 
+
+
+              <div class="media-body overflow-hidden">
+                <h5 class="card-text mb-0">{{ user.username }}</h5>
+                <p class="card-text text-uppercase text-muted">{{ user.firstName }}</p>
+                <p class="card-text">Age: {{ user.age }}</p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

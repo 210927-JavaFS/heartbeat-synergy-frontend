@@ -9,6 +9,7 @@ import { GenresComponent} from './genres/genres.component';
 
 import { RegistrationComponent} from './registration/registration.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
+import { MatchPageComponent } from './match-page/match-page.component';
 
 
 const routes: Routes = [
@@ -17,11 +18,9 @@ const routes: Routes = [
   {path: 'home-page', component: HomePageComponent, pathMatch: 'full'},
 
   {path: 'registration', component: RegistrationComponent, pathMatch: 'full'},
+  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'},
 
-
- {path: 'genres', component: GenresComponent, pathMatch: 'full'},
-
-  {path: 'edit-profile-page', component: EditProfilePageComponent, pathMatch: 'full'}
+  {path: 'match-page', component: MatchPageComponent, pathMatch: 'full'},
 
 ];
 
@@ -34,5 +33,5 @@ export class AppRoutingModule {
  
 }
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent]
 

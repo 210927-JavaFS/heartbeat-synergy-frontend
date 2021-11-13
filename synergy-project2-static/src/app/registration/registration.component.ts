@@ -34,7 +34,9 @@ export class RegistrationComponent implements OnInit {
   public genreList: any=[];
   public genre: any=[];
   
-  constructor( private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
+
+  constructor(private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
+
     this.form = this.formBuilder.group({
       genre: this.formBuilder.array([],[Validators.required])
     })

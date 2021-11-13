@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Artist } from '../models/artist';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
 import {FormBuilder, FormGroup, FormControl, Validators, FormArray} from'@angular/forms';
 import { getLocaleTimeFormat } from '@angular/common';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-registration',
@@ -27,13 +28,13 @@ export class RegistrationComponent implements OnInit {
   public favoriteGenre:string = '';
   public gender:string = '';
   public preference:string = '';
-  public token: any= sessionStorage.getItem("token");
+  public token:any = '';
   public anthemUrl:string = '';
   public genres:any=[];
   public genreList: any=[];
   public genre: any=[];
   
-  constructor(private router: Router,private accountService: AccountService, private transferService: TransferService,private formBuilder:FormBuilder) {
+  constructor( private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
     this.form = this.formBuilder.group({
       genre: this.formBuilder.array([],[Validators.required])
     })
@@ -145,27 +146,27 @@ export class RegistrationComponent implements OnInit {
         this.token = Object.values(data)[0];
 });
 }
-searchSong(){
-  if(this.token!=null){
-    this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
-      (data: Object) => {
-        let innerData: any[] = Object.values(data);
-        let innerInfo: any[] = Object.values(innerData[0]);
-        let innerSongs: any[] = Object.values(innerInfo[1]);
-        let innerSongsInfo: any[] = Object.values(innerSongs[0]);
-        let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
-        let finalUrl = innerSongsInfoUrl[0];
-        let anthem = finalUrl.substring(31, finalUrl.length);
-        console.log(anthem);
-        this.anthemUrl=anthem;
-        console.log(this.anthemUrl);
-          return(anthem);
-    })
-  }
-}
+
+searchSong():string{
+this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
+  (data: Object) => {
+    let innerData: any[] = Object.values(data);
+    let innerInfo: any[] = Object.values(innerData[0]);
+    let innerSongs: any[] = Object.values(innerInfo[1]);
+    let innerSongsInfo: any[] = Object.values(innerSongs[0]);
+    let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
+    let finalUrl = innerSongsInfoUrl[0];
+    let anthem:string = finalUrl.substring(31, finalUrl.length);
+    console.log(anthem);
+    this.anthemUrl=anthem;
+    console.log(this.anthemUrl);
+    console.log(anthem);
+      return anthem;
+})
+return this.anthemUrl; }
 
 searchArtist(artistName:string):Artist {
-  this.accountService.searchArtistServ(this.transferService.token, artistName).subscribe(
+  this.accountService.searchArtistServ(this.token, artistName).subscribe(
     (data: Object) => {
         console.log(data);
         let innerArtistSearch:any[] = Object.values(data);
@@ -183,6 +184,10 @@ searchArtist(artistName:string):Artist {
        
     })
     return new Artist('','','');
+}
+
+login(){
+  this.router.navigate(['']);
 }
 
 

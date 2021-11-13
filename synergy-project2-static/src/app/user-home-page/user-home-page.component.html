@@ -4,14 +4,17 @@
 
 
     
-          <!-- Breadcrumb -->
+          <!-- Breadcrumb -->  <div class="container">
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
+              <br>
               <li class="breadcrumb-item"><button (click)="login()">Logout</button></li>
               <li class="breadcrumb-item"><button (click)="goHome()">Home</button></li>
               <li class="breadcrumb-item"><button (click)="goEdit()">Edit Account</button></li>
             </ol>
           </nav>
+        
+    <div class="main-body" >
           <!-- /Breadcrumb -->
           <input [(ngModel)]="userSearch" id="searchBar">
           <button (click) = "searchUser()" type="button">Search</button>
@@ -112,8 +115,7 @@
     <button (click)="editGenres()" type ="button">Edit your top genres</button>
     <br>
 
-<div class="container">
-    <div class="main-body">
+
               </div>
             
 

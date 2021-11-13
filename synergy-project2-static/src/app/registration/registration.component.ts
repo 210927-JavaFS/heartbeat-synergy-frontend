@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit {
   public favoriteGenre:string = '';
   public gender:string = '';
   public preference:string = '';
-  public token:any = '';
+  public token:any = sessionStorage.getItem("token");
   public anthemUrl:string = '';
   public genres:any=[];
   public genreList: any=[];

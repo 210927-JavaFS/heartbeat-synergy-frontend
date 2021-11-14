@@ -1,6 +1,8 @@
 <!-- profile pic, username, first name, age -->
 <body>
-<nav aria-label="breadcrumb" class="main-breadcrumb">
+
+
+<div class="container"><nav aria-label="breadcrumb" class="main-breadcrumb">
   <ol class="breadcrumb">
     <br>
    
@@ -10,11 +12,9 @@
     <li ><button class="btn btn-primary btn-lg" (click)="goEdit()">Edit Account</button></li>
   </ol>
 </nav>
-
-<div class="container">
     <div class="row">
-      <div *ngFor="let user of users">
-      <div class="col-md-6 col-xl-4">                       
+      <div *ngFor="let user of users" class="d-flex justify-content-center">
+      <div class="col-md-6 col-xl-4 " >                       
         <div class="card">
           <div class="card-body">
               <div *ngIf="user.images?.length != 0; else elseBlock">

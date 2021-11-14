@@ -3,6 +3,7 @@ body {
     background-blend-mode: overlay;
     height: 100vh;
     overflow: auto;
+    color: black;
   }
 .main-body {
     padding: 15px;

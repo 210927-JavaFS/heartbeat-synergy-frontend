@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
@@ -56,7 +57,7 @@ export class EditProfilePageComponent implements OnInit {
           if(this.user?.images?.length != undefined && this.user?.images.length > 0)
             this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
         });
-        this.token = sessionStorage.getItem('token');
+
         if(this.token != null && this.anthem != "")
         {
           this.accountService.getSongServ(this.token, this.anthem).subscribe(
@@ -74,7 +75,8 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getGenres()
+    this.token = sessionStorage.getItem('token');
+    this.getGenres();
     this.form = this.formBuilder.group({
       genre:this.formBuilder.array([])
     });
@@ -84,15 +86,14 @@ export class EditProfilePageComponent implements OnInit {
     if(this.token!=null){
       this.accountService.getGenres(this.token).subscribe(
         (data:Object)=> {
-          this.genres=data
+          this.genres=data;
           console.log(this.genres.genres.length)
           for(let i = 0; i<this.genres.genres.length;i++){
             this.genreList.push({id:i,genre:this.genres.genres[i]})
           }
         }
        )
-    }
-   
+    }  
    }
 
    onCheckboxChange(e: any) {
@@ -107,25 +108,22 @@ export class EditProfilePageComponent implements OnInit {
     
   }
 
-   submit(){
-    let genreArray = [];
+   genreSubmit():Observable<Object>|null{
+    let genreArray: { id: number; genre: any; }[] = [];
     let userId = this.id;
+    console.log(genreArray);
     console.log(userId)
     console.log(sessionStorage.getItem("userId"))
     let genres=this.form.value;
   
+    if(this.genres.length == 0) return null;
     for(let i = 0; i<genres.genre.length;i++){
       genreArray.push({"id":i,"genre":genres.genre[i]})
     }
                  
     console.log(genreArray);
                  
-    this.accountService.postGenres(userId, genreArray).subscribe(
-      (data:Object)=>{
-        console.log(data)
-      }
-    )
-               
+    return this.accountService.postGenres(userId, genreArray);
   }
 
   login(){
@@ -162,7 +160,6 @@ export class EditProfilePageComponent implements OnInit {
   confirmEdit()
   {
     this.token=sessionStorage.getItem("token");
-    console.log("is token here: " + this.token);
     if(this.token != "" && this.anthem != "")
     {
       this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
@@ -198,7 +195,14 @@ export class EditProfilePageComponent implements OnInit {
             let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
             let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
             let innerArtistImage = innerArtistImageArray[1];
-            this.accountService.createUserTopArtistServ(this.user.userId.toString(), innerArtistId,innerArtistName,innerArtistImage).subscribe(()=>{this.router.navigate(['home-page']);});
+            this.accountService.createUserTopArtistServ(this.user.userId.toString(), innerArtistId,innerArtistName,innerArtistImage).subscribe(()=>{
+              let genreObservable:Observable<Object>|null = this.genreSubmit();
+              if(genreObservable != null)
+              {
+                genreObservable.subscribe(()=>{this.router.navigate(['home-page']);});
+              }
+
+            });
         });
     }
     else

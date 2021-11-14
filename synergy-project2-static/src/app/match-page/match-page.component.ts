@@ -14,30 +14,27 @@ export class MatchPageComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private as: AccountService, private router:Router) { }
+  constructor(private as: AccountService, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
-    this.getPotentialMatches();
+    // this.getPotentialMatches();
+    this.getConsensualMatches();
   }
 
-
-
-
-  getPotentialMatches(){
-    this.as.getPotentialMatches().subscribe(value=>{
-      
+  getConsensualMatches() {
+    this.as.getConsensualMatches().subscribe(value => {
       value.forEach(element => {
-        let userValues:any[] = Object.values(element);
-        let newUser:User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
+        let userValues: any[] = Object.values(element);
+        let newUser: User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
           userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
         this.users?.push(newUser);
-        
-        this.as.getUserImages(newUser.userId).subscribe(value=>{
+
+        this.as.getUserImages(newUser.userId).subscribe(value => {
           newUser.images = [];
-          
+
           value.forEach(element => {
-            let imageValues:any[] = Object.values(element);
-            let newUserImage:UserImage = new UserImage(imageValues[0], imageValues[1], imageValues[2], imageValues[3]);
+            let imageValues: any[] = Object.values(element);
+            let newUserImage: UserImage = new UserImage(imageValues[0], imageValues[1], imageValues[2], imageValues[3]);
             newUser.images?.push(newUserImage);
           })
         });
@@ -45,21 +42,44 @@ export class MatchPageComponent implements OnInit {
     });
   }
 
-  getUserImage(user:User){
+  // getPotentialMatches(){
+  //   this.as.getPotentialMatches().subscribe(value=>{
+
+  //     value.forEach(element => {
+  //       let userValues:any[] = Object.values(element);
+  //       let newUser:User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
+  //         userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+  //       this.users?.push(newUser);
+
+  //       this.as.getUserImages(newUser.userId).subscribe(value=>{
+  //         newUser.images = [];
+
+  //         value.forEach(element => {
+  //           let imageValues:any[] = Object.values(element);
+  //           let newUserImage:UserImage = new UserImage(imageValues[0], imageValues[1], imageValues[2], imageValues[3]);
+  //           newUser.images?.push(newUserImage);
+  //         })
+  //       });
+  //     });
+  //   });
+  // }
+
+
+
+  getUserImage(user: User) {
     if (user.images != null && user.images.length != 0) {
-      return user.images[0].getImageString();  
+      return user.images[0].getImageString();
     }
     return "";
   }
 
-  login(){
+  login() {
     sessionStorage.clear();
     this.router.navigate(['']);
   }
 
-  goHome()
-  {
-    this.router.navigate(['home-page']);  
+  goHome() {
+    this.router.navigate(['home-page']);
   }
 
   goEdit()

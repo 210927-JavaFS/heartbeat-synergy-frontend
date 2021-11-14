@@ -10,6 +10,7 @@ import { GenresComponent} from './genres/genres.component';
 import { RegistrationComponent} from './registration/registration.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
 import { MatchPageComponent } from './match-page/match-page.component';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
 
   {path: 'match-page', component: MatchPageComponent, pathMatch: 'full'},
 
+  {path: 'user-profile-page', component: UserProfilePageComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -33,5 +35,5 @@ export class AppRoutingModule {
  
 }
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent, UserProfilePageComponent]
 

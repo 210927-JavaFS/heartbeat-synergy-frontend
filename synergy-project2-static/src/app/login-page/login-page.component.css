@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #74d5e4;
+    background-color: #BFD1FD;
     height: 100vh;
   }
   #login .container #login-row #login-column #login-box {
@@ -9,7 +9,8 @@ body {
     max-width: 600px;
     height: 320px;
     border: 1px solid #9C9C9C;
-    background-color: #EAEAEA;
+   background-color: 	#f8f8ff;
+   
   }
   #login .container #login-row #login-column #login-box #login-form {
     padding: 20px;
@@ -17,3 +18,15 @@ body {
   #login .container #login-row #login-column #login-box #login-form #register-link {
     margin-top: -85px;
   }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}

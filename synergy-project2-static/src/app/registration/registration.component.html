@@ -1,166 +1,171 @@
 <head>
     <style>
         div.scroll {
-            margin:4px, 4px;
-            padding:4px;
+            margin: 4px, 4px;
+            padding: 4px;
             width: 500px;
             height: 110px;
             overflow-x: hidden;
             overflow-y: auto;
-            text-align:justify;
+            text-align: justify;
         }
     </style>
 </head>
-<nav aria-label="breadcrumb" class="main-breadcrumb">
-    <ol class="breadcrumb">
-      <br>
-      <li class="breadcrumb-item"><button (click)="login()">Login Page</button></li>
-     
-    </ol>
-  </nav>
-<section class="vh-100 gradient-custom">
-    <div class="container py-5 h-50">
-        <div class="row justify-content-center align-items-center h-50">
-            <div class="col-12 col-lg-9 col-xl-7">
-                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
-                    <div class="card-body p-4 p-md-5">
-                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration</h3>
-                        <div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
+<body>
 
-                                    <label for="firstName" class="form-label">Username: </label>
-                                    <input id="firstName" [(ngModel)]="username" class="form-control form-control-lg" required>
+    <section class="vh-100 gradient-custom">
+        <div class="container py-5 h-50">
+            <div class="row justify-content-center align-items-center h-50">
+                <div class="col-12 col-lg-9 col-xl-7">
+                   
+                    <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                        <div class="card-body p-4 p-md-5">
+                            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration</h3>
+                            <div>
 
-                                </div>
-                                <div class="col-md-6 mb-4">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
 
-                                    <label for="firstName" class="form-label">Password: </label>
-                                    <input id="firstName" [(ngModel)]="password" class="form-control form-control-lg">
+                                        <label for="firstName" class="form-label">Username: </label>
+                                        <input id="firstName" [(ngModel)]="username"
+                                            class="form-control form-control-lg" required>
 
-                                </div>
-                            </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
 
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
+                                        <label for="firstName" class="form-label">Password: </label>
+                                        <input id="firstName" [(ngModel)]="password"
+                                            class="form-control form-control-lg">
 
-                                    <label for="firstName" class="form-label">First name: </label>
-                                    <input id="firstName" [(ngModel)]="firstName" class="form-control form-control-lg">
-
-                                </div>
-                                <div class="col-md-6 mb-4">
-
-                                    <label for="firstName" class="form-label">Last name: </label>
-                                    <input id="firstName" [(ngModel)]="lastName" class="form-control form-control-lg">
-
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-sm-2">
-                                    <label for="firstName" class="form-label">Age: </label>
-                                    <input id="firstName" [(ngModel)]="age"
-                                        class="form-control form-control-lg col-sm-3">
-
-
-                                </div>
-                                <div class="col-sm-4"></div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="firstName" class="form-label">Profile Description: </label>
-                                    <textarea id="firstName" [(ngModel)]="profileDescription"
-                                        class="form-control form-control-lg"></textarea>
-
-
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label for="firstName" class="form-label">Favorite Song: </label>
-                                    <input id="firstName" [(ngModel)]="anthem"
-                                        class="form-control form-control-lg col-sm-3">
-
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="firstName" class="form-label">Favorite Artist: </label>
-                                    <input id="firstName" [(ngModel)]="artistName"
-                                        class="form-control form-control-lg col-sm-3">
-
-                                </div>
-                            </div>
-
-                            <div class="container">
-
-                                <label for="Genres">Genres</label>
-                                <form [formGroup]="form" (ngSubmit)="submit()">
-                                    <div class = "scroll">
-                                    <div class="form-group">
-                                        <div *ngFor="let genre of genreList">
-                                            <label>
-                                                <input type="checkbox"  [value]=genre.genre (change)="onCheckboxChange($event)"/>
-                                                {{genre.genre}}
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
-                                </form>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="firstName" class="form-label">First name: </label>
+                                        <input id="firstName" [(ngModel)]="firstName"
+                                            class="form-control form-control-lg">
+
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+
+                                        <label for="firstName" class="form-label">Last name: </label>
+                                        <input id="firstName" [(ngModel)]="lastName"
+                                            class="form-control form-control-lg">
+
+                                    </div>
                                 </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <label for="gender">Gender:</label>
-                                    <br>
-                                    <label>
-                                        He
-                                        <input for="gender" [(ngModel)]="gender" type="radio" value="MEN" name="gender">
-                                    </label>
-                                    <br>
-                                    <label>
-                                        She
-                                        <input for="gender" [(ngModel)]="gender" type="radio" value="WOMEN"
-                                            name="gender">
-                                    </label>
-                                    <br>
-                                    <label>
-                                        They
-                                        <input for="gender" [(ngModel)]="gender" type="radio" value="EVERYONE"
-                                            name="gender">
-                                    </label>
+
+                                <div class="row">
+
+                                    <div class="col-sm-2">
+                                        <label for="firstName" class="form-label">Age: </label>
+                                        <input id="firstName" [(ngModel)]="age"
+                                            class="form-control form-control-lg col-sm-3">
+
+
+                                    </div>
+                                    <div class="col-sm-4"></div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="firstName" class="form-label">Profile Description: </label>
+                                        <textarea id="firstName" [(ngModel)]="profileDescription"
+                                            class="form-control form-control-lg"></textarea>
+
+
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="preference">Gender Preference:</label>
-                                    <br>
-                                    <label>
-                                        Male
-                                        <input for="preference" [(ngModel)]="preference" type="radio" value="MEN"
-                                            name="preference">
-                                    </label>
-                                    <br>
-                                    <label>
-                                        Female
-                                        <input for="preference" [(ngModel)]="preference" type="radio" value="WOMEN"
-                                            name="preference">
-                                    </label>
-                                    <br>
-                                    <label>
-                                        All
-                                        <input for="preference" [(ngModel)]="preference" type="radio" value="EVERYONE"
-                                            name="preference">
-                                    </label>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="firstName" class="form-label">Favorite Song: </label>
+                                        <input id="firstName" [(ngModel)]="anthem"
+                                            class="form-control form-control-lg col-sm-3">
+
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="firstName" class="form-label">Favorite Artist: </label>
+                                        <input id="firstName" [(ngModel)]="artistName"
+                                            class="form-control form-control-lg col-sm-3">
+
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    
+                                    <label for="Genres">Favorite Genres:</label>
+                                    <form [formGroup]="form" (ngSubmit)="submit()" class="form-control scroll">
+                                        
+                                                <div *ngFor="let genre of genreList">
+                                                    <label>
+                                                        <input type="checkbox" [value]=genre.genre
+                                                            (change)="onCheckboxChange($event)" />
+                                                        {{genre.genre}}
+                                                    </label>
+                                                
+                                            </div>
+                                        
+                                    </form>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label for="gender">Gender:</label>
+                                        <br>
+                                        <label>
+                                            He
+                                            <input for="gender" [(ngModel)]="gender" type="radio" value="MEN"
+                                                name="gender">
+                                        </label>
+                                        <br>
+                                        <label>
+                                            She
+                                            <input for="gender" [(ngModel)]="gender" type="radio" value="WOMEN"
+                                                name="gender">
+                                        </label>
+                                        <br>
+                                        <label>
+                                            They
+                                            <input for="gender" [(ngModel)]="gender" type="radio" value="EVERYONE"
+                                                name="gender">
+                                        </label>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label for="preference">Gender Preference:</label>
+                                        <br>
+                                        <label>
+                                            Male
+                                            <input for="preference" [(ngModel)]="preference" type="radio" value="MEN"
+                                                name="preference">
+                                        </label>
+                                        <br>
+                                        <label>
+                                            Female
+                                            <input for="preference" [(ngModel)]="preference" type="radio" value="WOMEN"
+                                                name="preference">
+                                        </label>
+                                        <br>
+                                        <label>
+                                            All
+                                            <input for="preference" [(ngModel)]="preference" type="radio"
+                                                value="EVERYONE" name="preference">
+                                        </label>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="row">
+                                    
+                                    <button class="btn btn-primary btn-lg col-md-3" (click)="login()">Login Page</button>
+                                        <div class="col-md-5"></div>   <input class="btn btn-primary btn-lg col-md-3 " type="submit"
+                                        (click)="submit(); registerUser()" value="submit" />
+                                
                                 </div>
                             </div>
-
-
-                            <div class="mt-4 pt-2">
-                                <input class="btn btn-primary btn-lg" type="submit" (click)="submit(); registerUser()"
-                                    value="submit" />
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>

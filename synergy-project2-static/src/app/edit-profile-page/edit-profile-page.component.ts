@@ -86,8 +86,24 @@ export class EditProfilePageComponent implements OnInit {
   }
 
    submit(){
-
-    console.log(this.form.value);
+    let genreArray = [];
+    let userId = this.id;
+    console.log(userId)
+    console.log(sessionStorage.getItem("userId"))
+    let genres=this.form.value;
+  
+    for(let i = 0; i<genres.genre.length;i++){
+      genreArray.push({"id":i,"genre":genres.genre[i]})
+    }
+                 
+    console.log(genreArray);
+                 
+    this.accountService.postGenres(userId, genreArray).subscribe(
+      (data:Object)=>{
+        console.log(data)
+      }
+    )
+               
   }
 
   login(){

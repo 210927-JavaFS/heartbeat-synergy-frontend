@@ -1,10 +1,4 @@
-
-
-
-
-
-    
-          <!-- Breadcrumb -->  <div class="container">
+            <!-- Breadcrumb -->  <div class="container">
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <br>
@@ -16,26 +10,21 @@
         
     <div class="main-body" >
           <!-- /Breadcrumb -->
-          <input [(ngModel)]="userSearch" id="searchBar">
-          <button (click) = "searchUser()" type="button">Search</button>
-          <br>
-          <br>
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
                     <div *ngIf="retrievedImage; else elseBlock">
-                        <img [src]="retrievedImage" alt="Admin" class="rounded-circle" width="150">
+                        <img [src]="retrievedImage" alt="Admin" class="rounded-circle" width="150" height = "150">
                     </div>
                     <ng-template #elseBlock>
-                        <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150">
+                        <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150" height = "150">
                     </ng-template>
                     <div class="mt-3">
                       <h4></h4>
                       <p class="text-secondary mb-1">Age: {{age}}</p>
                       <p class="text-secondary mb-1">Username: {{username}}</p>
-                      <p class="text-secondary mb-1">Interested in: {{interest}}</p>
                     </div>
                   </div>
                 </div>
@@ -54,10 +43,10 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Full Name</h6>
+                      <h6 class="mb-0">Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{firstName}} {{lastName}}
+                      {{firstName}}
                     </div>
                   </div>
                   <hr>
@@ -98,27 +87,19 @@
               
               <div class="row">
                 <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Favorite Artists</h6>
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Favorite Artists</h6>
+                  </div>
                 </div>
-              </div>
                 <br>
                 <div *ngFor="let cell of topUserArtists" class="col">
                     {{cell[1]}}
                      <br>
-                    <img [src]="cell[2]">
+                    <img [src]="cell[2]" width = "300" height = "300">
                 </div>
-                
-<div> 
-    Your top genres are:
-</div>
-    <button (click)="editGenres()" type ="button">Edit your top genres</button>
-    <br>
-
-
               </div>
             
-
+                </div>
 </div>
 
             </div>

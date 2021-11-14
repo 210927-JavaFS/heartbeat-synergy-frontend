@@ -11,7 +11,6 @@ import { TransferService } from '../services/transfer.service';
   styleUrls: ['./edit-profile-page.component.css']
 })
 export class EditProfilePageComponent implements OnInit {
-
   public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
   public age:string = '';
   public firstName:string='';
@@ -40,8 +39,8 @@ export class EditProfilePageComponent implements OnInit {
 
   constructor(private accountService: AccountService, private router:Router, private formBuilder:FormBuilder) 
   { 
-    
     this.id = sessionStorage.getItem('currentUser');
+    
     if(this.id != null)
     {
       let numID:number = parseInt(this.id);
@@ -75,6 +74,58 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getGenres()
+    this.form = this.formBuilder.group({
+      genre:this.formBuilder.array([])
+    });
+  }
+
+  getGenres(){
+    if(this.token!=null){
+      this.accountService.getGenres(this.token).subscribe(
+        (data:Object)=> {
+          this.genres=data
+          console.log(this.genres.genres.length)
+          for(let i = 0; i<this.genres.genres.length;i++){
+            this.genreList.push({id:i,genre:this.genres.genres[i]})
+          }
+        }
+       )
+    }
+   
+   }
+
+   onCheckboxChange(e: any) {
+    const genre: FormArray = this.form.get('genre') as FormArray;
+      if (e.target.checked) {
+        genre.push(new FormControl(e.target.value));
+      } else {
+         const index = genre.controls.findIndex(x => x.value === e.target.value);
+         genre.removeAt(index);
+      }
+    
+    
+  }
+
+   submit(){
+    let genreArray = [];
+    let userId = this.id;
+    console.log(userId)
+    console.log(sessionStorage.getItem("userId"))
+    let genres=this.form.value;
+  
+    for(let i = 0; i<genres.genre.length;i++){
+      genreArray.push({"id":i,"genre":genres.genre[i]})
+    }
+                 
+    console.log(genreArray);
+                 
+    this.accountService.postGenres(userId, genreArray).subscribe(
+      (data:Object)=>{
+        console.log(data)
+      }
+    )
+               
   }
 
   login(){
@@ -108,21 +159,6 @@ export class EditProfilePageComponent implements OnInit {
     }
   }
 
-  onCheckboxChange(e: any) {
-    const genre: FormArray = this.form.get('genre') as FormArray;
-      if (e.target.checked) {
-        genre.push(new FormControl(e.target.value));
-      } else {
-         const index = genre.controls.findIndex(x => x.value === e.target.value);
-         genre.removeAt(index);
-      }  
-  }
-
-  submit(){
-
-    console.log(this.form.value);
-  }
-
   confirmEdit()
   {
     this.token=sessionStorage.getItem("token");
@@ -139,13 +175,13 @@ export class EditProfilePageComponent implements OnInit {
           let finalUrl = innerSongsInfoUrl[0];
           this.anthem = finalUrl.substring(31, finalUrl.length);
           this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
-          this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender).subscribe(()=>{
+          this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres).subscribe(()=>{
         });
       });
     }
     else{
       this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
-        this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender);
+        this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres);
     }
     if(this.artistName != "")
     {

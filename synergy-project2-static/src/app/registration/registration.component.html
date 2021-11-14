@@ -1,3 +1,16 @@
+<head>
+    <style>
+        div.scroll {
+            margin:4px, 4px;
+            padding:4px;
+            width: 500px;
+            height: 110px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            text-align:justify;
+        }
+    </style>
+</head>
 <nav aria-label="breadcrumb" class="main-breadcrumb">
     <ol class="breadcrumb">
       <br>
@@ -80,11 +93,10 @@
 
                             <div class="container">
 
-
+                                <label for="Genres">Genres</label>
                                 <form [formGroup]="form" (ngSubmit)="submit()">
                                     <div class = "scroll">
                                     <div class="form-group">
-                                        <label for="Genres">Genres</label>
                                         <div *ngFor="let genre of genreList">
                                             <label>
                                                 <input type="checkbox"  [value]=genre.genre (change)="onCheckboxChange($event)"/>
@@ -93,7 +105,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <button class="btn btn-primary" type="submit"[disabled]="!form.valid">Submit</button>
                                 </form>
                                 </div>
                             <div class="row">
@@ -142,7 +153,7 @@
 
 
                             <div class="mt-4 pt-2">
-                                <input class="btn btn-primary btn-lg" type="submit" (click)="registerUser()"
+                                <input class="btn btn-primary btn-lg" type="submit" (click)="submit(); registerUser()"
                                     value="submit" />
                             </div>
 

@@ -6,13 +6,13 @@
       <div class="col-md-6 col-xl-4">                       
         <div class="card">
           <div class="card-body">
-            <div class="media align-items-center"><span style="background-image: url(https://bootdey.com/img/Content/avatar/avatar1.png)" class="avatar avatar-xl mr-3"></span>
+                <img [src]= "getUserImage(user)" alt="Admin" class="rounded-circle" width="150">
+
               <div class="media-body overflow-hidden">
                 <h5 class="card-text mb-0">{{ user.username }}</h5>
                 <p class="card-text text-uppercase text-muted">{{ user.firstName }}</p>
                 <p class="card-text">Age: {{ user.age }}</p>
               </div>
-            </div><a href="#" class="tile-link"></a>
           </div>
         </div>
       </div>

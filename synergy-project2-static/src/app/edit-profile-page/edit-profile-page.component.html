@@ -1,3 +1,4 @@
+
 <head>
     <style>
         div.scroll {
@@ -11,20 +12,23 @@
         }
     </style>
 </head>
+
+<body>
+
 <div class="container">
     <div class="main-body">
     
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><button (click)="login()">Logout</button></li>
-            <li class="breadcrumb-item"><button (click)="goHome()">Home</button></li>
-            <li class="breadcrumb-item"><button (click)="goEdit()">Edit Account</button></li>
-        </ol>
-        </nav>
+            <ol class="breadcrumb">
+              <br>
+              <li ><button class="btn btn-primary btn-lg" (click)="login()">Logout</button>
+              <li ><button class="btn btn-primary btn-lg" (click)="goHome()">Home</button>
+              <li ><button class="btn btn-primary btn-lg" (click)="goEdit()">Edit Account</button>
+            </ol>
+          </nav>
         <!-- /Breadcrumb -->
-        <br>
-        <br>
+        
         <section class="vh-100 gradient-custom">
             <div class="container py-5 h-50">
                 <div class="row justify-content-center align-items-center h-50">
@@ -148,6 +152,5 @@
             </div>
         </section>
     </div>
-    <div class="container">
-</div>
+   
 

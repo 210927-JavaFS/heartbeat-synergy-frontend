@@ -146,6 +146,11 @@ export class EditProfilePageComponent implements OnInit {
     this.router.navigate(['edit-profile-page']);
   }
 
+  goDiscover()
+{
+  this.router.navigate(['match-page']);
+}
+
   onFileChange(event:any)
   {
     this.selectedFile = event.target.files[0];

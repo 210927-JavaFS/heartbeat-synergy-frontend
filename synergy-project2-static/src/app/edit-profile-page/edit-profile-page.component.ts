@@ -75,6 +75,7 @@ export class EditProfilePageComponent implements OnInit {
 
    onCheckboxChange(e: any) {
     const genre: FormArray = this.form.get('genre') as FormArray;
+    
       if (e.target.checked) {
         genre.push(new FormControl(e.target.value));
       } else {

@@ -21,6 +21,8 @@ export class MatchPageComponent implements OnInit {
   }
 
 
+
+
   getPotentialMatches(){
     this.as.getPotentialMatches().subscribe(value=>{
       
@@ -60,21 +62,25 @@ export class MatchPageComponent implements OnInit {
     this.router.navigate(['home-page']);  
   }
 
-  goProfile(user:User)
-  {
-    sessionStorage.setItem('viewedUser', user.userId.toString());
-    this.router.navigate(['user-profile-page']);
-  }
-
   goEdit()
   {
     this.router.navigate(['edit-profile-page']);
   }
-  
 
   goDiscover()
   {
+    this.router.navigate(['discover-page']);
+  }
+
+  goMatches()
+  {
     this.router.navigate(['match-page']);
+  }
+
+  goProfile(user:User)
+  {
+    sessionStorage.setItem('viewedUser', user.userId.toString());
+    this.router.navigate(['user-profile-page']);
   }
 }
 

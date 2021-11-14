@@ -11,6 +11,7 @@ import { RegistrationComponent} from './registration/registration.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
 import { MatchPageComponent } from './match-page/match-page.component';
 import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
+import { DiscoverPageComponent } from './discover-page/discover-page.component';
 
 
 const routes: Routes = [
@@ -23,7 +24,8 @@ const routes: Routes = [
 
   {path: 'match-page', component: MatchPageComponent, pathMatch: 'full'},
 
-  {path: 'user-profile-page', component: UserProfilePageComponent, pathMatch: 'full'}
+  {path: 'user-profile-page', component: UserProfilePageComponent, pathMatch: 'full'},
+  {path: 'discover-page', component: DiscoverPageComponent, pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -35,5 +37,5 @@ export class AppRoutingModule {
  
 }
 
-export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent, UserProfilePageComponent]
+export const routingComponents = [HomePageComponent, LoginPageComponent, EditProfilePageComponent, RegistrationComponent, MatchPageComponent, UserProfilePageComponent, DiscoverPageComponent]
 

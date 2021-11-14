@@ -147,9 +147,14 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   goDiscover()
-{
-  this.router.navigate(['match-page']);
-}
+  {
+    this.router.navigate(['discover-page']);
+  }
+
+  goMatches()
+  {
+    this.router.navigate(['match-page']);
+  }
 
   onFileChange(event:any)
   {

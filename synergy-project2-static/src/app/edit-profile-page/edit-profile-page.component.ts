@@ -37,6 +37,10 @@ export class EditProfilePageComponent implements OnInit {
   public anthemUrl:string = '';
   public genres:any=[];
   genreList: any=[];
+  public usernameError:boolean = false;
+  public passwordError:boolean = false;
+  public firstNameError:boolean = false;
+  public Error:boolean = false;
 
   constructor(private accountService: AccountService, private router:Router, private formBuilder:FormBuilder) 
   { 

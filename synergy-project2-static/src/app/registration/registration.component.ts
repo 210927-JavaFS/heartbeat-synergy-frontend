@@ -33,6 +33,16 @@ export class RegistrationComponent implements OnInit {
   public genres:any=[];
   public genreList: any=[];
   public genre: any=[];
+  public usernameError:boolean = false;
+  public passwordError:boolean = false;
+  public firstNameError:boolean = false;
+  public lastNameError:boolean = false;
+  public songError:boolean= false;
+  public artistError:boolean= false;
+  public genderError:boolean = false;
+  public preferenceError:boolean = false;
+  public error:boolean = false;
+
   
 
   constructor(private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
@@ -97,7 +107,17 @@ export class RegistrationComponent implements OnInit {
         let innerSongsInfo: any[] = Object.values(innerSongs[0]);
         let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
         let finalUrl = innerSongsInfoUrl[0];
-        let anthem:string = finalUrl.substring(31, finalUrl.length);          
+        let anthem:string = finalUrl.substring(31, finalUrl.length);
+        if(this.username == ''){this.usernameError=true};
+        if(this.password == ''){this.passwordError=true};
+        if(this.firstName == ''){this.firstNameError=true};
+        if(this.lastName == ''){this.lastNameError=true};
+        if(this.anthem == ''){this.songError=true};
+        if(this.artistName== ''){this.artistError=true};
+        if(this.gender == ''){this.genderError=true};
+        if(this.preference == ''){this.preferenceError=true};
+
+                  
         this.accountService.createUserServ(this.artistId, this.username, this.password, this.firstName, this.lastName, this.age,
       this.profileDescription, anthem, this.preference, this.gender, this.genre).subscribe( (data: Object) => {
         let userValues:any = Object.values(data);
@@ -127,7 +147,8 @@ export class RegistrationComponent implements OnInit {
                  
                  this.accountService.postGenres(userId, genreArray).subscribe(
                    (data:Object)=>{
-                      console.log(data)
+                      console.log(data);
+                      this.router.navigate(['']);
                    }
                  )
                }
@@ -135,7 +156,8 @@ export class RegistrationComponent implements OnInit {
           })
 
     })
-      })
+      }, 
+        error=> {console.log("error"); this.error=true;})
       
   }
   

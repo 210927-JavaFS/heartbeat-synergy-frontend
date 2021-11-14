@@ -149,9 +149,15 @@ export class AccountService {
   
 
   getPotentialMatches(){
-    console.log("in getPotentialMatches")
+    console.log("in getPotentialMatches");
     let data = sessionStorage.getItem('currentUser');
     return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/potentials');
+  }
+
+  getConsensualMatches(){
+    console.log("in getConsensualMatches");
+    let data = sessionStorage.getItem('currentUser');
+    return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/match/success');
   }
 
 

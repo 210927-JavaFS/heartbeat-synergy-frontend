@@ -108,6 +108,7 @@ export class EditProfilePageComponent implements OnInit {
     
   }
 
+
    genreSubmit():Observable<Object>|null{
     let genreArray: { id: number; genre: any; }[] = [];
     let userId = this.id;
@@ -116,7 +117,9 @@ export class EditProfilePageComponent implements OnInit {
     console.log(sessionStorage.getItem("userId"))
     let genres=this.form.value;
   
+
     if(this.genres.length == 0) return null;
+
     for(let i = 0; i<genres.genre.length;i++){
       genreArray.push({"id":i,"genre":genres.genre[i]})
     }
@@ -124,6 +127,7 @@ export class EditProfilePageComponent implements OnInit {
     console.log(genreArray);
                  
     return this.accountService.postGenres(userId, genreArray);
+
   }
 
   login(){

@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AccountService } from '../services/account.service';
-import { Track } from '../models/track';
-import { LoginPageComponent } from '../login-page/login-page.component';
-import { TransferService } from '../services/transfer.service';
-import { Artist } from '../models/artist';
-import { ThisReceiver } from '@angular/compiler';
-import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { Artist } from '../models/artist';
+import { Track } from '../models/track';
+import { User } from '../models/user';
+import { UserImage } from '../models/user-image';
+import { AccountService } from '../services/account.service';
 
 @Component({
-  selector: 'app-user-home-page',
-  templateUrl: './user-home-page.component.html',
-  styleUrls: ['./user-home-page.component.css']
+  selector: 'app-user-profile-page',
+  templateUrl: './user-profile-page.component.html',
+  styleUrls: ['./user-profile-page.component.css']
 })
-export class HomePageComponent implements OnInit {
+export class UserProfilePageComponent implements OnInit {
 
   public token:string|null = '';
   public authToken:string = '';
@@ -46,22 +43,22 @@ export class HomePageComponent implements OnInit {
  
 
   public id:string|null = '';
+  public currentUserId:string|null = '';
   public retrievedImage:string="";
 
   constructor(private accountService: AccountService, private router:Router) 
-
   {
-    this.id = sessionStorage.getItem('currentUser');
+    this.id = sessionStorage.getItem('viewedUser');
     if(this.id != null)
     {
       let numId:number = parseInt(this.id);
-      accountService.getUser(numId).subscribe(value =>
+      accountService.getUser(numId).subscribe((value: User) =>
         {
           this.user = value, this.firstName=this.user.firstName; console.log(this.id); this.profileDescription = 
           this.user.profileDescription, this.age=this.user.age, this.anthem=this.user.anthem, this.topUserGenres=this.generateGenres(this.user.topGenres),
             console.log(this.topUserGenres), this,this.topUserArtists=this.generateTopArtists(this.user.topArtists),
             this.username=this.user.username, this.lastName=this.user.lastName, this.interest=this.user.filterType;
-            accountService.getUserImages(numId).subscribe(value=>
+            accountService.getUserImages(numId).subscribe((value: UserImage[] | null)=>
               {
                 this.user.images = value;
                 if(this.user?.images?.length != undefined && this.user?.images.length > 0)
@@ -191,8 +188,4 @@ goDiscover()
         console.log(this.token);
       });
   }
-
 }
-
-
-

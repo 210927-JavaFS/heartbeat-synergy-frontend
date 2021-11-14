@@ -1,4 +1,13 @@
 <!-- profile pic, username, first name, age -->
+<nav aria-label="breadcrumb" class="main-breadcrumb">
+  <ol class="breadcrumb">
+    <br>
+    <li class="breadcrumb-item"><button (click)="login()">Logout</button></li>
+    <li class="breadcrumb-item"><button (click)="goHome()">Home</button></li>
+    <li class="breadcrumb-item"><button (click)="goDiscover()">Discover profiles</button></li>
+    <li class="breadcrumb-item"><button (click)="goEdit()">Edit Account</button></li>
+  </ol>
+</nav>
 
 <div class="container">
     <div class="row">
@@ -6,12 +15,17 @@
       <div class="col-md-6 col-xl-4">                       
         <div class="card">
           <div class="card-body">
-                <img [src]= "getUserImage(user)" alt="Admin" class="rounded-circle" width="150">
-
+              <div *ngIf="user.images?.length != 0; else elseBlock">
+                <img [src]= "getUserImage(user)" alt="Admin" class="rounded-circle" width="150" height = "150">
+              </div>
+              <ng-template #elseBlock>
+                <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150" height = "150">
+              </ng-template> 
               <div class="media-body overflow-hidden">
                 <h5 class="card-text mb-0">{{ user.username }}</h5>
                 <p class="card-text text-uppercase text-muted">{{ user.firstName }}</p>
                 <p class="card-text">Age: {{ user.age }}</p>
+                <input class="btn btn-secondary" type="submit" (click)="goProfile(user)" value="View profile"/>
               </div>
           </div>
         </div>

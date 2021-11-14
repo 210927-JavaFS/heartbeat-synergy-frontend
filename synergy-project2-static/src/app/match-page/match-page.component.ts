@@ -44,10 +44,37 @@ export class MatchPageComponent implements OnInit {
   }
 
   getUserImage(user:User){
-    if (user.images!=null) {
+    if (user.images != null && user.images.length != 0) {
       return user.images[0].getImageString();  
     }
     return "";
+  }
+
+  login(){
+    sessionStorage.clear();
+    this.router.navigate(['']);
+  }
+
+  goHome()
+  {
+    this.router.navigate(['home-page']);  
+  }
+
+  goProfile(user:User)
+  {
+    sessionStorage.setItem('viewedUser', user.userId.toString());
+    this.router.navigate(['user-profile-page']);
+  }
+
+  goEdit()
+  {
+    this.router.navigate(['edit-profile-page']);
+  }
+  
+
+  goDiscover()
+  {
+    this.router.navigate(['match-page']);
   }
 }
 

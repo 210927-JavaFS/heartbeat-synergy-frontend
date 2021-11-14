@@ -182,7 +182,7 @@ export class AccountService {
 
         }
       ],
-      "topGenres": userGenres,
+      "topGenres": [],
       "filterType": filterType,
       "userType": userType
     }

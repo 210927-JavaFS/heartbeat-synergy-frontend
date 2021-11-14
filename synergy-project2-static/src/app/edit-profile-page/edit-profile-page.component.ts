@@ -132,6 +132,7 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   login(){
+    sessionStorage.clear();
     this.router.navigate(['']);
   }
 

@@ -20,8 +20,6 @@ export class LoginPageComponent implements OnInit {
   constructor(private router: Router, private accountService:AccountService, private transferService:TransferService) { }
 
   ngOnInit(): void {
-    sessionStorage.clear();
-    console.log("token reset: " + sessionStorage.getItem('token'));
   }
 
   ngAfterViewInit() {

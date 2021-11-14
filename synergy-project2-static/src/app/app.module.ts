@@ -13,6 +13,7 @@ import { GenresComponent } from './genres/genres.component';
 
 import { JunkBranchComponent } from './junk-branch/junk-branch.component';
 import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.component';
+import { UserProfilePageComponent } from './user-profile-page/user-profile-page.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { EditProfilePageComponent } from './edit-profile-page/edit-profile-page.
     
 
     JunkBranchComponent,
-    EditProfilePageComponent
+    EditProfilePageComponent,
+    UserProfilePageComponent
 
   ],
   imports: [

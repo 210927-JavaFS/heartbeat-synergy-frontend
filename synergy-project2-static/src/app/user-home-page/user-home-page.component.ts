@@ -163,19 +163,6 @@ goEdit()
   this.router.navigate(['edit-profile-page']);
 }
 
-  
-getGenres()
-{
-  if(this.token != null)
-  {
-    this.accountService.getGenres(this.token).subscribe(
-      (data:Object)=> {
-        this.genres = JSON.stringify(data);
-        console.log("in getGenres()");
-      })
-  }
- }
-
  getTopArtists(){
    console.log("inTopArtists "+this.authToken);
    this.accountService.getTopArtists(this.authToken).subscribe(

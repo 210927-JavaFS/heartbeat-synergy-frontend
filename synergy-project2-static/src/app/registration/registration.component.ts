@@ -112,10 +112,7 @@ export class RegistrationComponent implements OnInit {
                (data:Object)=> {
                  console.log(data);
                }
-             )
-              
-             
-             
+             )      
           })
 
     })

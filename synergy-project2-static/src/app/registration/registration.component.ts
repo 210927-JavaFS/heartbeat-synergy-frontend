@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
   public genderError:boolean = false;
   public preferenceError:boolean = false;
   public error:boolean = false;
-
+  public stringError:boolean = false;
   
 
   constructor(private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
@@ -109,7 +109,13 @@ export class RegistrationComponent implements OnInit {
     this.genderError=false;
     this.preferenceError=false;
     this.error=false;
-   
+    console.log(!(Number.isNaN(parseFloat(this.firstName))));
+
+    if(!(Number.isNaN(parseFloat(this.firstName)))){this.stringError=true; 
+      this.errorCheck(); console.log("inside number checker") }
+    else if(!(Number.isNaN(parseFloat(this.lastName)))){this.stringError=true; 
+        this.errorCheck(); console.log("inside number checker") }
+    else{
     
 
     this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
@@ -121,18 +127,7 @@ export class RegistrationComponent implements OnInit {
         let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
         let finalUrl = innerSongsInfoUrl[0];
         let anthem:string = finalUrl.substring(31, finalUrl.length);
-        if(this.username == ''){this.usernameError=true};
-        if(this.password == ''){this.passwordError=true};
-        if(this.firstName == ''){this.firstNameError=true};
-        if(this.lastName == ''){this.lastNameError=true};
-        if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true};
-        if(parseInt(this.age)<0){this.ageError=true};
-        if(parseInt(this.age)>120){this.ageError=true};
-        console.log(this.ageError);
-        if(this.anthem == ''){this.songError=true};
-        if(this.artistName== ''){this.artistError=true};
-        if(this.gender == ''){this.genderError=true};
-        if(this.preference == ''){this.preferenceError=true};
+        this.errorCheck();
     
                   
         this.accountService.createUserServ(this.artistId, this.username, this.password, this.firstName, this.lastName, this.age,
@@ -177,20 +172,24 @@ export class RegistrationComponent implements OnInit {
     error=> {console.log("error"); this.error=true;});
       }, 
         error=> {console.log("error"); this.songError=true;
-        if(this.username == ''){this.usernameError=true};
-        if(this.password == ''){this.passwordError=true};
-        if(this.firstName == ''){this.firstNameError=true};
-        if(this.lastName == ''){this.lastNameError=true};
-        if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true};
-        if(parseInt(this.age)<0){this.ageError=true};
-        if(parseInt(this.age)>120){this.ageError=true};
-        console.log(this.ageError);
-        if(this.anthem == ''){this.songError=true};
-        if(this.artistName== ''){this.artistError=true};
-        if(this.gender == ''){this.genderError=true};
-        if(this.preference == ''){this.preferenceError=true};
+      this.errorCheck();
        });
       
+  }}
+
+  errorCheck(){
+    if(this.username == ''){this.usernameError=true};
+    if(this.password == ''){this.passwordError=true};
+    if(this.firstName == ''){this.firstNameError=true};
+    if(this.lastName == ''){this.lastNameError=true};
+    if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true};
+    if(parseInt(this.age)<0){this.ageError=true};
+    if(parseInt(this.age)>120){this.ageError=true};
+    console.log(this.ageError);
+    if(this.anthem == ''){this.songError=true};
+    if(this.artistName== ''){this.artistError=true};
+    if(this.gender == ''){this.genderError=true};
+    if(this.preference == ''){this.preferenceError=true};
   }
   
   getToken() {

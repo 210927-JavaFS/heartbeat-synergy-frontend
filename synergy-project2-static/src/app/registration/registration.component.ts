@@ -109,10 +109,7 @@ export class RegistrationComponent implements OnInit {
     this.genderError=false;
     this.preferenceError=false;
     this.error=false;
-    if(!Number.isNaN(this.firstName)){this.firstNameError=true}
-    else{
-      if(!Number.isNaN(this.lastName)){this.lastNameError=true}
-      else {
+   
     
 
     this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
@@ -127,7 +124,6 @@ export class RegistrationComponent implements OnInit {
         if(this.username == ''){this.usernameError=true};
         if(this.password == ''){this.passwordError=true};
         if(this.firstName == ''){this.firstNameError=true};
-        
         if(this.lastName == ''){this.lastNameError=true};
         if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true};
         if(parseInt(this.age)<0){this.ageError=true};
@@ -195,7 +191,7 @@ export class RegistrationComponent implements OnInit {
         if(this.preference == ''){this.preferenceError=true};
        });
       
-  }}}
+  }
   
   getToken() {
     this.accountService.getTokenServ().subscribe(

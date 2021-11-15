@@ -191,7 +191,7 @@ export class AccountService {
       "filterType": filterType,
       "userType": userType
     }
-    return this.http.post(this.serverUrl + '/account', sendUser)
+    return this.http.post(this.serverUrl + '/account', sendUser).pipe(catchError(this.errorHandler));
 
   }
 

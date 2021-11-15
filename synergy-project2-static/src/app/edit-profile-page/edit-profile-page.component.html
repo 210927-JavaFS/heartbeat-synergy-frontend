@@ -150,6 +150,17 @@
                                             <input class="btn btn-primary btn-lg" type="submit" (click)="confirmEdit()"
                                                 value="submit" />
                                         </div>
+                                        <br>
+                                        <div *ngIf="ageError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <strong>Invalid age</strong> 
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>
+                                          <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <strong>Submission error</strong> 
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>
+                                          
+
                                     </div>
                                 </div>
                             </div>

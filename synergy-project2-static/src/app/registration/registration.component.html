@@ -163,19 +163,31 @@
                                 </div>
                                 <br>
                                 <div *ngIf="usernameError" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Username required</strong> 
+                                    <strong>Invalid username</strong> 
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                                   <div *ngIf="passwordError" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Password required</strong> 
+                                    <strong>Invalid password</strong> 
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                                   <div *ngIf="firstNameError" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>First name required</strong> 
+                                    <strong>Invalid first name</strong> 
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                                   <div *ngIf="lastNameError" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Last name required</strong> 
+                                    <strong>Invalid last name</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="ageError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid age</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="songError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid song</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="artistError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid artist</strong> 
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                                   <div *ngIf="genderError" class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -187,7 +199,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                                   <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <strong>Submission error -- Favorite artist, genre and song are required</strong> 
+                                    <strong>Submission error</strong> 
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                   </div>
                             </div>

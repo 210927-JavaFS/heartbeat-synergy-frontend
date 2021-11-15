@@ -40,6 +40,14 @@
                   </div>
                 </ul>
               </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <input class="btn btn-success" type="submit" (click)="match('ACCEPT')" value="Match"/>
+                </div>
+                <div class="col-sm-6">
+                  <input class="btn btn-danger" type="submit" (click)="match('DECLINE')" value="Unmatch"/>
+                </div>
+              </div>
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
@@ -101,13 +109,10 @@
                     <img [src]="cell[2]" width = "300" height = "300">
                 </div>
               </div>
-            
                 </div>
 </div>
-
             </div>
           </div>
-
         </div>
     </div>
 

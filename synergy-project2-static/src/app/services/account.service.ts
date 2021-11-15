@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
 import { UserImage } from '../models/user-image';
+import { Match } from '../models/match';
 
 
 @Injectable({
@@ -163,12 +164,31 @@ export class AccountService {
 
   //*********************************************Localhost functions******************************** */
 
+  postMatch(loggedId:number, otherId:number, response:string, isNewMatch : boolean, match:Match) : Observable<any>
+  {
+    //check if match exists getMatch(matcherId, matcheeId)
+    if(isNewMatch)
+    {
+      let newMatch:Match = new Match(0, loggedId, otherId, "PENDING", response);
+      return this.http.post(this.serverUrl + '/account/' + loggedId + '/match', newMatch);
+    }
+    else{
+        match.matcheeResponse = response;
+        return this.http.post(this.serverUrl + '/account/' + loggedId + '/match', match);
+    }
+  }
+
+  getExistingMatch(loggedId:number, otherId:number) : Observable<any>
+  {
+    return this.http.get<Match>(this.serverUrl + '/account/' + loggedId + "/match/" + otherId);
+  }
+
   loginServ(username: string, password: string): Observable<any> {
     let user = {
       "username": username,
       "password": password
     }
-    return this.http.post(this.serverUrl + '/login', user)
+    return this.http.post(this.serverUrl + '/login', user);
 
   }
 

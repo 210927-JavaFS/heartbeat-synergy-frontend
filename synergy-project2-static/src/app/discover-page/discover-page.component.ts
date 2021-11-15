@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Artist } from '../models/artist';
+import { Match } from '../models/match';
 import { Track } from '../models/track';
 import { User } from '../models/user';
 import { UserImage } from '../models/user-image';
@@ -46,13 +47,14 @@ export class DiscoverPageComponent implements OnInit {
   public interest:string= '';
  
 
-  public id:string|null = '';
+  public id:string|null = "";
   public currentUserId:string|null = '';
   public retrievedImage:string="";
 
   constructor(private as: AccountService, private router:Router) { }
 
   ngOnInit(): void {
+    this.currentUserId = sessionStorage.getItem('currentUser');
     this.getPotentialMatches();
   }
 
@@ -96,7 +98,10 @@ export class DiscoverPageComponent implements OnInit {
       let numId:number = this.displayedUser.userId;
       this.as.getUser(numId).subscribe((value: User) =>
         {
-          this.displayedUser = value, this.firstName=this.displayedUser.firstName; this.profileDescription = 
+          let userValues: any[] = Object.values(value);
+          let newUser: User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
+          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+          this.displayedUser = newUser; this.id = this.displayedUser.userId.toString(); this.firstName=this.displayedUser.firstName; this.profileDescription = 
           this.displayedUser.profileDescription, this.age=this.displayedUser.age, this.anthem=this.displayedUser.anthem, this.topUserGenres=this.generateGenres(this.displayedUser.topGenres);
             this.topUserArtists=this.generateTopArtists(this.displayedUser.topArtists),
             this.username=this.displayedUser.username, this.lastName=this.displayedUser.lastName, this.interest=this.displayedUser.filterType;
@@ -196,6 +201,38 @@ export class DiscoverPageComponent implements OnInit {
   goMatches()
   {
     this.router.navigate(['match-page']);
+  }
+
+  match(response:string)
+  {
+    if(this.currentUserId != null && this.id != null)
+    {
+      this.as.getExistingMatch(parseInt(this.currentUserId), parseInt(this.id)).subscribe((value:Match)=>{
+        if(this.currentUserId != null && this.id != null)
+        {
+          this.as.postMatch(parseInt(this.currentUserId), parseInt(this.id), response, false,value).subscribe((value)=>{
+            this.displayedUser = this.users.pop();
+            if(this.displayedUser != null)
+            {
+              this.displayProfile();
+            }
+          });
+        }
+      },
+      (error)=>{
+        if(this.currentUserId != null && this.id != null)
+        {
+          let newMatch:Match = new Match(0, parseInt(this.currentUserId), parseInt(this.id), "PENDING", response);
+          this.as.postMatch(parseInt(this.currentUserId), parseInt(this.id), response, true, newMatch).subscribe((value)=>{
+            this.displayedUser = this.users.pop();
+            if(this.displayedUser != null)
+            {
+              this.displayProfile();
+            }
+          });
+        }
+      });
+    }
   }
 
 }

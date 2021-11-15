@@ -15,6 +15,7 @@ export class LoginPageComponent implements OnInit {
   public password: string = ''
   public token:string = '';
   public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public error:boolean = false;
 
 
   constructor(private router: Router, private accountService:AccountService, private transferService:TransferService) { }
@@ -29,14 +30,13 @@ export class LoginPageComponent implements OnInit {
 
   login() {
     
-    if(true) {
-      this.accountService.loginServ(this.username, this.password).subscribe(
+      this.accountService.loginServ(this.username, this.password).subscribe( 
         (data:Object)=> {
           console.log(JSON.stringify(data))
           let userValues:any[]=Object.values(data);
           console.log(userValues);
           this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);;
+            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
           sessionStorage.setItem('currentUser', this.user.userId.toString());
           this.accountService.getTokenServ().subscribe(
             (data: Object) => {
@@ -44,9 +44,10 @@ export class LoginPageComponent implements OnInit {
               sessionStorage.setItem('token', this.token);
               this.router.navigate(['home-page']);
             });
-        }
+        },
+        error=> {console.log("error"); this.error=true;}
       )
-    }
+    
   }
 
   register(){

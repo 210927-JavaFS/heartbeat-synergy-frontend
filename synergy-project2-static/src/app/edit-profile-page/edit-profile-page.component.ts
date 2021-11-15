@@ -37,6 +37,8 @@ export class EditProfilePageComponent implements OnInit {
   public anthemUrl:string = '';
   public genres:any=[];
   genreList: any=[];
+  public ageError:boolean = false;
+  public error:boolean = false;
 
   constructor(private accountService: AccountService, private router:Router, private formBuilder:FormBuilder) 
   { 
@@ -175,6 +177,11 @@ export class EditProfilePageComponent implements OnInit {
 
   confirmEdit()
   {
+    
+    if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true}
+    else if(parseInt(this.age)<0){this.ageError=true}
+    else if(parseInt(this.age)>120){this.ageError=true}
+    else{
     this.token=sessionStorage.getItem("token");
     if(this.token != "" && this.anthem != "")
     {
@@ -190,7 +197,8 @@ export class EditProfilePageComponent implements OnInit {
           this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
           this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres).subscribe(()=>{
         });
-      });
+      } , 
+      error=> {console.log("error"); this.error=true;});
     }
     else{
       this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
@@ -219,9 +227,10 @@ export class EditProfilePageComponent implements OnInit {
               }
 
             });
-        });
+        } , 
+        error=> {console.log("error"); this.error=true;});
     }
     else
       this.router.navigate(['home-page']);
   }
-}
+}}

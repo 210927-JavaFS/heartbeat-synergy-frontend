@@ -2,7 +2,7 @@
     <style>
         div.scroll {
             margin: 4px, 4px;
-            padding: 4px;
+            padding: 10px;
             width: 500px;
             height: 110px;
             overflow-x: hidden;
@@ -96,7 +96,6 @@
                                     
                                     <label for="Genres">Favorite Genres:</label>
                                     <form [formGroup]="form" (ngSubmit)="submit()" class="form-control scroll">
-                                        
                                                 <div *ngFor="let genre of genreList">
                                                     <label>
                                                         <input type="checkbox" [value]=genre.genre
@@ -162,6 +161,51 @@
                                         (click)="submit(); registerUser()" value="submit" />
                                 
                                 </div>
+                                <br>
+                                <div *ngIf="usernameError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid username</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="passwordError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid password</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="firstNameError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid first name</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="lastNameError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid last name</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="ageError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid age</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="songError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid song</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="artistError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Invalid artist</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="genderError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Gender required</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="preferenceError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Gender preference required</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="error" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Submission error</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                  <div *ngIf="stringError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <strong>Names cannot be numbers</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
                             </div>
                         </div>
                     </div>

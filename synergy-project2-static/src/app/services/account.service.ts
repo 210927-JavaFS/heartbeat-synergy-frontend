@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from '../models/user';
 import { UserImage } from '../models/user-image';
+import { catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -106,12 +107,12 @@ export class AccountService {
   }
 
   searchSongServ(token: string, song: string, artist: string): Observable<Object> {
-    return this.http.get(this.requestUrl + 'search?q=' + song + ' ' + artist + '&type=track&market=us&offset=0&limit=5', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
+    return this.http.get(this.requestUrl + 'search?q=' + song + ' ' + artist + '&type=track&market=us&offset=0&limit=5', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) }).pipe(catchError(this.errorHandler))
   }
 
   getSongServ(token: string, songId: string): Observable<Object> {
     if (songId != null) { }
-    return this.http.get(this.requestUrl + 'tracks/' + songId + '?market=us', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
+    return this.http.get(this.requestUrl + 'tracks/' + songId + '?market=us', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) }).pipe(catchError(this.errorHandler))
   }
 
 
@@ -130,11 +131,11 @@ export class AccountService {
 
 
   searchArtistServ(token: string, artist: string): Observable<Object> {
-    return this.http.get(this.requestUrl + 'search?q=' + artist + '&type=artist&market=us&offset=0&limit=5', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
+    return this.http.get(this.requestUrl + 'search?q=' + artist + '&type=artist&market=us&offset=0&limit=5', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) }).pipe(catchError(this.errorHandler))
   }
 
   getArtistServ(token: string, artistId: string): Observable<Object> {
-    return this.http.get(this.requestUrl + 'artists/' + artistId + '?market=us', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
+    return this.http.get(this.requestUrl + 'artists/' + artistId + '?market=us', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) }).pipe(catchError(this.errorHandler))
   }
 
 
@@ -168,8 +169,12 @@ export class AccountService {
       "username": username,
       "password": password
     }
-    return this.http.post(this.serverUrl + '/login', user)
+    return this.http.post(this.serverUrl + '/login', user).pipe(catchError(this.errorHandler));
 
+  }
+  errorHandler(error: HttpErrorResponse) {
+    console.log(error);
+    return throwError(error.message || 'server Error');
   }
 
   createUserServ(id: string, username: string, password: string, firstName: string, lastName: string, age: string, profileDescription: string, anthem: string, filterType: string, userType: string, userGenres: any[]): Observable<any> {
@@ -192,7 +197,7 @@ export class AccountService {
       "filterType": filterType,
       "userType": userType
     }
-    return this.http.post(this.serverUrl + '/account', sendUser)
+    return this.http.post(this.serverUrl + '/account', sendUser).pipe(catchError(this.errorHandler));
 
   }
 
@@ -218,7 +223,10 @@ export class AccountService {
     uploadImageData.append('image', file, file.name);
     return this.http.post(this.serverUrl+'/account/'+ userId+'/photo', uploadImageData, {observe:'response'});
   }
+  
+
 }
+
 
   
 

@@ -14,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   public username: string = '';
   public password: string = ''
   public token:string = '';
-  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public user:User = new User(0, '','','','','','','',[],[], '', '', null);
   public error:boolean = false;
 
 
@@ -36,7 +36,7 @@ export class LoginPageComponent implements OnInit {
           let userValues:any[]=Object.values(data);
           console.log(userValues);
           this.user = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+            userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], null);
           sessionStorage.setItem('currentUser', this.user.userId.toString());
           this.accountService.getTokenServ().subscribe(
             (data: Object) => {

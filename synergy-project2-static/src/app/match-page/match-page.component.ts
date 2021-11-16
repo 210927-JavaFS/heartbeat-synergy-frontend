@@ -26,7 +26,7 @@ export class MatchPageComponent implements OnInit {
       value.forEach(element => {
         let userValues: any[] = Object.values(element);
         let newUser: User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], null);
         this.users?.push(newUser);
 
         this.as.getUserImages(newUser.userId).subscribe(value => {

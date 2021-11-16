@@ -32,8 +32,8 @@ export class DiscoverPageComponent implements OnInit {
   public artist:Artist|null = null;
   public getArtistSearch:string = '';
 
-  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
-  public friend:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public user:User = new User(0, '','','','','','','',[],[], '', '', null);
+  public friend:User = new User(0, '','','','','','','',[],[], '', '', null);
 
   public firstName:string = '';
   public profileDescription = '';
@@ -64,7 +64,7 @@ export class DiscoverPageComponent implements OnInit {
       value.forEach(element => {
         let userValues:any[] = Object.values(element);
         let newUser:User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], null);
         this.users?.push(newUser);
       });
       this.displayedUser = this.users.pop();
@@ -100,7 +100,7 @@ export class DiscoverPageComponent implements OnInit {
         {
           let userValues: any[] = Object.values(value);
           let newUser: User = new User(userValues[0], userValues[1], userValues[2], userValues[3], userValues[4], userValues[5], userValues[6],
-          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], userValues[12], null);
+          userValues[7], userValues[8], userValues[9], userValues[10], userValues[11], null);
           this.displayedUser = newUser; this.id = this.displayedUser.userId.toString(); this.firstName=this.displayedUser.firstName; this.profileDescription = 
           this.displayedUser.profileDescription, this.age=this.displayedUser.age, this.anthem=this.displayedUser.anthem, this.topUserGenres=this.generateGenres(this.displayedUser.topGenres);
             this.topUserArtists=this.generateTopArtists(this.displayedUser.topArtists),

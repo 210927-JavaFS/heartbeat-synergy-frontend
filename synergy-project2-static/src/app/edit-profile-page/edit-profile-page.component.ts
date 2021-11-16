@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ITS_JUST_ANGULAR } from '@angular/core/src/r3_symbols';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -36,7 +37,9 @@ export class EditProfilePageComponent implements OnInit {
   public token:any = '';
   public anthemUrl:string = '';
   public genres:any=[];
-  genreList: any=[];
+  public genreList: any=[];
+  public genreArray:any[]=[];
+  
 
   constructor(private accountService: AccountService, private router:Router, private formBuilder:FormBuilder) 
   { 
@@ -75,36 +78,75 @@ export class EditProfilePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.token = sessionStorage.getItem('token');
     this.getGenres();
     this.form = this.formBuilder.group({
       genre:this.formBuilder.array([])
     });
+    let genre: FormArray = this.form.get('genre') as FormArray;
   }
 
   getGenres(){
+    const genre: FormArray = this.form.get('genre') as FormArray;
+    
     if(this.token!=null){
       this.accountService.getGenres(this.token).subscribe(
         (data:Object)=> {
           this.genres=data;
-          console.log(this.genres.genres.length)
-          for(let i = 0; i<this.genres.genres.length;i++){
-            this.genreList.push({id:i,genre:this.genres.genres[i]})
-          }
+
+          this.accountService.getUserGenres(this.id).subscribe(
+            (data2)=>{
+              let dataArray:any[]=Object.values(data2);
+              this.genreArray=[];
+              let compare:boolean=false;
+              for(let i =0;i<dataArray.length;i++){
+                this.genreArray.push(dataArray[i].genre);
+              }
+              
+              for(let i = 0; i<this.genres.genres.length;i++){
+                compare=false;
+                if(this.genreArray.includes(this.genres.genres[i])){
+                  compare = true;
+                  this.form.get('genre')?.value.push(this.genres.genres[i]);
+                }
+                this.genreList.push({id:i,genre:this.genres.genres[i],checked:compare})
+
+              }
+
+              
+
+            })
+
+         
         }
        )
     }  
    }
 
    onCheckboxChange(e: any) {
+
     const genre: FormArray = this.form.get('genre') as FormArray;
+
+ 
     
-      if (e.target.checked) {
-        genre.push(new FormControl(e.target.value));
-      } else {
-         const index = genre.controls.findIndex(x => x.value === e.target.value);
-         genre.removeAt(index);
-      }
+        if (e.target.checked) {
+          genre.value.push(e.target.value);
+          console.log([e.target.value])
+          console.log(this.form.value)
+          console.log(genre.value)
+
+        } else {
+          const index = genre.value.indexOf(e.target.value);
+          if (index>-1){
+            genre.value.splice(index,1);
+          }
+        }
+        console.log(genre.value);
+        console.log(this.form.value)
+      
+    
+
     
     
   }

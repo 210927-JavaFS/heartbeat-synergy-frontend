@@ -119,6 +119,10 @@ export class AccountService {
     return this.http.get(this.requestUrl + 'recommendations/available-genre-seeds', { headers: new HttpHeaders({ 'Authorization': 'Bearer ' + token }) })
   }
 
+  getUserGenres(userId:any): Observable<Object>{
+    return this.http.get(this.serverUrl + "/account/"+userId+"/genres");
+  }
+
   postGenres(userId:any, genres:any):Observable<Object>{
     return this.http.post(this.serverUrl +"/account/"+ userId +"/genres", genres);
   }

@@ -1,19 +1,17 @@
-            <body>
-            <!-- Breadcrumb -->  <div class="container">
-          <nav aria-label="breadcrumb" class="main-breadcrumb">
+<body>
+    <!-- Breadcrumb -->  <div class="container">
+        <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <br>
-
               <li ><button class="btn btn-primary btn-lg" (click)="login()">Logout</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goHome()">Home</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goDiscover()">Discover profiles</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goMatches()">View Matches</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goEdit()">Edit Account</button></li>
-
             </ol>
           </nav>
         
-    <div class="main-body" >
+    <div *ngIf="displayedUser; else mainElseBlock" class="main-body" >
           <!-- /Breadcrumb -->
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -34,8 +32,8 @@
                 </div>
               </div>
               <div class="card mt-3">
-                <ul class="list-group list-group-flush card">
-                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"><h6>Favorite Genres </h6></li>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap"><h6>Favorite Genres: </h6></li>
                   <div *ngFor="let cell of topUserGenres" >
                   <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">{{cell}}</li>
                   </div>
@@ -49,34 +47,38 @@
                     <div class="col-sm-3">
                       <h6 class="mb-0">Profile Description</h6>
                     </div>
-                    <div class="col-sm-9 ">
+                    <div class="col-sm-9 text-secondary">
                       {{profileDescription}}
                     </div>
+                    
+
                   </div>
                   <hr>
                   <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Anthem</h6>
-                        </div>
-                        <div class = "col-sm-1">
-                          <img [src] = "albumImageUrl" >
-                        </div>    
-                        <div class = "col-sm-1">
-                        </div>   
-                        <div class="col-md-3">
-                            <div style="display: table-cell; vertical-align: middle;">
-                              
-                                {{track?.trackName}}
-                            <br>
-                            By: 
-                            {{track?.trackArtist}}
-                            <br>
-                               
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Anthem</h6>
+                    </div>
+                    <div class = "col-sm-1">
+                      <img [src] = "albumImageUrl" >
+                    </div>    
+                    <div class = "col-sm-1">
+                    </div>   
+                    <div class="col-md-3">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          
+                            {{track?.trackName}}
+                        <br>
+                        By: 
+                        {{track?.trackArtist}}
+                        <br>
+                           
 
-                               
-                            </div>
-                                <br>
-                        </div>  
+                           
+                        </div>
+                            <br>
+                    </div>  
+               
+                  
                 </div>
                <hr>
               
@@ -93,17 +95,25 @@
                     <img [src]="cell[3]" width = "150" height = "150">
                 </div>
               </div>
-            
+              <br>
+              <div class="row">
+                <div class="col-sm-2">
+                  <input class="btn btn-success" type="submit" (click)="match('ACCEPT')" value="Match"/>
+                </div>
+                <div class="col-sm-2">
+                  <input class="btn btn-danger" type="submit" (click)="match('DECLINE')" value="Unmatch"/>
+                </div>
+              </div>
                 </div>
 </div>
-
             </div>
           </div>
-
         </div>
     </div>
-
-            </body>
-
-
+  <ng-template #mainElseBlock>
+      <div class="card">
+        <div class="card-body">
+          <p><b>No more available profiles to discover! </b></p>
+          <p><b>Try adding in more genres or come again later. </b></p>
+      </div>
 

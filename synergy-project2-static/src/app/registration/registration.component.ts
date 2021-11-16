@@ -33,6 +33,17 @@ export class RegistrationComponent implements OnInit {
   public genres:any=[];
   public genreList: any=[];
   public genre: any=[];
+  public usernameError:boolean = false;
+  public passwordError:boolean = false;
+  public firstNameError:boolean = false;
+  public lastNameError:boolean = false;
+  public ageError:boolean = false;
+  public songError:boolean= false;
+  public artistError:boolean= false;
+  public genderError:boolean = false;
+  public preferenceError:boolean = false;
+  public error:boolean = false;
+  public stringError:boolean = false;
   
 
   constructor(private accountService: AccountService,private formBuilder:FormBuilder,private router:Router) {
@@ -88,6 +99,24 @@ export class RegistrationComponent implements OnInit {
   }
 
   registerUser(){
+    this.usernameError=false;
+    this.passwordError=false;
+    this.firstNameError=false;
+    this.lastNameError=false;
+    this.ageError=false;
+    this.songError=false;
+    this.artistError=false;
+    this.genderError=false;
+    this.preferenceError=false;
+    this.error=false;
+    console.log(!(Number.isNaN(parseFloat(this.firstName))));
+
+    if(!(Number.isNaN(parseFloat(this.firstName)))){this.stringError=true; 
+      this.errorCheck(); console.log("inside number checker") }
+    else if(!(Number.isNaN(parseFloat(this.lastName)))){this.stringError=true; 
+        this.errorCheck(); console.log("inside number checker") }
+    else{
+    
 
     this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
       (data: Object) => {
@@ -97,7 +126,10 @@ export class RegistrationComponent implements OnInit {
         let innerSongsInfo: any[] = Object.values(innerSongs[0]);
         let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
         let finalUrl = innerSongsInfoUrl[0];
-        let anthem:string = finalUrl.substring(31, finalUrl.length);          
+        let anthem:string = finalUrl.substring(31, finalUrl.length);
+        this.errorCheck();
+    
+                  
         this.accountService.createUserServ(this.artistId, this.username, this.password, this.firstName, this.lastName, this.age,
       this.profileDescription, anthem, this.preference, this.gender, this.genre).subscribe( (data: Object) => {
         let userValues:any = Object.values(data);
@@ -127,16 +159,37 @@ export class RegistrationComponent implements OnInit {
                  
                  this.accountService.postGenres(userId, genreArray).subscribe(
                    (data:Object)=>{
-                      console.log(data)
+                      console.log(data);
+                      this.router.navigate(['']);
                    }
                  )
-               }
+               } 
              )      
-          })
+          } , 
+          error=> {console.log("error"); this.artistError=true;});
 
-    })
-      })
+    }, 
+    error=> {console.log("error"); this.error=true;});
+      }, 
+        error=> {console.log("error"); this.songError=true;
+      this.errorCheck();
+       });
       
+  }}
+
+  errorCheck(){
+    if(this.username == ''){this.usernameError=true};
+    if(this.password == ''){this.passwordError=true};
+    if(this.firstName == ''){this.firstNameError=true};
+    if(this.lastName == ''){this.lastNameError=true};
+    if(!(Number.isInteger(parseInt(this.age))) && this.age!= ''){this.ageError=true};
+    if(parseInt(this.age)<0){this.ageError=true};
+    if(parseInt(this.age)>120){this.ageError=true};
+    console.log(this.ageError);
+    if(this.anthem == ''){this.songError=true};
+    if(this.artistName== ''){this.artistError=true};
+    if(this.gender == ''){this.genderError=true};
+    if(this.preference == ''){this.preferenceError=true};
   }
   
   getToken() {
@@ -177,12 +230,12 @@ searchArtist(artistName:string):Artist {
         let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
         let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
         let innerArtistImage = innerArtistImageArray[1];
-        let artist = new Artist(innerArtistId, innerArtistName, innerArtistImage); 
+        let artist = new Artist(0, innerArtistId, innerArtistName, innerArtistImage); 
         console.log(Object.values(artist));
         return artist;
        
     })
-    return new Artist('','','');
+    return new Artist(0, '','','');
 }
 
 login(){

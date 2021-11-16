@@ -147,24 +147,30 @@ export class UserProfilePageComponent implements OnInit {
     this.router.navigate(['home-page']);
   })}
 
-  goHome(){
+  login(){
+    sessionStorage.clear();
+    this.router.navigate(['']);
+  }
+
+  goHome()
+  {
     this.router.navigate(['home-page']);  
   }
 
-login(){
-  sessionStorage.clear();
-  this.router.navigate(['']);
-}
+  goEdit()
+  {
+    this.router.navigate(['edit-profile-page']);
+  }
 
-goEdit()
-{
-  this.router.navigate(['edit-profile-page']);
-}
+  goDiscover()
+  {
+    this.router.navigate(['discover-page']);
+  }
 
-goDiscover()
-{
-  this.router.navigate(['match-page']);
-}
+  goMatches()
+  {
+    this.router.navigate(['match-page']);
+  }
 
  getTopArtists(){
    console.log("inTopArtists "+this.authToken);

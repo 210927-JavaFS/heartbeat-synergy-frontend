@@ -83,8 +83,9 @@
                                             <form [formGroup]="form" class="form-control scroll">
                                                 <div *ngFor="let genre of genreList">
                                                     <label>
-                                                        <input type="checkbox" [value]=genre.genre
-                                                            (change)="onCheckboxChange($event)" />
+
+                                                        <input type="checkbox"  [value]=genre.genre [checked] = "genre.checked" (change)="onCheckboxChange($event)"/>
+
                                                         {{genre.genre}}
                                                     </label>
 

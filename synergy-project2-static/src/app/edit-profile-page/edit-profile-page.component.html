@@ -38,7 +38,7 @@
                         <div class="col-12 col-lg-9 col-xl-7">
                             <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                                 <div class="card-body p-4 p-md-5">
-                                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Edit profile</h3>
+                                    <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" style="text-align: center;">Edit profile</h3>
                                     <div>
                                         <div *ngIf="retrievedImage; else elseBlock">
                                             <img [src]="retrievedImage" alt="Admin" class="rounded-circle" width="150"
@@ -51,46 +51,35 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-8">
+                                                <label for="profilePic" class="form-label"><b>Change profile picture</b></label>
                                                 <input type="file" (change)="onFileChange($event)">
                                             </div>
+                                            <div class="col-md-2">
+                                                <label for="firstName" class="form-label"><b>Age:</b></label>
+                                                <input id="firstName" [(ngModel)]="age"
+                                                    class="form-control">
+                                            </div>
+                                            <div class="col-sm-4"></div>
                                         </div>
                                         <br>
                                         <div class="row">
 
-                                            <div class="col-sm-2">
-                                                <label for="firstName" class="form-label">Age: </label>
-                                                <input id="firstName" [(ngModel)]="age"
-                                                    class="form-control form-control-lg col-sm-3">
-                                            </div>
-                                            <div class="col-sm-4"></div>
+ 
                                             <div class="col-md-6 mb-4">
-                                                <label for="firstName" class="form-label">Profile Description: </label>
+                                                <label for="firstName" class="form-label"><b>Profile Description:</b> </label>
                                                 <textarea id="firstName" [(ngModel)]="profileDescription"
                                                     class="form-control form-control-lg"></textarea>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
                                             <div class="col-md-6 mb-4">
-                                                <label for="firstName" class="form-label">Favorite Song: </label>
+                                                <label for="firstName" class="form-label"><b>Favorite Song: </b></label>
                                                 <input id="firstName" [(ngModel)]="anthem"
                                                     class="form-control form-control-lg col-sm-3">
-
                                             </div>
-                                            <div class="col-md-6 mb-4">
-                                                <label for="firstName" class="form-label">Favorite Artist: </label>
-                                                <input id="firstName" [(ngModel)]="artistName"
-                                                    class="form-control form-control-lg col-sm-3">
-
-                                            </div>
-                                        </div>
-
-
-                                        
+                                        </div>                                        
                                         <br>
                                        
                                         <div>
-                                            <label for="Genres">Favorite Genres:</label>
+                                            <label for="Genres"><b>Favorite Genres:</b></label>
                                             <form [formGroup]="form" class="form-control scroll">
                                                 <div *ngFor="let genre of genreList">
                                                     <label>
@@ -104,10 +93,46 @@
                                             </form>
                                         </div>
                                         <br>
-
+                                        <div>
+                                            <label><b>Favorite Artists:</b></label>
+                                            <form [formGroup]="form" class="form-control scroll">
+                                                <div *ngFor="let artist of topArtists">
+                                                    <div class = "row">
+                                                        <div class="col-md-6 mb-4">
+                                                            <label>
+                                                                {{artist.artistName}}
+                                                            </label> 
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <label>
+                                                                <button type="button" class="btn-close" (click)="deleteArtist(artist)"></button>
+                                                            </label> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <br>
+                                        <label for="firstName" class="form-label"><b>Add new artist: </b></label>
+                                        <div class = "row">
+                                            <div class="col-md-6">
+                                                <input id="firstName" [(ngModel)]="artistName"
+                                                    class="form-control col-sm-3"> 
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>
+                                                    <input class="btn btn-primary" type="submit" (click)="submitFavoriteArtist()" value="submit" />
+                                                </label> 
+                                            </div>
+                                            <div *ngIf="artistError" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                <strong>Can only have up to 3 top artists. Please remove one.</strong> 
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="toggleOffArtistError()"></button>
+                                              </div>
+                                        </div>
+                                        <br>
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
-                                                <label for="gender">Gender:</label>
+                                                <label for="gender"><b>Gender:</b></label>
                                                 <br>
                                                 <label>
                                                     Male
@@ -128,7 +153,7 @@
                                                 </label>
                                             </div>
                                             <div class="col-md-6 mb-4">
-                                                <label for="preference">Gender Preference:</label>
+                                                <label for="preference"><b>Gender Preference:</b></label>
                                                 <br>
                                                 <label>
                                                     Men
@@ -153,7 +178,6 @@
                                             <input class="btn btn-primary btn-lg" type="submit" (click)="confirmEdit()"
                                                 value="submit" />
                                         </div>
-                                        <br>
                                         <div *ngIf="ageError" class="alert alert-warning alert-dismissible fade show" role="alert">
                                             <strong>Invalid age</strong> 
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -162,8 +186,6 @@
                                             <strong>Submission error</strong> 
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                           </div>
-                                          
-
                                     </div>
                                 </div>
                             </div>

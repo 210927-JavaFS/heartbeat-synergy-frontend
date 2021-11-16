@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { UserImage } from '../models/user-image';
 import { Match } from '../models/match';
 import { catchError } from 'rxjs/operators';
+import { Artist } from '../models/artist';
 
 
 @Injectable({
@@ -228,8 +229,12 @@ export class AccountService {
       "artistName": name,
       "artistImage": image
     }
-    return this.http.post(this.serverUrl + '/account/'+userId+ '/artist', topArtists)
+    return this.http.post(this.serverUrl + '/account/'+userId+ '/artist', topArtists);
 
+  }
+
+  deleteUserTopArtist(userId:string, artistId:number):Observable<any>{
+    return this.http.delete<Artist>(this.serverUrl + '/account/'+userId+ '/artist/' + artistId.toString());
   }
 
   getUserImages(id:number):Observable<UserImage[]>{

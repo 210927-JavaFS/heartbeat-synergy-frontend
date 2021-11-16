@@ -24,11 +24,16 @@
               <ng-template #elseBlock>
                 <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150" height = "150">
               </ng-template> 
+              <br>
               <div class="media-body overflow-hidden">
-                <h5 class="card-text mb-0">{{ user.username }}</h5>
-                <p class="card-text text-uppercase text-muted">{{ user.firstName }}</p>
-                <p class="card-text">Age: {{ user.age }}</p>
-                <input class="btn btn-primary btn-lg" type="submit" (click)="goProfile(user)" value="View profile"/>
+                <div class = "row">
+                  <div class="col-sm-6" style="text-align: center;">
+                    <h5><b>{{ user.firstName }}, {{user.age}}</b></h5>
+                  </div>
+                  <div class="col-sm-2">
+                    <input class="btn btn-primary" type="submit" (click)="goProfile(user)" value="View profile"/>
+                  </div>
+                </div>
               </div>
           </div>
         </div>

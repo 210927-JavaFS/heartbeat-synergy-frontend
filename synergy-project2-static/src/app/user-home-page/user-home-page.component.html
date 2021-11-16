@@ -28,8 +28,7 @@
                     </ng-template>
                     <div class="mt-3">
                       <h4></h4>
-                      <p class="">Age: {{age}}</p>
-                      <p class="">Username: {{username}}</p>
+                      <p class="text-secondary mb-1"><b>{{firstName}}, {{age}}</b></p>
                     </div>
                   </div>
                 </div>
@@ -48,31 +47,25 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Name</h6>
-                    </div>
-                    <div class="col-sm-9 ">
-                      {{firstName}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
                       <h6 class="mb-0">Profile Description</h6>
                     </div>
                     <div class="col-sm-9 ">
                       {{profileDescription}}
                     </div>
-                    
-
                   </div>
                   <hr>
                   <div class="row">
                         <div class="col-sm-3">
                           <h6 class="mb-0">Anthem</h6>
                         </div>
-                        <div class="col-sm-9 ">
-                            <div>
-
+                        <div class = "col-sm-1">
+                          <img [src] = "albumImageUrl" >
+                        </div>    
+                        <div class = "col-sm-1">
+                        </div>   
+                        <div class="col-md-3">
+                            <div style="display: table-cell; vertical-align: middle;">
+                              
                                 {{track?.trackName}}
                             <br>
                             By: 
@@ -82,11 +75,8 @@
 
                                
                             </div>
-                              <img [src] = "albumImageUrl">
                                 <br>
-                        </div>
-               
-                  
+                        </div>  
                 </div>
                <hr>
               
@@ -98,9 +88,9 @@
                 </div>
                 <br>
                 <div *ngFor="let cell of topUserArtists" class="col">
-                    {{cell[1]}}
+                    {{cell[2]}}
                      <br>
-                    <img [src]="cell[2]" width = "300" height = "300">
+                    <img [src]="cell[3]" width = "150" height = "150">
                 </div>
               </div>
             

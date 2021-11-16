@@ -11,7 +11,7 @@
             </ol>
           </nav>
         
-    <div class="main-body" >
+    <div *ngIf="displayedUser; else mainElseBlock" class="main-body" >
           <!-- /Breadcrumb -->
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -26,8 +26,7 @@
                     </ng-template>
                     <div class="mt-3">
                       <h4></h4>
-                      <p class="text-secondary mb-1">Age: {{age}}</p>
-                      <p class="text-secondary mb-1">Username: {{username}}</p>
+                      <p class="text-secondary mb-1"><b>{{firstName}}, {{age}}</b></p>
                     </div>
                   </div>
                 </div>
@@ -40,27 +39,10 @@
                   </div>
                 </ul>
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <input class="btn btn-success" type="submit" (click)="match('ACCEPT')" value="Match"/>
-                </div>
-                <div class="col-sm-6">
-                  <input class="btn btn-danger" type="submit" (click)="match('DECLINE')" value="Unmatch"/>
-                </div>
-              </div>
             </div>
             <div class="col-md-8">
               <div class="card mb-3">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Name</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{firstName}}
-                    </div>
-                  </div>
-                  <hr>
                   <div class="row">
                     <div class="col-sm-3">
                       <h6 class="mb-0">Profile Description</h6>
@@ -73,24 +55,28 @@
                   </div>
                   <hr>
                   <div class="row">
-                        <div class="col-sm-3">
-                          <h6 class="mb-0">Anthem</h6>
-                        </div>
-                        <div class="col-sm-9 text-secondary">
-                            <div>
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Anthem</h6>
+                    </div>
+                    <div class = "col-sm-1">
+                      <img [src] = "albumImageUrl" >
+                    </div>    
+                    <div class = "col-sm-1">
+                    </div>   
+                    <div class="col-md-3">
+                        <div style="display: table-cell; vertical-align: middle;">
+                          
+                            {{track?.trackName}}
+                        <br>
+                        By: 
+                        {{track?.trackArtist}}
+                        <br>
+                           
 
-                                {{track?.trackName}}
-                            <br>
-                            By: 
-                            {{track?.trackArtist}}
-                            <br>
-                               
-
-                               
-                            </div>
-                              <img [src] = "albumImageUrl">
-                                <br>
+                           
                         </div>
+                            <br>
+                    </div>  
                
                   
                 </div>
@@ -104,9 +90,18 @@
                 </div>
                 <br>
                 <div *ngFor="let cell of topUserArtists" class="col">
-                    {{cell[1]}}
+                    {{cell[2]}}
                      <br>
-                    <img [src]="cell[2]" width = "300" height = "300">
+                    <img [src]="cell[3]" width = "150" height = "150">
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-sm-2">
+                  <input class="btn btn-success" type="submit" (click)="match('ACCEPT')" value="Match"/>
+                </div>
+                <div class="col-sm-2">
+                  <input class="btn btn-danger" type="submit" (click)="match('DECLINE')" value="Unmatch"/>
                 </div>
               </div>
                 </div>
@@ -115,4 +110,10 @@
           </div>
         </div>
     </div>
+  <ng-template #mainElseBlock>
+      <div class="card">
+        <div class="card-body">
+          <p><b>No more available profiles to discover! </b></p>
+          <p><b>Try adding in more genres or come again later. </b></p>
+      </div>
 

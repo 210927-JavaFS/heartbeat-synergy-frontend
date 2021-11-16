@@ -112,12 +112,12 @@ export class JunkBranchComponent implements OnInit {
         let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
         let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
         let innerArtistImage = innerArtistImageArray[1];
-        let artist = new Artist(innerArtistId, innerArtistName, innerArtistImage); 
+        let artist = new Artist(0, innerArtistId, innerArtistName, innerArtistImage); 
         console.log(Object.values(artist));
         return artist;
        
     })
-    return new Artist('','','');
+    return new Artist(0, '','','');
 }
 
   getArtist(artistId:any):Artist {
@@ -130,12 +130,12 @@ export class JunkBranchComponent implements OnInit {
         let artistImage:any[] = innerGetData[5];
         let artistImageArray:any[]=Object.values(artistImage[2]);
         let artistImageUrl = artistImageArray[1];
-        let artist = new Artist('adsfasdf', artistName, artistImageUrl);
+        let artist = new Artist(0, 'adsfasdf', artistName, artistImageUrl);
         console.log(artist);
         return artist;
         
       })
-      return new Artist('','','');
+      return new Artist(0, '','','');
   }
 
 

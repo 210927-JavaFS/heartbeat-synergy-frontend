@@ -230,12 +230,12 @@ searchArtist(artistName:string):Artist {
         let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
         let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
         let innerArtistImage = innerArtistImageArray[1];
-        let artist = new Artist(innerArtistId, innerArtistName, innerArtistImage); 
+        let artist = new Artist(0, innerArtistId, innerArtistName, innerArtistImage); 
         console.log(Object.values(artist));
         return artist;
        
     })
-    return new Artist('','','');
+    return new Artist(0, '','','');
 }
 
 login(){

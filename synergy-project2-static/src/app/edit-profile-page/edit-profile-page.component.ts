@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Artist } from '../models/artist';
+import { Track } from '../models/track';
 import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 import { TransferService } from '../services/transfer.service';
@@ -39,6 +41,9 @@ export class EditProfilePageComponent implements OnInit {
   genreList: any=[];
   public ageError:boolean = false;
   public error:boolean = false;
+  public artistError:boolean = false;
+
+  public topArtists:any[] = [];
 
   constructor(private accountService: AccountService, private router:Router, private formBuilder:FormBuilder) 
   { 
@@ -49,7 +54,11 @@ export class EditProfilePageComponent implements OnInit {
       let numID:number = parseInt(this.id);
       accountService.getUser(numID).subscribe(value =>
       {
-        this.user = value; this.anthem = this.user.anthem; this.artistName = this.user.topArtists[0].artistName;
+        this.user = value; this.anthem = this.user.anthem; this.topArtists = this.user.topArtists; 
+        if(this.topArtists.length > 0)
+        {
+          this.artistName = this.user.topArtists[0].artistName;
+        }
         this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
         this.age=this.user.age; this.lastName=this.user.lastName; this.interest=this.user.filterType;
         this.gender = this.user.userType; this.preference = this.user.filterType;
@@ -84,12 +93,18 @@ export class EditProfilePageComponent implements OnInit {
     });
   }
 
+  deleteArtist(artist:any){
+    if(this.id != null)
+    {
+      this.accountService.deleteUserTopArtist(this.id.toString(), artist.id).subscribe(()=>{ let index:number = this.topArtists.indexOf(artist); this.topArtists.splice(index, 1); this.user.topArtists = this.topArtists;});
+    }
+  }
+
   getGenres(){
     if(this.token!=null){
       this.accountService.getGenres(this.token).subscribe(
         (data:Object)=> {
           this.genres=data;
-          console.log(this.genres.genres.length)
           for(let i = 0; i<this.genres.genres.length;i++){
             this.genreList.push({id:i,genre:this.genres.genres[i]})
           }
@@ -175,6 +190,73 @@ export class EditProfilePageComponent implements OnInit {
     }
   }
 
+  toggleOffArtistError()
+  {
+    this.artistError = false;
+  }
+
+  submitFavoriteArtist()
+  {
+    if(this.artistName != "")
+    {
+      if(this.topArtists.length == 3)
+      {
+        this.artistError = true;
+        return;
+      }
+      this.accountService.searchArtistServ(this.token, this.artistName).subscribe(
+        (data: Object) => 
+        {
+            console.log(data);
+            let innerArtistSearch:any[] = Object.values(data);
+            let innerArtistSearchInfo:any[] = Object.values(innerArtistSearch[0]);
+            let innerArtistSearchDetails:any[] = Object.values(innerArtistSearchInfo[1]);
+            let innerArtistSearchArray:any[] = Object.values(innerArtistSearchDetails[0]);
+            let innerArtistId = innerArtistSearchArray[4];
+            let innerArtistName = innerArtistSearchArray[6];
+            let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
+            let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
+            let innerArtistImage = innerArtistImageArray[1];
+            this.accountService.createUserTopArtistServ(this.user.userId.toString(), innerArtistId,innerArtistName,innerArtistImage).subscribe(()=>
+            {
+              if(this.id != null)
+              {
+                let numID:number = parseInt(this.id);
+                this.accountService.getUser(numID).subscribe(value =>
+                {
+                  this.user = value; this.anthem = this.user.anthem; this.topArtists = this.user.topArtists; 
+                  if(this.topArtists.length > 0)
+                  {
+                    this.artistName = this.user.topArtists[this.topArtists.length - 1].artistName;
+                  }
+                  this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
+                  this.age=this.user.age; this.lastName=this.user.lastName; this.interest=this.user.filterType;
+                  this.gender = this.user.userType; this.preference = this.user.filterType;
+                  this.accountService.getUserImages(numID).subscribe(value=>
+                  {
+                    this.user.images = value;
+                    if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+                      this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+                  });
+          
+                  if(this.token != null && this.anthem != "")
+                  {
+                    this.accountService.getSongServ(this.token, this.anthem).subscribe(
+                      (data: Object) => 
+                      {
+                        let innerData = Object.values(data);
+                        let songName = innerData[11]; 
+                        this.anthem = songName;
+                      });
+                  }
+                });
+              }
+            });
+        } , 
+        error=> {console.log("error"); this.error=true;});
+    }
+  }
+
   confirmEdit()
   {
     
@@ -196,41 +278,24 @@ export class EditProfilePageComponent implements OnInit {
           this.anthem = finalUrl.substring(31, finalUrl.length);
           this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
           this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres).subscribe(()=>{
+            let genreObservable:Observable<Object>|null = this.genreSubmit();
+              if(genreObservable != null)
+              {
+                genreObservable.subscribe(()=>{this.router.navigate(['home-page']);});
+              }
         });
       } , 
       error=> {console.log("error"); this.error=true;});
     }
     else{
       this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
-        this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres);
-    }
-    if(this.artistName != "")
-    {
-      this.accountService.searchArtistServ(this.token, this.artistName).subscribe(
-        (data: Object) => 
-        {
-            console.log(data);
-            let innerArtistSearch:any[] = Object.values(data);
-            let innerArtistSearchInfo:any[] = Object.values(innerArtistSearch[0]);
-            let innerArtistSearchDetails:any[] = Object.values(innerArtistSearchInfo[1]);
-            let innerArtistSearchArray:any[] = Object.values(innerArtistSearchDetails[0]);
-            let innerArtistId = innerArtistSearchArray[4];
-            let innerArtistName = innerArtistSearchArray[6];
-            let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
-            let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
-            let innerArtistImage = innerArtistImageArray[1];
-            this.accountService.createUserTopArtistServ(this.user.userId.toString(), innerArtistId,innerArtistName,innerArtistImage).subscribe(()=>{
-              let genreObservable:Observable<Object>|null = this.genreSubmit();
+        this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres).subscribe(()=>{
+          let genreObservable:Observable<Object>|null = this.genreSubmit();
               if(genreObservable != null)
               {
                 genreObservable.subscribe(()=>{this.router.navigate(['home-page']);});
               }
-
-            });
-        } , 
-        error=> {console.log("error"); this.error=true;});
+        });
     }
-    else
-      this.router.navigate(['home-page']);
   }
 }}

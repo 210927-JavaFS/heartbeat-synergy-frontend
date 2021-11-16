@@ -15,7 +15,7 @@ import { TransferService } from '../services/transfer.service';
   styleUrls: ['./edit-profile-page.component.css']
 })
 export class EditProfilePageComponent implements OnInit {
-  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public user:User = new User(0, '','','','','','','',[],[], '', '', null);
   public age:string = '';
   public firstName:string='';
   public id:string|null = '';

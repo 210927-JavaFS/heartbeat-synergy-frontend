@@ -14,8 +14,8 @@ export class TransferService {
   private username:string = '';
   private password:string = '';
   public token:string = '';
-  public user:User = new User(0, '','','','','','','','',[],[], '', '', null);
-  public friend:User = new User(0, '','','','','','','','',[],[], '', '', null);
+  public user:User = new User(0, '','','','','','','',[],[], '', '', null);
+  public friend:User = new User(0, '','','','','','','',[],[], '', '', null);
   public id:string = ''
 
   userChange : Subject<User> = new Subject<User>();

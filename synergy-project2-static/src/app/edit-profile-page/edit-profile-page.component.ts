@@ -42,6 +42,7 @@ export class EditProfilePageComponent implements OnInit {
 
   public genreList: any=[];
   public genreArray:any[]=[];
+  public userGenres:any[]=[];
   
 
 
@@ -144,6 +145,7 @@ export class EditProfilePageComponent implements OnInit {
 
         }
        )
+       this.userGenres = this.form.value;
     }  
    }
 
@@ -155,9 +157,7 @@ export class EditProfilePageComponent implements OnInit {
     
         if (e.target.checked) {
           genre.value.push(e.target.value);
-          console.log([e.target.value])
-          console.log(this.form.value)
-          console.log(genre.value)
+
 
         } else {
           const index = genre.value.indexOf(e.target.value);
@@ -165,8 +165,8 @@ export class EditProfilePageComponent implements OnInit {
             genre.value.splice(index,1);
           }
         }
-        console.log(genre.value);
-        console.log(this.form.value)
+        this.userGenres = this.form.value;
+
       
     
 

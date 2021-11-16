@@ -37,7 +37,7 @@ export class AccountService {
   responseType: string = 'code';
   scopes: string = 'user-library-read, user-top-read'; //can edit this to your liking
 
-  serverUrl: string = 'http://localhost:8083/data';
+  serverUrl: string = 'http://18.223.29.20:8083/data';
 
   base64Credentials = btoa(this.clientId + ':' + this.clientSecret);
   authTokenBody = new URLSearchParams({ 'grant_type': 'client_credentials' });
@@ -147,24 +147,24 @@ export class AccountService {
 
   //spring data calls
   getAllUsers() {
-    return this.http.get<User[]>('http://localhost:8083/data/account');
+    return this.http.get<User[]>(this.serverUrl + '/account');
   }
 
   getUser(id: number) {
-    return this.http.get<User>('http://localhost:8083/data/account/' + id);
+    return this.http.get<User>(this.serverUrl + '/account/' + id);
   }
   
 
   getPotentialMatches(){
     console.log("in getPotentialMatches");
     let data = sessionStorage.getItem('currentUser');
-    return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/potentials');
+    return this.http.get<User[]>(this.serverUrl + '/account/'+data+'/potentials');
   }
 
   getConsensualMatches(){
     console.log("in getConsensualMatches");
     let data = sessionStorage.getItem('currentUser');
-    return this.http.get<User[]>('http://localhost:8083/data/account/'+data+'/match/success');
+    return this.http.get<User[]>(this.serverUrl + '/account/'+data+'/match/success');
   }
 
 

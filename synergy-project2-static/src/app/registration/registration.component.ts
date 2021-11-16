@@ -17,6 +17,7 @@ export class RegistrationComponent implements OnInit {
 
   public username:string = '';
   public password:string = '';
+  public confirmpassword:string = '';
   public firstName:string = '';
   public lastName:string = '';
   public profileDescription:string = '';

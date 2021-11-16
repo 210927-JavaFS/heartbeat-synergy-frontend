@@ -64,7 +64,7 @@ export class EditProfilePageComponent implements OnInit {
         this.user = value; this.anthem = this.user.anthem; this.topArtists = this.user.topArtists; 
         if(this.topArtists.length > 0)
         {
-          this.artistName = this.user.topArtists[0].artistName;
+          this.artistName = this.user.topArtists[this.user.topArtists.length - 1].artistName;
         }
         this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
         this.age=this.user.age; this.lastName=this.user.lastName; this.interest=this.user.filterType;
@@ -83,7 +83,7 @@ export class EditProfilePageComponent implements OnInit {
             {
               let innerData = Object.values(data);
               let songName = innerData[11]; 
-              this.anthem = songName;
+              this.anthem = songName + " " + innerData[0].artists[0].name;
             });
         }
       });
@@ -164,14 +164,9 @@ export class EditProfilePageComponent implements OnInit {
           if (index>-1){
             genre.value.splice(index,1);
           }
-        }
-        this.userGenres = this.form.value;
 
-      
-    
+        }  
 
-    
-    
   }
 
 
@@ -262,7 +257,17 @@ export class EditProfilePageComponent implements OnInit {
             let innerArtistSearchArray:any[] = Object.values(innerArtistSearchDetails[0]);
             let innerArtistId = innerArtistSearchArray[4];
             let innerArtistName = innerArtistSearchArray[6];
-            let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
+            let shouldAdd:boolean = true;
+            this.topArtists.forEach((value:any)=>{
+              if(innerArtistName == value.artistName)
+              {
+                shouldAdd = false;
+                return;
+              }
+            });
+            if(shouldAdd)
+            {
+              let innerArtistImageDetails:any[]=Object.values(innerArtistSearchArray[5]);
             let innerArtistImageArray:any[]=Object.values(innerArtistImageDetails[0]);
             let innerArtistImage = innerArtistImageArray[1];
             this.accountService.createUserTopArtistServ(this.user.userId.toString(), innerArtistId,innerArtistName,innerArtistImage).subscribe(()=>
@@ -270,14 +275,10 @@ export class EditProfilePageComponent implements OnInit {
               if(this.id != null)
               {
                 let numID:number = parseInt(this.id);
+                
                 this.accountService.getUser(numID).subscribe(value =>
                 {
-                  this.user = value; this.anthem = this.user.anthem; this.topArtists = this.user.topArtists; 
-                  if(this.topArtists.length > 0)
-                  {
-                    this.artistName = this.user.topArtists[this.topArtists.length - 1].artistName;
-                  }
-                  this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
+                  this.user = value; this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
                   this.age=this.user.age; this.lastName=this.user.lastName; this.interest=this.user.filterType;
                   this.gender = this.user.userType; this.preference = this.user.filterType;
                   this.accountService.getUserImages(numID).subscribe(value=>
@@ -297,10 +298,16 @@ export class EditProfilePageComponent implements OnInit {
                         this.anthem = songName;
                       });
                   }
+                  this.topArtists = this.user.topArtists; 
+                  if(this.topArtists.length > 0)
+                  {
+                    this.artistName = this.user.topArtists[this.topArtists.length - 1].artistName;
+                  }          
                 });
               }
             });
-        } , 
+          }
+        }, 
         error=> {console.log("error"); this.error=true;});
     }
   }
@@ -315,6 +322,7 @@ export class EditProfilePageComponent implements OnInit {
     this.token=sessionStorage.getItem("token");
     if(this.token != "" && this.anthem != "")
     {
+      console.log(this.anthem);
       this.accountService.searchSongServ(this.token, this.anthem, '').subscribe(
         (data: Object) => {
           let innerData: any[] = Object.values(data);

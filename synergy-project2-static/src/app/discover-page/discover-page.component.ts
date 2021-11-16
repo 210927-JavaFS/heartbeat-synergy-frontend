@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { Artist } from '../models/artist';
 import { Match } from '../models/match';
 import { Track } from '../models/track';
@@ -51,7 +52,7 @@ export class DiscoverPageComponent implements OnInit {
   public currentUserId:string|null = '';
   public retrievedImage:string="";
 
-  constructor(private as: AccountService, private router:Router) { }
+  constructor(private as: AccountService, private router:Router, private notificationService: NotificationsService) { }
 
   ngOnInit(): void {
     this.currentUserId = sessionStorage.getItem('currentUser');
@@ -112,6 +113,8 @@ export class DiscoverPageComponent implements OnInit {
                   this.displayedUser.images = value;
                   if(this.displayedUser.images?.length != undefined && this.displayedUser?.images.length > 0)
                     this.retrievedImage = 'data:image/png;base64,'+this.displayedUser?.images[this.displayedUser?.images.length - 1].picByte;
+                  else
+                    this.retrievedImage = "/assets/blank-profile.png";
                 }
               });
           
@@ -210,6 +213,18 @@ export class DiscoverPageComponent implements OnInit {
       this.as.getExistingMatch(parseInt(this.currentUserId), parseInt(this.id)).subscribe((value:Match)=>{
         if(this.currentUserId != null && this.id != null)
         {
+          console.log('matcher response: ' + value.matcherResponse);
+          console.log('matchee response: ' + response);
+          if(value.matcherResponse == response)
+          {
+            console.log("match!");
+            this.notificationService.success('Match!', 'Check your matches to see the lucky person!', {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true
+            });
+          }
           this.as.postMatch(parseInt(this.currentUserId), parseInt(this.id), response, false,value).subscribe((value)=>{
             this.displayedUser = this.users.pop();
             if(this.displayedUser != null)

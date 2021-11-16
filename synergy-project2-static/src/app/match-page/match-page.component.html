@@ -18,12 +18,9 @@
       <div class="col-md-6 col-xl-4 " >                       
         <div class="card">
           <div class="card-body">
-              <div *ngIf="user.images?.length != 0; else elseBlock">
-                <img [src]= "getUserImage(user)" alt="Admin" class="rounded-circle" width="150" height = "150">
+              <div *ngIf="user.images?.length != 0;">
+                <img [src]= "getUserImage(user)" class="rounded-circle" width="150" height = "150">
               </div>
-              <ng-template #elseBlock>
-                <img src="/assets/blank-profile.png" alt="Admin" class="rounded-circle" width="150" height = "150">
-              </ng-template> 
               <br>
               <div class="media-body overflow-hidden">
                 <div class = "row">

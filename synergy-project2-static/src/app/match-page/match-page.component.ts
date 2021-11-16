@@ -70,7 +70,7 @@ export class MatchPageComponent implements OnInit {
     if (user.images != null && user.images.length != 0) {
       return user.images[0].getImageString();
     }
-    return "";
+    return "/assets/blank-profile.png";
   }
 
   login() {

@@ -218,11 +218,11 @@ export class DiscoverPageComponent implements OnInit {
           if(value.matcherResponse == response)
           {
             console.log("match!");
-            this.notificationService.success('Match!', 'Check your matches to see your new match', {
-              position: ['bottom', 'right'],
-              timeOut: 15,
-              animate: 'fade',
-              showProgressBar:true
+            this.notificationService.success('Match!', 'Check your matches to see the lucky person!', {
+              timeOut: 3000,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true
             });
           }
           this.as.postMatch(parseInt(this.currentUserId), parseInt(this.id), response, false,value).subscribe((value)=>{

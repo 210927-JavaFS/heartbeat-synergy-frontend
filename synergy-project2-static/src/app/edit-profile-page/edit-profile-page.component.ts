@@ -273,9 +273,29 @@ export class EditProfilePageComponent implements OnInit {
               if(this.id != null)
               {
                 let numID:number = parseInt(this.id);
+                
                 this.accountService.getUser(numID).subscribe(value =>
                 {
-                  this.user = value;
+                  this.user = value; this.user.userId = numID; this.firstName=this.user.firstName; this.profileDescription = this.user.profileDescription; 
+                  this.age=this.user.age; this.lastName=this.user.lastName; this.interest=this.user.filterType;
+                  this.gender = this.user.userType; this.preference = this.user.filterType;
+                  this.accountService.getUserImages(numID).subscribe(value=>
+                  {
+                    this.user.images = value;
+                    if(this.user?.images?.length != undefined && this.user?.images.length > 0)
+                      this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+                  });
+          
+                  if(this.token != null && this.anthem != "")
+                  {
+                    this.accountService.getSongServ(this.token, this.anthem).subscribe(
+                      (data: Object) => 
+                      {
+                        let innerData = Object.values(data);
+                        let songName = innerData[11]; 
+                        this.anthem = songName;
+                      });
+                  }
                   this.topArtists = this.user.topArtists; 
                   if(this.topArtists.length > 0)
                   {
@@ -309,7 +329,6 @@ export class EditProfilePageComponent implements OnInit {
           let innerSongsInfo: any[] = Object.values(innerSongs[0]);
           let innerSongsInfoUrl: any[] = Object.values(innerSongsInfo[6]);
           let finalUrl = innerSongsInfoUrl[0];
-          console.log(finalUrl);
           this.anthem = finalUrl.substring(31, finalUrl.length);
           this.accountService.createUserServ(this.user.userId.toString(), this.user.username, this.user.password, this.firstName, 
           this.lastName, this.age, this.profileDescription, this.anthem, this.preference, this.gender, this.genres).subscribe(()=>{

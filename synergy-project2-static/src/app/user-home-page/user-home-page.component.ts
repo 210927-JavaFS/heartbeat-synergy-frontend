@@ -66,6 +66,9 @@ export class HomePageComponent implements OnInit {
                 this.user.images = value;
                 if(this.user?.images?.length != undefined && this.user?.images.length > 0)
                   this.retrievedImage = 'data:image/png;base64,'+this.user?.images[this.user?.images.length - 1].picByte;
+                else
+                  this.retrievedImage = "/assets/blank-profile.png";
+                  
               });
           
           this.token = sessionStorage.getItem('token');

@@ -41,6 +41,7 @@ export class LoginPageComponent implements OnInit {
           this.accountService.getTokenServ().subscribe(
             (data: Object) => {
               this.token = Object.values(data)[0];
+              console.log("token: "+ this.token);
               sessionStorage.setItem('token', this.token);
               this.router.navigate(['home-page']);
             });

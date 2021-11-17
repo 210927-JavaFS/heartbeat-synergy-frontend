@@ -115,7 +115,7 @@
                                             </form>
                                         </div>
                                         <br>
-                                        <label for="firstName" class="form-label"><b>Add new artist: (Add up to 3)</b></label>
+                                        <label for="firstName" class="form-label"><b>Add Favorite Artist: (Add up to 3)</b></label>
                                         <div class = "row">
                                             <div class="col-md-6">
                                                 <input id="firstName" [(ngModel)]="artistName"
@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label>
-                                                    <input class="btn btn-primary" type="submit" (click)="submitFavoriteArtist()" value="submit" />
+                                                    <input class="btn btn-primary" type="submit" (click)="submitFavoriteArtist()" value="Add" />
                                                 </label> 
                                             </div>
                                             <div *ngIf="artistError" class="alert alert-warning alert-dismissible fade show" role="alert">

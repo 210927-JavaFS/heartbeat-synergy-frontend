@@ -56,3 +56,7 @@ body {
     height: 100px;
 }
 
+.img-container {
+    position: relative;
+    text-align: center;
+  }

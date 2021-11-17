@@ -17,10 +17,11 @@
     <div class="container">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="main-breadcrumb">
+
             <ol class="breadcrumb">
                 <br>
 
-
+              <li><input type="image" src ="/assets/logo-heartBeat-transparent.png" (click) = "goHome()" width = "130" height="45"></li>
               <li ><button class="btn btn-primary btn-lg" (click)="login()">Logout</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goHome()">Home</button></li>
               <li ><button class="btn btn-primary btn-lg" (click)="goDiscover()">Discover profiles</button></li>
@@ -114,7 +115,7 @@
                                             </form>
                                         </div>
                                         <br>
-                                        <label for="firstName" class="form-label"><b>Add new artist: </b></label>
+                                        <label for="firstName" class="form-label"><b>Add new artist: (Add up to 3)</b></label>
                                         <div class = "row">
                                             <div class="col-md-6">
                                                 <input id="firstName" [(ngModel)]="artistName"

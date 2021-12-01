@@ -45,7 +45,7 @@ heartBeat is a web-based online dating/social application centered around connec
 
 To-do list:
 * Utilize OAuth 2.0 to link account playlists
-* Increase loading time for pages within application
+* Decrease loading time for pages within application
 
 ## Getting Started
    
